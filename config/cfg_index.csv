@@ -1,3 +1,4 @@
 name,field,var,rule,title,nan_filler
-JSBG_7_PH,PH,cfg_JSBG_7_PH_var,cfg_JSBG_7_PH_rule,"安吉县表层样点土壤pH分级统计表","/"
-JSBG_8_SOM,SOM,cfg_JSBG_8_SOM_var,cfg_JSBG_8_SOM_rule,"安吉县表层样点土壤SOM分级统计表","/"
+JSBG_7_PH,PH,cfg_JSBG_7_PH_var,cfg_PH_rule,"安吉县表层样点土壤pH分级统计表","/"
+JSBG_8_SOM,SOM,cfg_JSBG_8_SOM_var,cfg_SOM_rule,"安吉县表层样点土壤SOM分级统计表","/"
+TRSX_111_PH,MJ,cfg_TRSX_111_PH_var,cfg_PH_rule,"安吉县土地利用类型土壤pH分级面积统计表","/"

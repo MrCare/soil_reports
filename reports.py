@@ -49,8 +49,11 @@ def fill_title(sheet, title, position="A1"):
     sheet[position] = title
     return sheet
 
-def fill_template(sheet, position, value):
-    sheet[position] = value
+def fill_template(sheet, start_position, value_list):
+    start_row, start_col = int(start_position[1:]), ord(start_position[0].upper()) - 64 # B4 转为 列标数字
+    for each in value_list:
+        sheet.cell(row=start_row, column=start_col, value=each)
+        start_col += 1
     return sheet
 
 def deal_none(df, field, rule_table):
@@ -67,29 +70,38 @@ def save_xls(wb, xls_file_path):
     wb.save(xls_file_path)
     return
 
-def get_var(ss, rule_table, classification, method, nan_filler):
+def get_var(ss, rule_table, calc_type, nan_filler):
     '''
+    根据计算类型，计算出结果
     '''
-    rule_str = rule_table.loc[classification]['value']
-    ss_result = ss[ss.apply(lambda x: eval(rule_str, {"x": x}))]
-    result = None
-    if method == "mean":
-        mean_value = ss_result.mean()
-        result = nan_filler if pd.isna(mean_value)  else "{:.2f}%".format(mean_value) # 均值保留两位小数, 如果无法算均值填充 “/”
-    elif method == "count":
-        result = ss_result.count()
-    elif method == "percent":
-        result = "{:.2f}%".format( (ss_result.count() / ss.count()) * 100 ) # 保留两位小数百分数
+    not_none_rule_table = rule_table[rule_table.index != "none"]
+    result = []
+    if calc_type == "classification":
+        result = not_none_rule_table["alias"].tolist()
+    else:
+        rule_strs = not_none_rule_table['value']
+        df = pd.DataFrame()
+        for each in rule_strs:
+            s_result = ss[ss.apply(lambda x: eval(each, {"x": x}))]
+            df = pd.concat([df, s_result], axis=1)
+        if calc_type == "mean":
+            raw_result = df.mean().tolist()
+            result = [nan_filler if pd.isna(x) else f'{x:.2f}' for x in raw_result]
+        elif calc_type == "count":
+            raw_result = df.count().tolist()
+            result = raw_result
+        elif calc_type == "percent":
+            raw_result = df.count() / ss.count()
+            result = [f'{x:.2f}' for x in raw_result.tolist()]
     return result
 
 def statistics_all(ss, var_table, rule_table, sheet, nan_filler):
     wb = None
-    for var, row in var_table.iterrows():
-        classification = row["classification"]
-        method = row["method"]
-        position = row["position"]
-        var_result = get_var(ss, rule_table, classification, method, nan_filler)
-        fill_template(sheet, position, var_result)
+    for name, row in var_table.iterrows():
+        calc_type = name
+        start_position = row["start_position"]
+        result_list = get_var(ss, rule_table, calc_type, nan_filler)
+        fill_template(sheet, start_position, result_list)
     return
 
 def main(file_pth, name, out_file_pth=None):
@@ -104,9 +116,9 @@ def main(file_pth, name, out_file_pth=None):
         if not out_file_pth:
             out_file_pth = os.path.join(os.path.dirname(file_pth), 'reports_result.xls')
         save_xls(wb, out_file_pth)
-    bar()
+        bar()
     return "Done!"
 
 if __name__ == "__main__":
-    # main('./test_data/表层样点.shp', 'JSBG_7_PH')
-    fire.Fire(main)
+    main('./test_data/表层样点.shp', 'JSBG_7_PH')
+    # fire.Fire(main)
