@@ -1,0 +1,7 @@
+name,value
+one,"(x > 3.00)"
+two,"(x > 2.00) and (x <= 3.00)"
+three,"(x > 1.00) and (x <= 2.00)"
+four,"(x > 0.50) and (x <= 1.00)"
+five,"(x <= 0.50)"
+none,"x == '/'"

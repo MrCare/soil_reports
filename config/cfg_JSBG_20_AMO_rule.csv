@@ -1,0 +1,7 @@
+name,value
+one,"(x > 0.20)"
+two,"(x > 0.15) and (x <= 0.20)"
+three,"(x > 0.10) and (x <= 0.15)"
+four,"(x > 0.05) and (x <= 0.10)"
+five,"(x <= 0.05)"
+none,"x == '/'"
