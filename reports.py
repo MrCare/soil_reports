@@ -8,7 +8,7 @@ import os
 import fire
 import warnings
 
-from inner import *
+from inner import JSBG_7, TRSX_111, zonal_statistics
 from alive_progress import alive_bar
 from openpyxl import load_workbook
 
@@ -35,90 +35,93 @@ def get_cfg_params(cfg_index, name):
     var_table = csv_data[cfg_index.loc[name]["var"]]
     rule_table = csv_data[cfg_index.loc[name]["rule"]]
     field = cfg_index.loc[name]["field"]
+    target_field = cfg_index.loc[name]["target_field"]
     title = cfg_index.loc[name]["title"]
     nan_filler = cfg_index.loc[name]["nan_filler"]
-    return var_table, rule_table, field, title, nan_filler
+    return var_table, rule_table, field, target_field, title, nan_filler
 
-def get_sheet(xls_file_path, template):
+def get_wb(xls_file_path):
     wb = load_workbook(xls_file_path)    
+    return wb
+
+def get_sheet(wb, template):
     sheet_name = next(x for x in wb.sheetnames if template in x)
-    sheet = wb.get_sheet_by_name(sheet_name)
-    return wb, sheet
+    sheet = wb[sheet_name]
+    return sheet
 
 def fill_title(sheet, title, position="A1"):
     sheet[position] = title
     return sheet
 
-def fill_template(sheet, start_position, value_list):
-    start_row, start_col = int(start_position[1:]), ord(start_position[0].upper()) - 64 # B4 转为 列标数字
-    for each in value_list:
-        sheet.cell(row=start_row, column=start_col, value=each)
-        start_col += 1
-    return sheet
-
-def deal_none(df, field, rule_table):
+def deal_none(df, field, rule_table, result_type="ss"):
     '''
     输入样点数据 输出df(除了空值之外的) 输出df(空值)
     '''
     ss = df[field]
     rule_str = rule_table.loc["none"]["value"]
     ss_none = ss[ss.apply(lambda x: eval(rule_str, {"x": x}))]
+    df_none = df[ss.apply(lambda x: eval(rule_str, {"x": x}))]
     ss_not_none = ss[ss.apply(lambda x: not eval(rule_str, {"x": x}))]
-    return ss_none, ss_not_none
+    df_not_none = df[ss.apply(lambda x: not eval(rule_str, {"x": x}))]
+    if result_type == "ss":
+        return ss_none, ss_not_none
+    elif result_type == "df":
+        return df_none, df_not_none
 
 def save_xls(wb, xls_file_path):
     wb.save(xls_file_path)
     return
 
-def get_var(ss, rule_table, calc_type, nan_filler):
-    '''
-    根据计算类型，计算出结果
-    '''
-    not_none_rule_table = rule_table[rule_table.index != "none"]
-    result = []
-    if calc_type == "classification":
-        result = not_none_rule_table["alias"].tolist()
-    else:
-        rule_strs = not_none_rule_table['value']
-        df = pd.DataFrame()
-        for each in rule_strs:
-            s_result = ss[ss.apply(lambda x: eval(each, {"x": x}))]
-            df = pd.concat([df, s_result], axis=1)
-        if calc_type == "mean":
-            raw_result = df.mean().tolist()
-            result = [nan_filler if pd.isna(x) else f'{x:.2f}' for x in raw_result]
-        elif calc_type == "count":
-            raw_result = df.count().tolist()
-            result = raw_result
-        elif calc_type == "percent":
-            raw_result = df.count() / ss.count()
-            result = [f'{x:.2f}' for x in raw_result.tolist()]
-    return result
-
-def statistics_all(ss, var_table, rule_table, sheet, nan_filler):
-    wb = None
-    for name, row in var_table.iterrows():
-        calc_type = name
-        start_position = row["start_position"]
-        result_list = get_var(ss, rule_table, calc_type, nan_filler)
-        fill_template(sheet, start_position, result_list)
-    return
-
-def main(file_pth, name, out_file_pth=None):
-    total_steps = 1
+def batch_type_7(file_pth, table_list, out_file_pth=None):
+    total_steps = len(table_list) + 1
     with alive_bar(total_steps) as bar:
         df = gpd.read_file(file_pth)
-        var_table, rule_table, field, title, nan_filler = get_cfg_params(cfg_index, name)
-        wb, sheet = get_sheet(xls_template_path, name)
-        sheet = fill_title(sheet,title,"A1")
-        ss_none, ss_not_none = deal_none(df, field, rule_table)
-        statistics_all(ss_not_none, var_table, rule_table, sheet, nan_filler)
-        if not out_file_pth:
-            out_file_pth = os.path.join(os.path.dirname(file_pth), 'reports_result.xls')
+        wb = get_wb(xls_template_path)
+        for table in table_list:
+            var_table, rule_table, field, target_field, title, nan_filler = get_cfg_params(cfg_index, table)
+            sheet = get_sheet(wb, table)
+            sheet = fill_title(sheet, title, "A1")
+            ss_none, ss_not_none = deal_none(df, field, rule_table)
+            JSBG_7.statistics_all(ss_not_none, var_table, rule_table, sheet, nan_filler)
+            if not out_file_pth:
+                out_file_pth = os.path.join(os.path.dirname(file_pth), 'reports_result.xls')
+            bar()
+
+        save_xls(wb, out_file_pth)
+        bar()
+    return "Done!"
+
+def batch_type_111(file_pth, table_list, out_file_pth=None):
+    total_steps = len(table_list) + 1
+    with alive_bar(total_steps) as bar:
+        df = gpd.read_file(file_pth)
+        wb = get_wb(xls_template_path)
+        for table in table_list:
+            var_table, rule_table, field, target_field, title, nan_filler = get_cfg_params(cfg_index, table)
+            sheet = get_sheet(wb, table)
+            sheet = fill_title(sheet, title, "A1")
+            df_none, df_not_none = deal_none(df, field, rule_table, 'df')
+            df = TRSX_111.prepare(df_not_none)
+            TRSX_111.statistics_all(df, field, target_field, var_table, rule_table, sheet, nan_filler)
+            if not out_file_pth:
+                out_file_pth = os.path.join(os.path.dirname(file_pth), 'reports_result.xls')
+            bar()
+
         save_xls(wb, out_file_pth)
         bar()
     return "Done!"
 
 if __name__ == "__main__":
-    main('./test_data/表层样点.shp', 'JSBG_7_PH')
-    # fire.Fire(main)
+    '''
+    reports batch_type_7 --file_pth ./test_data/表层样点.shp --table_list "[JSBG_7_PH,JSBG_8_OM]"--out_file_pth xx.shp
+    reports batch_type_111 --file_pth xx.shp --table_list "[JSBG_7_PH]" --out_file_pth xx.shp
+    '''
+    # zonal_statistics.zs('./test_data/评价单元.shp','./test_data/PH预测.tif','PH','./test_data/PH评价单元.shp')
+    # batch_type_7('./test_data/表层样点.shp', ['JSBG_7_PH', 'JSBG_8_OM'])
+    batch_type_111('./test_data/PH评价单元.shp', ['TRSX_111_PH'])
+
+    # fire.Fire({
+    #     "zs":zonal_statistics.zs,
+    #     "batch_type_7":batch_type_7,
+    #     "batch_type_111":batch_type_111
+    # })

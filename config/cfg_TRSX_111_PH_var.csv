@@ -1,1 +1,7 @@
-name,start_position,
+name,start_position,parent_field
+classification,B3,
+耕地,B4,DLDLMC
+园地,B5,DLDLMC
+林地,B6,DLDLMC
+草地,B7,DLDLMC
+summary,B8,
