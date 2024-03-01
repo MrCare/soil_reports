@@ -1,7 +1,0 @@
-name,value
-one,"(x > 150)"
-two,"(x > 125) and (x <= 150)"
-three,"(x > 100) and (x <= 125)"
-four,"(x > 75) and (x <= 100)"
-five,"(x <= 75)"
-none,"x == '/'"

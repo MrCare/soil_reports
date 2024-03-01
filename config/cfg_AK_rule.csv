@@ -1,0 +1,7 @@
+name,value,alias
+one,"(x > 150)",">150"
+two,"(x > 125) and (x <= 150)","125~150"
+three,"(x > 100) and (x <= 125)","100~125"
+four,"(x > 75) and (x <= 100)","75~100"
+five,"(x <= 75)","≤75"
+none,"x is None","/"

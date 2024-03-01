@@ -117,8 +117,8 @@ if __name__ == "__main__":
     reports batch_type_111 --file_pth xx.shp --table_list "[JSBG_7_PH]" --out_file_pth xx.shp
     '''
     # zonal_statistics.zs('./test_data/评价单元.shp','./test_data/PH预测.tif','PH','./test_data/PH评价单元.shp')
-    # batch_type_7('./test_data/表层样点.shp', ['JSBG_7_PH', 'JSBG_8_OM'])
-    batch_type_111('./test_data/PH评价单元.shp', ['TRSX_111_PH'])
+    batch_type_7('./test_data/表层样点.shp', ['JSBG_7_PH','JSBG_10_OM','JSBG_16_TN','JSBG_19_TP','JSBG_22_TK','JSBG_25_AP','JSBG_28_AK','JSBG_31_AS1','JSBG_34_AFE','JSBG_37_AMN','JSBG_40_ACU','JSBG_43_AZN','JSBG_46_AB','JSBG_49_AMO','JSBG_53_GZCHD'])
+    # batch_type_111('./test_data/PH评价单元.shp', ['TRSX_111_PH'])
 
     # fire.Fire({
     #     "zs":zonal_statistics.zs,

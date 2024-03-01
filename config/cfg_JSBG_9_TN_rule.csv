@@ -1,7 +1,0 @@
-name,value
-one,"(x > 2.0)"
-two,"(x > 1.5) and (x <= 2.0)"
-three,"(x > 1.0) and (x <= 1.5)"
-four,"(x > 0.75) and (x <= 1.0)"
-five,"(x <= 0.75)"
-none,"x == '/'"

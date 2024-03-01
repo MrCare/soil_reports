@@ -1,7 +1,0 @@
-name,value
-one,"(x > 50.00)"
-two,"(x > 15.00) and (x <= 50.00)"
-three,"(x > 7.00) and (x <= 15.00)"
-four,"(x > 3.00) and (x <= 7.00)"
-five,"(x <= 3.00)"
-none,"x == '/'"
