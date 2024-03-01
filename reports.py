@@ -72,7 +72,7 @@ def save_xls(wb, xls_file_path):
     wb.save(xls_file_path)
     return
 
-def batch_type_7(file_pth, table_list, out_file_pth=None):
+def batch_type_7(file_pth, table_list, xls_template_path=xls_template_path, out_file_pth=None):
     total_steps = len(table_list) + 1
     with alive_bar(total_steps) as bar:
         df = gpd.read_file(file_pth)
@@ -84,14 +84,14 @@ def batch_type_7(file_pth, table_list, out_file_pth=None):
             ss_none, ss_not_none = deal_none(df, field, rule_table)
             JSBG_7.statistics_all(ss_not_none, var_table, rule_table, sheet, nan_filler)
             if not out_file_pth:
-                out_file_pth = os.path.join(os.path.dirname(file_pth), 'reports_result.xls')
+                out_file_pth = os.path.join(os.path.dirname(file_pth), 'reports_result.xlsx')
             bar()
 
         save_xls(wb, out_file_pth)
         bar()
     return "Done!"
 
-def batch_type_111(file_pth, table_list, out_file_pth=None):
+def batch_type_111(file_pth, table_list, xls_template_path=xls_template_path, out_file_pth=None,):
     total_steps = len(table_list) + 1
     with alive_bar(total_steps) as bar:
         df = gpd.read_file(file_pth)
@@ -104,11 +104,22 @@ def batch_type_111(file_pth, table_list, out_file_pth=None):
             df = TRSX_111.prepare(df_not_none)
             TRSX_111.statistics_all(df, field, target_field, var_table, rule_table, sheet, nan_filler)
             if not out_file_pth:
-                out_file_pth = os.path.join(os.path.dirname(file_pth), 'reports_result.xls')
+                out_file_pth = os.path.join(os.path.dirname(file_pth), 'reports_result.xlsx')
             bar()
 
         save_xls(wb, out_file_pth)
         bar()
+    return "Done!"
+
+def total(sample_pth, element_pth, type_list, out_file_pth=None):
+    xls_template_path = os.path.join(os.path.dirname(sample_pth), 'reports_result.xlsx')
+    for each in type_list:
+        if each == "JSBG_7":
+            batch_type_7(sample_pth, ['JSBG_7_PH','JSBG_10_OM','JSBG_16_TN','JSBG_19_TP','JSBG_22_TK','JSBG_25_AP','JSBG_28_AK','JSBG_31_AS1','JSBG_34_AFE','JSBG_37_AMN','JSBG_40_ACU','JSBG_43_AZN','JSBG_46_AB','JSBG_49_AMO','JSBG_53_GZCHD'])
+        elif each == "TRSX_111":
+            batch_type_111(element_pth, ['TRSX_111_PH', 'TRSX_135_OM'], xls_template_path)
+        else:
+            print('ERROR!')     
     return "Done!"
 
 if __name__ == "__main__":
@@ -116,12 +127,13 @@ if __name__ == "__main__":
     reports batch_type_7 --file_pth ./test_data/表层样点.shp --table_list "[JSBG_7_PH,JSBG_8_OM]"--out_file_pth xx.shp
     reports batch_type_111 --file_pth xx.shp --table_list "[JSBG_7_PH]" --out_file_pth xx.shp
     '''
-    # zonal_statistics.zs('./test_data/评价单元.shp','./test_data/PH预测.tif','PH','./test_data/PH评价单元.shp')
-    batch_type_7('./test_data/表层样点.shp', ['JSBG_7_PH','JSBG_10_OM','JSBG_16_TN','JSBG_19_TP','JSBG_22_TK','JSBG_25_AP','JSBG_28_AK','JSBG_31_AS1','JSBG_34_AFE','JSBG_37_AMN','JSBG_40_ACU','JSBG_43_AZN','JSBG_46_AB','JSBG_49_AMO','JSBG_53_GZCHD'])
-    # batch_type_111('./test_data/PH评价单元.shp', ['TRSX_111_PH'])
-
+    # zonal_statistics.zs('./test_data/PH评价单元.shp','./test_data/OM预测.tif','OM','./test_data/PH_OM评价单元.shp')
+    # batch_type_7('./test_data/表层样点.shp', ['JSBG_7_PH','JSBG_10_OM','JSBG_16_TN','JSBG_19_TP','JSBG_22_TK','JSBG_25_AP','JSBG_28_AK','JSBG_31_AS1','JSBG_34_AFE','JSBG_37_AMN','JSBG_40_ACU','JSBG_43_AZN','JSBG_46_AB','JSBG_49_AMO','JSBG_53_GZCHD'])
+    # batch_type_111('./test_data/PH_OM评价单元.shp', ['TRSX_111_PH', 'TRSX_135_OM'])
+    total('./test_data/表层样点.shp', './test_data/PH_OM评价单元.shp', ['JSBG_7', 'TRSX_111'])
     # fire.Fire({
     #     "zs":zonal_statistics.zs,
+    #     "total":total,
     #     "batch_type_7":batch_type_7,
     #     "batch_type_111":batch_type_111
     # })

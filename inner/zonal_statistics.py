@@ -23,3 +23,4 @@ def zs(vector_file, raster_file, new_field, output_file, stats_way='mean'):
         # 保存结果到新的矢量文件
         df.to_file(output_file)
         bar()
+    return "Done!"
