@@ -1,0 +1,8 @@
+name,value,alias
+one,"x == '砂土'","砂土"
+two,"x == '砂壤'","砂壤"
+three,"x == '轻壤'","轻壤"
+four,"x == '中壤'","中壤"
+five,"x == '重壤'","重壤"
+five,"x == '黏土'","黏土"
+none,"x is None","/"
