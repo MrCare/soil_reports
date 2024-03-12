@@ -1,0 +1,19 @@
+name,type,range,isnull
+PH,float,"(x >= 0) and (x <= 14)",False
+OM,float,"(x >= 0)",False
+TN,float,"(x >= 0)",False
+TP,float,"(x >= 0)",False
+TK,float,"(x >= 0)",False
+AP,float,"(x >= 0)",False
+AK,float,"(x >= 0)",False
+AS,float,"(x >= 0)",False
+AF,float,"(x >= 0)",False
+AM,float,"(x >= 0)",False
+AC,float,"(x >= 0)",False
+AZ,float,"(x >= 0)",False
+AB,float,"(x >= 0)",False
+AM,float,"(x >= 0)",False
+TRZD,str,"['粘壤土','壤质粘土']",False
+TRSL,float,"(x >= 0 and x<=100)",False
+TRFSL,float,"(x >= 0 and x<=100)",False
+TRNL,float,"(x >= 0 and x<=100)",False

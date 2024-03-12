@@ -5,12 +5,13 @@ Author: Mr.Car
 Date: 2024-01-07 17:34:41
 '''
 import pandas as pd
+import numpy as np
 import geopandas as gpd
 import os
 import fire
 import warnings
 
-from inner import JSBG_7, TRSX_111, TRSX_112, zonal_statistics
+from inner import JSBG_7, JSBG_8, TRSX_111, TRSX_112, zonal_statistics, check
 from alive_progress import alive_bar
 from openpyxl import load_workbook
 
@@ -31,6 +32,11 @@ for filename in os.listdir(folder_path):
         dataframe.set_index('name', inplace=True)
         csv_data[os.path.splitext(filename)[0]] = dataframe # 使用文件名（不包含扩展名）作为字典的键，并将 DataFrame 存储为值
 cfg_index = csv_data['cfg_index']
+
+def read_and_prepare_file(file_pth):
+    df = gpd.read_file(file_pth)
+    # df.replace({np.nan: None}, inplace=True)
+    return df
 
 def get_cfg_params(cfg_index, name, result_type="variable"):
     if result_type == "variable":
@@ -54,7 +60,7 @@ def get_sheet(wb, template):
     return sheet
 
 def fill_title(sheet, title, position="A1"):
-    sheet[position] = title
+    sheet[position] = title 
     return sheet
 
 def fill_value(sheet, value, position):
@@ -95,15 +101,15 @@ def prepare_cfg(origin_file_pth, cfg_name, parent_field):
     '''
     准备好文件
     '''
-    with alive_bar(1) as bar:
+    with alive_bar(1, title="生成配置文件:") as bar:
         TRSX_112.prepare(origin_file_pth, folder_path, cfg_name, parent_field)
         bar()
     return "Done!"
 
 def batch_type_7(file_pth, table_list, xls_template_path=xls_template_path, out_file_pth=None):
     total_steps = len(table_list) + 1
-    with alive_bar(total_steps) as bar:
-        df = gpd.read_file(file_pth)
+    with alive_bar(total_steps, title="表层样数据分析:") as bar:
+        df = read_and_prepare_file(file_pth)
         wb = get_wb(xls_template_path)
         for table in table_list:
             var_table, rule_table, field, target_field, title, nan_filler = get_cfg_params(cfg_index, table)
@@ -121,8 +127,8 @@ def batch_type_7(file_pth, table_list, xls_template_path=xls_template_path, out_
 
 def batch_type_111(file_pth, table_list, xls_template_path=xls_template_path, out_file_pth=None):
     total_steps = len(table_list) + 1
-    with alive_bar(total_steps) as bar:
-        df = gpd.read_file(file_pth)
+    with alive_bar(total_steps, title="评价单元数据分析:") as bar:
+        df = read_and_prepare_file(file_pth)
         wb = get_wb(xls_template_path)
         for table in table_list:
             var_table, rule_table, field, target_field, title, nan_filler = get_cfg_params(cfg_index, table)
@@ -140,95 +146,150 @@ def batch_type_111(file_pth, table_list, xls_template_path=xls_template_path, ou
         bar()
     return "Done!"
 
+def batch_type_8(file_pth, table_list, xls_template_path=xls_template_path, out_file_pth=None):
+    total_steps = len(table_list) + 1
+    with alive_bar(total_steps,title="评价单元数据分析:") as bar:
+        df = read_and_prepare_file(file_pth)
+        wb = get_wb(xls_template_path)
+        for table in table_list:
+            var_table, rule_table, field, target_field, title, nan_filler = get_cfg_params(cfg_index, table)
+            sheet = get_sheet(wb, table)
+            sheet = fill_title(sheet, title, "A1")
+            df_none, df_not_none = deal_none(df, field, rule_table, 'df')
+            JSBG_8.statistics_all(df_not_none, field, target_field, var_table, sheet, nan_filler)
+            if not out_file_pth:
+                out_file_pth = os.path.join(os.path.dirname(file_pth), 'reports_result.xlsx')
+            bar()
+        save_xls(wb, out_file_pth)
+        bar()
+    return "Done!"
+
+def quality_check(shp_files):
+    global_rule_file = os.path.join(folder_path, 'cfg_check_rule_all.csv')
+    output_file = os.path.join(os.path.dirname(shp_files[0]), 'check_results.csv')
+    check.quality_check(global_rule_file, shp_files, output_file)
+    return
+
 def total(sample_pth, element_pth, type_list, out_file_pth=None):
     xls_template_path = os.path.join(os.path.dirname(sample_pth), 'reports_result.xlsx')
+    type_7_list = [
+        'JSBG_7_PH',
+        'JSBG_10_OM',
+        'JSBG_16_TN',
+        'JSBG_19_TP',
+        'JSBG_22_TK',
+        'JSBG_25_AP',
+        'JSBG_28_AK',
+        'JSBG_31_AS1',
+        'JSBG_34_AFE',
+        'JSBG_37_AMN',
+        'JSBG_40_ACU',
+        'JSBG_43_AZN',
+        'JSBG_46_AB',
+        'JSBG_49_AMO',
+        'JSBG_53_GZCHD'
+        ]
+    type_111_list = [
+        'TRSX_111_PH',
+        'TRSX_112_PH',
+        'TRSX_113_PH',
+        'TRSX_114_CEC',
+        'TRSX_115_CEC',
+        'TRSX_116_CEC',
+        'TRSX_117_TRRZPJZ',
+        'TRSX_118_TRRZPJZ',
+        'TRSX_119_TRRZPJZ',
+        'TRSX_120_GZCHD',
+        'TRSX_121_GZCHD',
+        'TRSX_122_GZCHD',
+        'TRSX_123_TRZD',
+        'TRSX_124_TRZD',
+        'TRSX_125_TRZD',
+        'TRSX_126_TRSL',
+        'TRSX_127_TRSL',
+        'TRSX_128_TRSL',
+        'TRSX_129_TRFSL',
+        'TRSX_130_TRFSL',
+        'TRSX_131_TRFSL',
+        'TRSX_132_TRNL',
+        'TRSX_133_TRNL',
+        'TRSX_134_TRNL',
+        'TRSX_135_OM',
+        'TRSX_136_OM',
+        'TRSX_137_OM',
+        'TRSX_138_TN',
+        'TRSX_139_TN',
+        'TRSX_140_TN',
+        'TRSX_141_TP',
+        'TRSX_142_TP',
+        'TRSX_143_TP',
+        'TRSX_144_TK',
+        'TRSX_145_TK',
+        'TRSX_146_TK',
+        'TRSX_147_AP',
+        'TRSX_148_AP',
+        'TRSX_149_AP',
+        'TRSX_150_AK',
+        'TRSX_151_AK',
+        'TRSX_152_AK'
+        ]
+    type_8_list = [
+        'JSBG_8_PH',
+        'JSBG_11_OM',
+        'JSBG_17_TN',
+        'JSBG_20_TP',
+        'JSBG_23_TK',
+        'JSBG_26_AP',
+        'JSBG_29_AK',
+        'JSBG_32_AS1',
+        'JSBG_35_AFE',
+        'JSBG_38_AMN',
+        'JSBG_41_ACU',
+        'JSBG_44_AZN',
+        'JSBG_47_AB',
+        'JSBG_50_AMO',
+        'JSBG_54_GZCHD'
+        ]
     for each in type_list:
         if each == "JSBG_7":
-            batch_type_7(sample_pth, 
-            ['JSBG_7_PH',
-            'JSBG_10_OM',
-            'JSBG_16_TN',
-            'JSBG_19_TP',
-            'JSBG_22_TK',
-            'JSBG_25_AP',
-            'JSBG_28_AK',
-            'JSBG_31_AS1',
-            'JSBG_34_AFE',
-            'JSBG_37_AMN',
-            'JSBG_40_ACU',
-            'JSBG_43_AZN',
-            'JSBG_46_AB',
-            'JSBG_49_AMO',
-            'JSBG_53_GZCHD'])
+            batch_type_7(sample_pth, type_7_list)
         elif each == "TRSX_111":
             # batch_type_111(element_pth, ['TRSX_111_PH', 'TRSX_135_OM', 'TRSX_114_CEC', 'TRSX_117_TRRZPJZ', 'TRSX_120_GZCHD', 'TRSX_123_TRZD', 'TRSX_126_TRSL', 'TRSX_129_TRFSL', 'TRSX_132_TRNL', 'TRSX_138_TN', 'TRSX_141_TP', 'TRSX_144_TK', 'TRSX_147_AP', 'TRSX_150_AK'], xls_template_path)
-            batch_type_111(element_pth,
-            ['TRSX_111_PH',
-            'TRSX_112_PH',
-            'TRSX_113_PH',
-            'TRSX_114_CEC',
-            'TRSX_115_CEC',
-            'TRSX_116_CEC',
-            'TRSX_117_TRRZPJZ',
-            'TRSX_118_TRRZPJZ',
-            'TRSX_119_TRRZPJZ',
-            'TRSX_120_GZCHD',
-            'TRSX_121_GZCHD',
-            'TRSX_122_GZCHD',
-            'TRSX_123_TRZD',
-            'TRSX_124_TRZD',
-            'TRSX_125_TRZD',
-            # 'TRSX_126_TRSL',
-            # 'TRSX_127_TRSL',
-            # 'TRSX_128_TRSL',
-            # 'TRSX_129_TRFS',
-            # 'TRSX_130_TRFS',
-            # 'TRSX_131_TRFS',
-            # 'TRSX_132_TRNL',
-            # 'TRSX_133_TRNL',
-            # 'TRSX_134_TRNL',
-            'TRSX_135_OM',
-            'TRSX_136_OM',
-            'TRSX_137_OM',
-            'TRSX_138_TN',
-            'TRSX_139_TN',
-            'TRSX_140_TN',
-            'TRSX_141_TP',
-            'TRSX_142_TP',
-            'TRSX_143_TP',
-            'TRSX_144_TK',
-            'TRSX_145_TK',
-            'TRSX_146_TK',
-            'TRSX_147_AP',
-            'TRSX_148_AP',
-            'TRSX_149_AP',
-            'TRSX_150_AK',
-            'TRSX_151_AK',
-            'TRSX_152_AK'], xls_template_path)
+            batch_type_111(element_pth, type_111_list, xls_template_path)
+        elif each == "JSBG_8":
+            batch_type_8(element_pth, type_8_list, xls_template_path)
         else:
-            print('ERROR!')     
+            print('ERROR!')
     return "Done!"
 
 if __name__ == "__main__":
     '''
     reports batch_type_7 --file_pth ./test_data/表层样点.shp --table_list "[JSBG_7_PH,JSBG_8_OM]"--out_file_pth xx.shp
     reports batch_type_111 --file_pth xx.shp --table_list "[JSBG_7_PH]" --out_file_pth xx.shp
+    python reports.py quality_check --shp_files "['./test_data/表层样点.shp']"
     '''
     # zonal_statistics.zs('./test_data/PH评价单元.shp','./test_data/OM预测.tif','OM','./test_data/PH_OM评价单元.shp')
     # batch_type_7('./test_data/表层样点.shp', ['JSBG_7_PH','JSBG_10_OM','JSBG_16_TN','JSBG_19_TP','JSBG_22_TK','JSBG_25_AP','JSBG_28_AK','JSBG_31_AS1','JSBG_34_AFE','JSBG_37_AMN','JSBG_40_ACU','JSBG_43_AZN','JSBG_46_AB','JSBG_49_AMO','JSBG_53_GZCHD'])
-    # batch_type_111('./test_data/PH_OM评价单元.shp', ['TRSX_111_PH', 'TRSX_135_OM'])
+    # batch_type_111('./test_data/评价单元.shp', ['TRSX_117_TRRZPJZ'])
     
     # 生成配置文件
 
-    # prepare_cfg('./test_data/适宜性评价结果.shp','cfg_112_var','XZQMC')
-    # prepare_cfg('./test_data/适宜性评价结果.shp','cfg_113_var','TL')
+    # prepare_cfg('./test_data/评价单元.shp','cfg_112_var','XZQMC')
+    # prepare_cfg('./test_data/评价单元.shp','cfg_113_var','TL')
 
     # batch_type_111('./test_data/PH_OM评价单元.shp', ['TRSX_112_PH', 'TRSX_113_PH'])
-    total('./test_data/表层样点.shp', './test_data/适宜性评价结果.shp', ['JSBG_7', 'TRSX_111'])
+    # batch_type_8('./test_data/评价单元.shp', ['JSBG_8_PH'])
+    total('./test_data/表层样点.shp', './test_data/评价单元.shp', [
+        'JSBG_7',
+        'JSBG_8',
+        'TRSX_111'
+    ])
+
     # fire.Fire({
     #     "zs": zonal_statistics.zs,
     #     "total": total,
     #     "get_var_table": prepare_cfg,
+    #     "quality_check": quality_check,
     #     "batch_type_7": batch_type_7,
     #     "batch_type_111": batch_type_111,
     # })

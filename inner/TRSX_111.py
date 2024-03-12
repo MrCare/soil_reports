@@ -20,7 +20,9 @@ def get_iterrows_var(df, field, target_field, rule_table, calc_field, parent_fie
     for each in rule_strs:
         df_result = df[df[field].apply(lambda x: eval(each, {"x": x}))] # 把 第一等级的 PH 筛选出来了
         df_result = df_result[df_result[parent_field] == calc_field] # 把 第一等级的 PH 属于“耕地” 筛选出来了
-        result.append(df_result[target_field].sum())
+        value_result = df_result[target_field].sum()
+        result.append(value_result)
+        # result.append( nan_filler if pd.isna(value_result) else str(round(value_result, 2)))
     return result
 
 def get_summary_var(result_table):
@@ -61,10 +63,23 @@ def statistics_all(df, field, target_field, var_table, rule_table, sheet, nan_fi
             result_table.append(get_iterrows_var(df, field, target_field, rule_table, calc_field, parent_field))
         else:
             result_table.append(get_summary_var(result_table[1:]))
+
+    # 格式化 result_table 
+    formatted_table = []
+    for row in result_table:
+        formatted_row = []
+        for item in row:
+            if isinstance(item, (int, float)):
+                formatted_row.append(f"{item:.2f}")
+            else:
+                formatted_row.append(item)
+        formatted_table.append(formatted_row)
+    
+    # 填充数据
     i = 0
     for name, row in var_table.iterrows():
         start_position = row["start_position"]
-        fill_template(sheet, start_position, result_table[i])
+        fill_template(sheet, start_position, formatted_table[i])
         i += 1
     return
 

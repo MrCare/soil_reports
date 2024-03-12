@@ -26,8 +26,8 @@ def get_var(ss, rule_table, calc_type, nan_filler):
             raw_result = df.count().tolist()
             result = [str(x) for x in raw_result]
         elif calc_type == "percent":
-            raw_result = df.count() / ss.count()
-            result = [f'{x:.2f}' for x in raw_result.tolist()]
+            raw_result = df.count() / ss.count() * 100
+            result = [nan_filler if pd.isna(x) else f'{x:.2f}%' for x in raw_result.tolist()]
     return result
 
 def statistics_all(ss, var_table, rule_table, sheet, nan_filler):
