@@ -27,6 +27,8 @@ class FieldRule:
             if isinstance(value, str):
                 if self.value_range:
                     return value in eval(self.value_range)
+                else:
+                    return True
             else:
                 return False
         else:
@@ -50,7 +52,7 @@ class FieldChecker:
         for _, row in rules_df.iterrows():
             field = row['name']
             dtype = row['type']
-            value_range = row['range'] if row['range'] else None
+            value_range = row['range'] if row['range'] and not pd.isna(row['range']) else None
             allow_empty = row['isnull']
             rules[field] = FieldRule(field, dtype, value_range, allow_empty)
         return rules
@@ -63,7 +65,7 @@ class FieldChecker:
                 if not rule.validate(value):
                     invalid_data.append({
                         '文件名': gdf.at[index, 'filename'],
-                        '行号': index,
+                        '行号': index + 1,
                         '字段名': field,
                         '不合格的值': value,
                         '不合格的原因': rule.get_description()
@@ -99,16 +101,18 @@ class FieldChecker:
                     '不合格的原因': entry['不合格的原因'],
                 })
 
-def quality_check(global_rule_file, shp_files, output_file):
+def quality_check(global_rule_file, shp_files, output_file, specific_rule_files):
     '''
     数据质量检查
     '''
     checker = FieldChecker(global_rule_file)
     all_invalid_data = []
-    for shp_file in shp_files:
-        # specific_rule_file = f"{shp_file[:-4]}_specific_rules.csv"
-        # invalid_data = checker.check_file(shp_file, specific_rule_file)
-        invalid_data = checker.check_file(shp_file)
+    for i, shp_file in enumerate(shp_files):
+        if specific_rule_files:
+            specific_rule_file = specific_rule_files[i]
+            invalid_data = checker.check_file(shp_file, specific_rule_file)
+        else:
+            invalid_data = checker.check_file(shp_file)
         all_invalid_data.extend(invalid_data)
     if len(all_invalid_data) == 0:
         print("数据已经符合要求！")

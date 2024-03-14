@@ -1,0 +1,10 @@
+name,type,range,isnull
+MJ,float,"(x >= 0)",False
+CEC,float,"(x >= 0)",False
+TRRZPJZ,float,"(x >= 0)",False
+XZQMC,str,,False
+TL,str,,False
+TRZD,str,,False
+TRSL,float,"(x >= 0 and x<=100)",False
+TRFSL,float,"(x >= 0 and x<=100)",False
+TRNL,float,"(x >= 0 and x<=100)",False

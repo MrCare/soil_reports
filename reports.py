@@ -164,11 +164,18 @@ def batch_type_8(file_pth, table_list, xls_template_path=xls_template_path, out_
         bar()
     return "Done!"
 
-def quality_check(shp_files):
+def quality_check(shp, shp_type="sample"):
     global_rule_file = os.path.join(folder_path, 'cfg_check_rule_all.csv')
-    output_file = os.path.join(os.path.dirname(shp_files[0]), 'check_results.csv')
-    check.quality_check(global_rule_file, shp_files, output_file)
-    return
+    sample_rule_file = os.path.join(folder_path, 'cfg_check_rule_sample.csv')
+    element_rule_file = os.path.join(folder_path, 'cfg_check_rule_element.csv')
+    output_file = os.path.join(os.path.dirname(shp), os.path.splitext(os.path.basename(shp))[0] + '_check_results.csv')
+    if shp_type == 'sample':
+        check.quality_check(global_rule_file, [shp], output_file, [sample_rule_file])
+    elif shp_type == "element":
+        check.quality_check(global_rule_file, [shp], output_file, [element_rule_file])
+    else:
+        check.quality_check(global_rule_file, [shp], output_file)
+    return "Done!"
 
 def total(sample_pth, element_pth, type_list, out_file_pth=None):
     xls_template_path = os.path.join(os.path.dirname(sample_pth), 'reports_result.xlsx')
@@ -274,16 +281,18 @@ if __name__ == "__main__":
     
     # 生成配置文件
 
-    # prepare_cfg('./test_data/评价单元.shp','cfg_112_var','XZQMC')
-    # prepare_cfg('./test_data/评价单元.shp','cfg_113_var','TL')
+    prepare_cfg('./test_data/评价单元.shp','cfg_112_var','XZQMC')
+    prepare_cfg('./test_data/评价单元.shp','cfg_113_var','TL')
 
     # batch_type_111('./test_data/PH_OM评价单元.shp', ['TRSX_112_PH', 'TRSX_113_PH'])
     # batch_type_8('./test_data/评价单元.shp', ['JSBG_8_PH'])
-    total('./test_data/表层样点.shp', './test_data/评价单元.shp', [
-        'JSBG_7',
-        'JSBG_8',
-        'TRSX_111'
-    ])
+    quality_check("./test_data/表层样点.shp", shp_type='sample')
+    quality_check('./test_data/评价单元.shp', shp_type='element')
+    # total('./test_data/表层样点.shp', './test_data/评价单元.shp', [
+    #     'JSBG_7',
+    #     'JSBG_8',
+    #     'TRSX_111'
+    # ])
 
     # fire.Fire({
     #     "zs": zonal_statistics.zs,
