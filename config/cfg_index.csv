@@ -86,3 +86,5 @@ JSBG_44_AZN,3,AZN,MJ,cfg_8_var,cfg_AZN_rule,"安吉县各乡镇（街道）土�
 JSBG_47_AB,3,AB,MJ,cfg_8_var,cfg_AB_rule,"安吉县各乡镇（街道）土壤有效硼含量统计表","/"
 JSBG_50_AMO,3,AMO,MJ,cfg_8_var,cfg_AMO_rule,"安吉县各乡镇（街道）土壤有效钼含量统计表","/"
 JSBG_54_GZCHD,3,GZCHD,MJ,cfg_8_var,cfg_GZCHD_rule,"安吉县各乡镇（街道）土壤耕层厚度统计表","/"
+
+SUTI_66,4,_,_,cfg_8_var,cfg_PH_rule,"安吉县土地利用类型-适宜类评价面积占比表","/"

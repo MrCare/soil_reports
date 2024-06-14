@@ -12,6 +12,7 @@ import fire
 import warnings
 
 from inner import JSBG_7, JSBG_8, TRSX_111, TRSX_112, zonal_statistics, check
+from inner_unique import add_field, table_66
 from alive_progress import alive_bar
 from openpyxl import load_workbook
 
@@ -33,9 +34,11 @@ for filename in os.listdir(folder_path):
         csv_data[os.path.splitext(filename)[0]] = dataframe # 使用文件名（不包含扩展名）作为字典的键，并将 DataFrame 存储为值
 cfg_index = csv_data['cfg_index']
 
-def read_and_prepare_file(file_pth):
-    df = gpd.read_file(file_pth)
-    # df.replace({np.nan: None}, inplace=True)
+def read_and_prepare_file(file_pth, file_type="shp"):
+    if file_type == 'csv':
+        df = pd.read_csv(file_path)
+    else:
+        df = gpd.read_file(file_pth)
     return df
 
 def get_cfg_params(cfg_index, name, result_type="variable"):
@@ -177,7 +180,36 @@ def quality_check(shp, shp_type="sample"):
         check.quality_check(global_rule_file, [shp], output_file)
     return "Done!"
 
-def total(sample_pth, element_pth, type_list, out_file_pth=None):
+def add_DL(shp):
+    total_steps = 3
+    with alive_bar(total_steps,title="合并地类名称:") as bar:
+        new_csv = os.path.join(os.path.dirname(shp), 'new_csv.csv')
+        df = gpd.read_file(shp, encoding="utf-8")
+        bar()
+        df = add_field.add_field(df)
+        bar()
+        df.to_csv(new_csv, encoding="utf-8")
+        bar()
+    return "Done!"
+
+def _suiti_tables(file_pth, table_list, xls_template_path=xls_template_path, out_file_pth=None):
+    df = read_and_prepare_file(file_pth)
+    wb = get_wb(xls_template_path)
+    if not out_file_pth:
+        out_file_pth = os.path.join(os.path.dirname(file_pth), 'reports_result.xlsx')
+
+    for table in table_list:
+        _, _, _, _, title, nan_filler = get_cfg_params(cfg_index, table)
+        sheet = get_sheet(wb, table)
+        sheet = fill_title(sheet, title, "A1")
+        if table == 'SUTI_66':
+            result_list = table_66.table_66(df)
+            for each in result_list:
+                fill_value(sheet, each["form"], each["position"])
+    save_xls(wb, out_file_pth)
+
+
+def total(sample_pth, element_pth, suti_pth, type_list, out_file_pth=None):
     xls_template_path = os.path.join(os.path.dirname(sample_pth), 'reports_result.xlsx')
     type_7_list = [
         'JSBG_7_PH',
@@ -257,6 +289,9 @@ def total(sample_pth, element_pth, type_list, out_file_pth=None):
         'JSBG_50_AMO',
         'JSBG_54_GZCHD'
         ]
+    suti_list = [
+        'SUTI_66'
+        ]
     for each in type_list:
         if each == "JSBG_7":
             batch_type_7(sample_pth, type_7_list)
@@ -265,6 +300,8 @@ def total(sample_pth, element_pth, type_list, out_file_pth=None):
             batch_type_111(element_pth, type_111_list, xls_template_path)
         elif each == "JSBG_8":
             batch_type_8(element_pth, type_8_list, xls_template_path)
+        elif each == "SUTI":
+            _suiti_tables(suti_pth, suti_list, xls_template_path)
         else:
             print('ERROR!')
     return "Done!"
@@ -281,24 +318,36 @@ if __name__ == "__main__":
     
     # 生成配置文件
 
-    prepare_cfg('./test_data/评价单元.shp','cfg_112_var','XZQMC')
-    prepare_cfg('./test_data/评价单元.shp','cfg_113_var','TL')
+    # prepare_cfg('./test_data/评价单元.shp','cfg_112_var','XZQMC')
+    # prepare_cfg('./test_data/评价单元.shp','cfg_113_var','TL')
+
+    # 批处理测试
 
     # batch_type_111('./test_data/PH_OM评价单元.shp', ['TRSX_112_PH', 'TRSX_113_PH'])
     # batch_type_8('./test_data/评价单元.shp', ['JSBG_8_PH'])
-    quality_check("./test_data/表层样点.shp", shp_type='sample')
-    quality_check('./test_data/评价单元.shp', shp_type='element')
-    # total('./test_data/表层样点.shp', './test_data/评价单元.shp', [
-    #     'JSBG_7',
-    #     'JSBG_8',
-    #     'TRSX_111'
-    # ])
+
+    # 质量检查
+
+    # quality_check("./test_data/表层样点.shp", shp_type='sample')
+    # quality_check('./test_data/评价单元.shp', shp_type='element')
+    
+    #总体测试
+
+    total('./test_data/表层样点.shp', './test_data/评价单元.shp','./test_data/suiti_result/new_csv.csv', [
+        'JSBG_7',
+        'JSBG_8',
+        'TRSX_111',
+        'SUTI'
+    ])
+
+    # total('./test_data/表层样点.shp', './test_data/评价单元.shp', './test_data/suiti_result/new_csv.csv',['SUTI'])
+
+    # add_DL("./test_data/简化的适宜性结果.shp")
 
     # fire.Fire({
     #     "zs": zonal_statistics.zs,
     #     "total": total,
     #     "get_var_table": prepare_cfg,
     #     "quality_check": quality_check,
-    #     "batch_type_7": batch_type_7,
-    #     "batch_type_111": batch_type_111,
+    #     "add_DL": add_DL,
     # })

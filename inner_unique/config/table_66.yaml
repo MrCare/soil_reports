@@ -1,0 +1,81 @@
+"table_66":
+  "denominator":
+      "name": "TBMJ"
+      "unit": "km2"
+  "summary_horizon":
+      "position": "D23"
+  "summary_vertical":
+      "position": "H3"
+  "cal_fields":
+    - "name": "s_name"
+      "value": ["宜耕"]
+    - "name": "s_name"
+      "value": ["宜园"]      
+    - "name": "s_name"
+      "value": ["宜林"]
+    - "name": "s_name"
+      "value": ["宜草"]
+  "summary_position": "D3"
+  "limit_fields":
+    - "position": "D3"
+      "remark": "耕地"
+      "filter":
+        - "name": "HBDLBM"
+          "value": ["01"]
+    - "position": "D5"
+      "remark": "园地"
+      "filter":
+        - "name": "HBDLBM"
+          "value": ["02"]
+    - "position": "D7"
+      "remark": "园地 工程恢复"
+      "filter":
+        - "name": "HBDLBM"
+          "value": ["02"]
+        - "name": "ZZSXMC" 
+          "value": ["工程恢复"]
+    - "position": "D9"
+      "remark": "园地 即可恢复"
+      "filter":
+        - "name": "HBDLBM"
+          "value": ["02"]
+        - "name": "ZZSXMC" 
+          "value": ["即可恢复"]
+    - "position": "D11"
+      "remark": "林地"
+      "filter":
+        - "name": "HBDLBM"
+          "value": ["03"]
+    - "position": "D13"
+      "remark": "林地 工程恢复"
+      "filter":
+        - "name": "HBDLBM"
+          "value": ["03"]
+        - "name": "ZZSXMC" 
+          "value": ["工程恢复"]
+    - "position": "D15"
+      "remark": "林地 即可恢复"
+      "filter":
+        - "name": "HBDLBM"
+          "value": ["03"]
+        - "name": "ZZSXMC" 
+          "value": ["工程恢复"]
+    - "position": "D17"
+      "remark": "草地"
+      "filter":
+        - "name": "HBDLBM"
+          "value": ["04"]
+    - "position": "D19"
+      "remark": "草地 工程恢复"
+      "filter":
+        - "name": "HBDLBM"
+          "value": ["04"]
+        - "name": "ZZSXMC" 
+          "value": ["工程恢复"]
+    - "position": "D21"
+      "remark": "林地 即可恢复"
+      "filter":
+        - "name": "HBDLBM"
+          "value": ["03"]
+        - "name": "ZZSXMC" 
+          "value": ["即可恢复"]

@@ -88,16 +88,17 @@ def prepare(df):
     数据预处理，增加 DLDLMC 字段, 将地类名称统成“耕园林草”
     '''
     def get_DLDLMC(dlbm):
-        if '01' in dlbm:
+        dlbm_head = dlbm[:2]
+        if dlbm_head == '01': # 01 开头 / 其他（）
             return '耕地'        
-        elif '02' in dlbm:
+        elif dlbm_head == '02':
             return '园地'
-        elif '03' in dlbm:
+        elif dlbm_head == '03':
             return '林地'
-        elif '04' in dlbm:
+        elif dlbm_head == '04':
             return '草地'
         else:
-            return None
+            return '其他'
     # 添加新的列 DLDLMC
     df['DLDLMC'] = df['DLBM'].apply(get_DLDLMC)
     return df
