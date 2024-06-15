@@ -298,13 +298,13 @@ def total(sample_pth, element_pth, suti_pth, qual_pth, type_list, out_file_pth=N
             batch_type_7(sample_pth, type_7_list)
         elif each == "TRSX_111":
             # batch_type_111(element_pth, ['TRSX_111_PH', 'TRSX_135_OM', 'TRSX_114_CEC', 'TRSX_117_TRRZPJZ', 'TRSX_120_GZCHD', 'TRSX_123_TRZD', 'TRSX_126_TRSL', 'TRSX_129_TRFSL', 'TRSX_132_TRNL', 'TRSX_138_TN', 'TRSX_141_TP', 'TRSX_144_TK', 'TRSX_147_AP', 'TRSX_150_AK'], xls_template_path)
-            batch_type_111(element_pth, type_111_list, xls_template_path)
+            batch_type_111(element_pth, type_111_list, xls_template_path, xls_template_path)
         elif each == "JSBG_8":
-            batch_type_8(element_pth, type_8_list, xls_template_path)
+            batch_type_8(element_pth, type_8_list, xls_template_path, xls_template_path)
         elif each == "SUTI":
-            _suiti_tables(suti_pth, suti_list, xls_template_path)
+            _suiti_tables(suti_pth, suti_list, xls_template_path, xls_template_path)
         elif each == "QUAL_76_78":
-            batch_type_76(qual_pth, xls_template_path)
+            batch_type_76(qual_pth, xls_template_path, xls_template_path)
         else:
             print('ERROR!')
     return "Done!"
