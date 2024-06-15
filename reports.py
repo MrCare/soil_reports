@@ -13,7 +13,7 @@ import warnings
 
 from inner import JSBG_7, JSBG_8, TRSX_111, TRSX_112, QUAL_76_78, zonal_statistics, check
 from inner.share import fill_title, fill_value, get_sheet
-from inner_unique import add_field, table_66
+# from inner_unique import add_field, table_66
 from alive_progress import alive_bar
 from openpyxl import load_workbook
 
@@ -344,12 +344,12 @@ if __name__ == "__main__":
     #     'QUAL_76_78'
     # ])
 
-    batch_type_76("test_data/quality_result/quality_short.shp")
+    # batch_type_76("test_data/quality_result/quality_short.shp")
 
-    # fire.Fire({
-    #     "zs": zonal_statistics.zs,
-    #     "total": total,
-    #     "get_var_table": prepare_cfg,
-    #     "quality_check": quality_check,
-    #     "add_DL": add_DL,
-    # })
+    fire.Fire({
+        "zs": zonal_statistics.zs,
+        "total": total,
+        "get_var_table": prepare_cfg,
+        "quality_check": quality_check,
+        "add_DL": add_DL,
+    })

@@ -10,7 +10,7 @@ conda env export > environment.yaml
 conda env create -f environment.yaml
 
 ## 整体打包
-pyinstaller -c -D --icon=icon.ico reports.py --add-data=config:./config --add-data=C:\Users\Lenovo\.conda\envs\soilCli\Lib\site-packages\grapheme:grapheme
+pyinstaller -c -D --icon=icon.ico reports.py --add-data=config:./config --add-data=C:\Users\Lenovo\.conda\envs\soilCli\Lib\site-packages\grapheme:grapheme --add-data=C:\Users\Lenovo\.conda\envs\soilCli\Lib\site-packages\Fiona.libs:Fiona.libs --add-data=C:\Users\Lenovo\.conda\envs\soilCli\Lib\site-packages\rasterio:rasterio
 注意 pyinstaller 的更新
 
 ## 整体测试
