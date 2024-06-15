@@ -11,7 +11,8 @@ import os
 import fire
 import warnings
 
-from inner import JSBG_7, JSBG_8, TRSX_111, TRSX_112, zonal_statistics, check
+from inner import JSBG_7, JSBG_8, TRSX_111, TRSX_112, QUAL_76_78, zonal_statistics, check
+from inner.share import fill_title, fill_value, get_sheet
 from inner_unique import add_field, table_66
 from alive_progress import alive_bar
 from openpyxl import load_workbook
@@ -56,19 +57,6 @@ def get_cfg_params(cfg_index, name, result_type="variable"):
 def get_wb(xls_file_path):
     wb = load_workbook(xls_file_path)    
     return wb
-
-def get_sheet(wb, template):
-    sheet_name = next(x for x in wb.sheetnames if template in x)
-    sheet = wb[sheet_name]
-    return sheet
-
-def fill_title(sheet, title, position="A1"):
-    sheet[position] = title 
-    return sheet
-
-def fill_value(sheet, value, position):
-    sheet[position] = value
-    return sheet
 
 def fill_column_title(var_table, sheet):
     '''
@@ -167,6 +155,20 @@ def batch_type_8(file_pth, table_list, xls_template_path=xls_template_path, out_
         bar()
     return "Done!"
 
+def batch_type_76(file_pth, xls_template_path=xls_template_path, out_file_pth=None):
+    var_table = csv_data['cfg_76and78_var']
+    total_steps = len(var_table) + 1
+    if not out_file_pth:
+        out_file_pth = os.path.join(os.path.dirname(file_pth), 'reports_result.xlsx')
+    with alive_bar(total_steps, title="土壤质量等级分布:") as bar:
+        df = read_and_prepare_file(file_pth)
+        wb = get_wb(xls_template_path)
+        wb = QUAL_76_78.statistics_all(df, var_table, csv_data, wb, bar)
+        save_xls(wb, out_file_pth)
+        bar()
+    return "Done!"
+
+
 def quality_check(shp, shp_type="sample"):
     global_rule_file = os.path.join(folder_path, 'cfg_check_rule_all.csv')
     sample_rule_file = os.path.join(folder_path, 'cfg_check_rule_sample.csv')
@@ -208,8 +210,7 @@ def _suiti_tables(file_pth, table_list, xls_template_path=xls_template_path, out
                 fill_value(sheet, each["form"], each["position"])
     save_xls(wb, out_file_pth)
 
-
-def total(sample_pth, element_pth, suti_pth, type_list, out_file_pth=None):
+def total(sample_pth, element_pth, suti_pth, qual_pth, type_list, out_file_pth=None):
     xls_template_path = os.path.join(os.path.dirname(sample_pth), 'reports_result.xlsx')
     type_7_list = [
         'JSBG_7_PH',
@@ -302,6 +303,8 @@ def total(sample_pth, element_pth, suti_pth, type_list, out_file_pth=None):
             batch_type_8(element_pth, type_8_list, xls_template_path)
         elif each == "SUTI":
             _suiti_tables(suti_pth, suti_list, xls_template_path)
+        elif each == "QUAL_76_78":
+            batch_type_76(qual_pth, xls_template_path)
         else:
             print('ERROR!')
     return "Done!"
@@ -318,8 +321,8 @@ if __name__ == "__main__":
     
     # 生成配置文件
 
-    # prepare_cfg('./test_data/评价单元.shp','cfg_112_var','XZQMC')
-    # prepare_cfg('./test_data/评价单元.shp','cfg_113_var','TL')
+    # prepare_cfg('./test_data/element/element_short.shp','cfg_112_var','XZQMC')
+    # prepare_cfg('./test_data/element/element_short.shp','cfg_113_var','TL')
 
     # 批处理测试
 
@@ -332,17 +335,16 @@ if __name__ == "__main__":
     # quality_check('./test_data/评价单元.shp', shp_type='element')
     
     #总体测试
+    # add_DL("./test_data/suiti_result/suiti_result.shp")
+    # total('test_data/sample/sample_short.shp', 'test_data/element/element_short.shp', './test_data/suiti_result/new_csv.csv', './test_data/quality_result/quality_short.shp', [
+    #     'JSBG_7',
+    #     'JSBG_8',
+    #     'TRSX_111',
+    #     'SUTI',
+    #     'QUAL_76_78'
+    # ])
 
-    total('./test_data/表层样点.shp', './test_data/评价单元.shp','./test_data/suiti_result/new_csv.csv', [
-        'JSBG_7',
-        'JSBG_8',
-        'TRSX_111',
-        'SUTI'
-    ])
-
-    # total('./test_data/表层样点.shp', './test_data/评价单元.shp', './test_data/suiti_result/new_csv.csv',['SUTI'])
-
-    # add_DL("./test_data/简化的适宜性结果.shp")
+    batch_type_76("test_data/quality_result/quality_short.shp")
 
     # fire.Fire({
     #     "zs": zonal_statistics.zs,

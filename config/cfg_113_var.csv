@@ -1,11 +1,8 @@
 name,start_position,parent_field,title,locate_position
 classification,B3,,,
-棕壤,B4,TL,棕壤,A4
-潮土,B5,TL,潮土,A5
-紫色土,B6,TL,紫色土,A6
-砂姜黑土,B7,TL,砂姜黑土,A7
-河湖库渠,B8,TL,河湖库渠,A8
-粗骨土,B9,TL,粗骨土,A9
-水稻土,B10,TL,水稻土,A10
-黄棕壤,B11,TL,黄棕壤,A11
-summary,B12,,总计,A12
+潮土,B4,TL,潮土,A4
+红壤,B5,TL,红壤,A5
+基性岩土,B6,TL,基性岩土,A6
+水稻土,B7,TL,水稻土,A7
+紫色土,B8,TL,紫色土,A8
+summary,B9,,总计,A9
