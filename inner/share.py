@@ -19,7 +19,7 @@ class ConfigLoader:
         for root, dirs, files in os.walk(folder_path):
             for filename in files:
                 if filename.endswith('.yaml'):
-                    with open(os.path.join(root, filename), 'r') as f:
+                    with open(os.path.join(root, filename), 'r', encoding='utf-8') as f:
                         data = yaml.load(f, Loader=yaml.FullLoader)
                         self.yaml.update(data)
                 if filename.endswith('.csv'):
