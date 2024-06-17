@@ -1,0 +1,22 @@
+"QUAL_72":
+  "title" : "安吉县耕地质量等级面积及其占比"
+  "group_field" : dj
+  "group_field_values" : 
+    - 1        
+    - 2
+    - 3
+    - 4
+    - 5
+    - 6
+    - 7
+    - 8
+    - 9
+    - 10
+  "calc_field" : 'MJ'
+  "start_position" : "B3"
+  "seg_length" : 5
+  "position_interval" : 3
+"QUAL_73":
+  "title" : "安吉县各乡镇（街道）耕地评价综合指数及质量等级表"
+"QUAL_74":
+  "title" : "安吉县各乡镇（街道）耕地质量等级面积分布表"

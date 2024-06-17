@@ -11,8 +11,8 @@ import os
 import fire
 import warnings
 
-from inner import JSBG_7, JSBG_8, TRSX_111, TRSX_112, QUAL_76_78, QUAL_77, zonal_statistics, check
-from inner.share import fill_title, fill_value, get_sheet
+from inner import JSBG_7, JSBG_8, TRSX_111, TRSX_112, QUAL_76_78, QUAL_77, QUAL_72, zonal_statistics, check
+from inner.share import fill_title, fill_value, get_sheet, ConfigLoader
 # from inner_unique import add_field, table_66
 from alive_progress import alive_bar
 from openpyxl import load_workbook
@@ -20,19 +20,12 @@ from openpyxl import load_workbook
 # 忽略 FutureWarning
 warnings.simplefilter(action='ignore', category=FutureWarning)
 
-# 指定包含 CSV 文件的文件夹路径
+# 载入配置文件
 folder_path = os.path.join(os.path.dirname(__file__), 'config')
 xls_template_path = os.path.join(folder_path, 'cfg_template.xlsx')
-
-
-# 载入配置文件
-csv_data = {}
-for filename in os.listdir(folder_path):
-    if filename.endswith('.csv'):
-        file_path = os.path.join(folder_path, filename)  # 获取文件的完整路径
-        dataframe = pd.read_csv(file_path)  # 读取 CSV 文件为 Pandas DataFrame
-        dataframe.set_index('name', inplace=True)
-        csv_data[os.path.splitext(filename)[0]] = dataframe # 使用文件名（不包含扩展名）作为字典的键，并将 DataFrame 存储为值
+configLoader = ConfigLoader(folder_path)# 载入配置文件
+csv_data = configLoader.csv
+yaml_data = configLoader.yaml
 cfg_index = csv_data['cfg_index']
 
 def read_and_prepare_file(file_pth, file_type="shp"):
@@ -181,6 +174,18 @@ def batch_type_77(file_pth, xls_template_path=xls_template_path, out_file_pth=No
         bar()
     return "Done!"
 
+def type_72(file_pth, xls_template_path=xls_template_path, out_file_pth=None):
+    total_steps = 1 + 1
+    if not out_file_pth:
+        out_file_pth = os.path.join(os.path.dirname(file_pth), 'reports_result.xlsx')
+    with alive_bar(total_steps, title="土壤质量等级面积及其占比:") as bar:
+        df = read_and_prepare_file(file_pth)
+        wb = get_wb(xls_template_path)
+        wb = QUAL_72.statistics_all(df, yaml_data, wb, bar)
+        save_xls(wb, out_file_pth)
+        bar()
+    return "Done!"
+
 def quality_check(shp, shp_type="sample"):
     global_rule_file = os.path.join(folder_path, 'cfg_check_rule_all.csv')
     sample_rule_file = os.path.join(folder_path, 'cfg_check_rule_sample.csv')
@@ -319,6 +324,8 @@ def total(sample_pth, element_pth, suti_pth, qual_pth, type_list, out_file_pth=N
             batch_type_76(qual_pth, xls_template_path, xls_template_path)
         elif each == "QUAL_77":
             batch_type_77(qual_pth, xls_template_path, xls_template_path)
+        elif each == "QUAL_72":
+            type_72(qual_pth, xls_template_path, xls_template_path)
         else:
             print('ERROR!')
     return "Done!"
@@ -355,7 +362,11 @@ if __name__ == "__main__":
     #     'JSBG_8',
     #     'TRSX_111',
     #     'QUAL_76_78'
-    #     'QUAL_77'
+    #     'QUAL_77',
+    #     'QUAL_72'
+    # ])
+    # total('test_data/sample/sample_short.shp', 'test_data/element/element_short.shp', './test_data/suiti_result/new_csv.csv', './test_data/quality_result/quality_short.shp', [
+    #     'QUAL_76_78'
     # ])
 
     # batch_type_76("test_data/quality_result/quality_short.shp")
