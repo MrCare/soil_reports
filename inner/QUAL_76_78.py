@@ -2,18 +2,8 @@
 Author: Mr.Car
 Date: 2024-03-04 15:23:53
 '''
-import pandas as pd
-import geopandas as gpd
 import os
 from .share import fill_template, get_sheet, fill_title
-import warnings
-warnings.filterwarnings("ignore", category=UserWarning, message="Boolean Series key will be reindexed to match DataFrame index.")
-# street_start_position = 'B2'
-# result_start_position = 'B3'
-# calc_field= 'MJ'
-# group_field = 'dj'
-# group_field_value = '1'
-# table_name = 'QUAL_76'
 
 def _get_street_list(csv_data):
     street_list = csv_data["cfg_112_var"][1:-1]
@@ -23,10 +13,11 @@ def _get_street_list(csv_data):
 
 def _get_result_list(street_value_list, df, calc_field, limit_field, group_field, group_field_value):
     result_list = []
-    # TODO: 统一转化为 str 之后再进行比较
-    grouped_df = df[df[group_field] == group_field_value]
+    df.loc[:,(group_field + '_str')] = df[group_field].astype(str)
+    df.loc[:,(limit_field + '_str')] = df[limit_field].astype(str)
+    grouped_df = df.loc[df[(group_field + '_str')] == str(group_field_value)].copy()
     for each in street_value_list:
-        calc_df = grouped_df[df[limit_field] == each]
+        calc_df = grouped_df.loc[grouped_df[(limit_field + '_str')] == str(each)].copy()
         result = calc_df[calc_field].sum()
         result_list.append(result)
     return result_list

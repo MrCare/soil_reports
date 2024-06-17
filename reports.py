@@ -11,7 +11,7 @@ import os
 import fire
 import warnings
 
-from inner import JSBG_7, JSBG_8, TRSX_111, TRSX_112, QUAL_76_78, zonal_statistics, check
+from inner import JSBG_7, JSBG_8, TRSX_111, TRSX_112, QUAL_76_78, QUAL_77, zonal_statistics, check
 from inner.share import fill_title, fill_value, get_sheet
 # from inner_unique import add_field, table_66
 from alive_progress import alive_bar
@@ -160,7 +160,7 @@ def batch_type_76(file_pth, xls_template_path=xls_template_path, out_file_pth=No
     total_steps = len(var_table) + 1
     if not out_file_pth:
         out_file_pth = os.path.join(os.path.dirname(file_pth), 'reports_result.xlsx')
-    with alive_bar(total_steps, title="土壤质量等级分布:") as bar:
+    with alive_bar(total_steps, title="土壤质量等级面积与产能分布:") as bar:
         df = read_and_prepare_file(file_pth)
         wb = get_wb(xls_template_path)
         wb = QUAL_76_78.statistics_all(df, var_table, csv_data, wb, bar)
@@ -168,6 +168,18 @@ def batch_type_76(file_pth, xls_template_path=xls_template_path, out_file_pth=No
         bar()
     return "Done!"
 
+def batch_type_77(file_pth, xls_template_path=xls_template_path, out_file_pth=None):
+    var_table = csv_data['cfg_77_var']
+    total_steps = len(var_table) + 1
+    if not out_file_pth:
+        out_file_pth = os.path.join(os.path.dirname(file_pth), 'reports_result.xlsx')
+    with alive_bar(total_steps, title="土壤质量属性情况:") as bar:
+        df = read_and_prepare_file(file_pth)
+        wb = get_wb(xls_template_path)
+        wb = QUAL_77.statistics_all(df, var_table, csv_data, wb, bar)
+        save_xls(wb, out_file_pth)
+        bar()
+    return "Done!"
 
 def quality_check(shp, shp_type="sample"):
     global_rule_file = os.path.join(folder_path, 'cfg_check_rule_all.csv')
@@ -305,6 +317,8 @@ def total(sample_pth, element_pth, suti_pth, qual_pth, type_list, out_file_pth=N
             _suiti_tables(suti_pth, suti_list, xls_template_path, xls_template_path)
         elif each == "QUAL_76_78":
             batch_type_76(qual_pth, xls_template_path, xls_template_path)
+        elif each == "QUAL_77":
+            batch_type_77(qual_pth, xls_template_path, xls_template_path)
         else:
             print('ERROR!')
     return "Done!"
@@ -340,8 +354,8 @@ if __name__ == "__main__":
     #     'JSBG_7',
     #     'JSBG_8',
     #     'TRSX_111',
-    #     'SUTI',
     #     'QUAL_76_78'
+    #     'QUAL_77'
     # ])
 
     # batch_type_76("test_data/quality_result/quality_short.shp")
