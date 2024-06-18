@@ -16,7 +16,7 @@ pyinstaller -c -D --icon=icon.ico reports.py --add-data=config:./config --add-da
 ## 整体测试
 复制如下命令：
 
-python ./reports.py total --sample_pth test_data\sample\sample_short.shp --element_pth test_data\element\element_short.shp --suti_pth test_data\suiti_result\new_csv.csv --qual_pth test_data/quality_result/quality_short.shp --type_list "['JSBG_7','JSBG_8','TRSX_111','QUAL_76_78','QUAL_77','QUAL_72','QUAL_73']"
+python ./reports.py total --sample_pth test_data\sample\sample_short.shp --element_pth test_data\element\element_short.shp --suti_pth test_data\suiti_result\new_csv.csv --qual_pth test_data/quality_result/quality_short.shp --type_list "['JSBG_7','JSBG_8','TRSX_111','QUAL_76_78','QUAL_77','QUAL_72','QUAL_73','QUAL_74']"
 
 
-<!-- python ./reports.py total --sample_pth test_data/sample/sample_short.shp --element_pth test_data/element/element_short.shp --suti_pth test_data/suiti_result/new_csv.csv --qual_pth test_data/quality_result/quality_short.shp --type_list "['JSBG_7','JSBG_8','TRSX_111','QUAL_76_78','QUAL_77','QUAL_72','QUAL_73']" -->
+<!-- python ./reports.py total --sample_pth test_data/sample/sample_short.shp --element_pth test_data/element/element_short.shp --suti_pth test_data/suiti_result/new_csv.csv --qual_pth test_data/quality_result/quality_short.shp --type_list "['JSBG_7','JSBG_8','TRSX_111','QUAL_76_78','QUAL_77','QUAL_72','QUAL_73','QUAL_74']" -->

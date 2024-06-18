@@ -2,9 +2,8 @@
 Author: Mr.Car
 Date: 2024-06-17 12:53:04
 '''
-from .share import fill_template, fill_title, get_sheet, XlsPosUtil
+from .share import fill_template, fill_title, get_sheet
 from .QUAL_76_78 import _get_street_list
-xpu = XlsPosUtil()
 
 def _get_weight_result(df,calc_field, weight_field):
     denominator = df[calc_field].sum()
@@ -40,8 +39,6 @@ def statistics_all(df, csv_data, yaml_data, wb, bar):
     计算表73: 各乡镇（街道）耕地评价综合指数及质量等级表
     '''
     sheet_name = "QUAL_73"
-    # group_field = yaml_data[sheet_name]["group_field"]
-    # group_field_values = yaml_data[sheet_name]["group_field_values"]
     title = yaml_data[sheet_name]["title"]
     limit_field = yaml_data[sheet_name]["limit_field"]
     calc_field = yaml_data[sheet_name]["calc_field"]

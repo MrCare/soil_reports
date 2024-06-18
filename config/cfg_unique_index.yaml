@@ -47,3 +47,9 @@
       "range": (x < 0.6960)
 "QUAL_74":
   "title" : "安吉县各乡镇（街道）耕地质量等级面积分布表"
+  "limit_field" : "XZQMC"
+  "calc_field" : 'MJ'
+  "group_field" : 'dj'
+  "group_field_value" : [1,2,3,4,5,6,7,8,9,10]
+  "street_start_position": "A4"
+  "result_start_position": "C4"

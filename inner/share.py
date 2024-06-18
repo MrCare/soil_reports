@@ -81,14 +81,14 @@ class XlsPosUtil:
         return position_list, group_result_list
     
 
-def fill_template(sheet, start_position, value_list, horizon=True):
+def fill_template(sheet, start_position, value_list, horizon=True, interval=0):
     start_row, start_col = int(start_position[1:]), ord(start_position[0].upper()) - 64 # B4 转为 列标数字
     for each in value_list:
         sheet.cell(row=start_row, column=start_col, value=each)
         if horizon:
-            start_col += 1
+            start_col += 1 + interval
         else:
-            start_row += 1
+            start_row += 1 + interval
     return sheet
 
 def fill_title(sheet, title, position="A1"):
