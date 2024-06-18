@@ -30,7 +30,7 @@ def _get_result_list(street_value_list, df, calc_field, limit_field, group_field
         if denominator != 0:
             result = format(calc_df['_temp'].sum() / calc_df[calc_field].sum(), '.2f')
         else:
-            result = '分母为0'
+            result = '/'
 
         result_list.append(result)
     return result_list

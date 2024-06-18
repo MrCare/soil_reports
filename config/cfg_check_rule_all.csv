@@ -1,16 +1,16 @@
 name,type,range,isnull
-PH,float,"(x >= 0) and (x <= 14)",False
-OM,float,"(x >= 0)",False
-TN,float,"(x >= 0)",False
-TP,float,"(x >= 0)",False
-TK,float,"(x >= 0)",False
-AP,float,"(x >= 0)",False
-AK,float,"(x >= 0)",False
-AS1,float,"(x >= 0)",False
-AFE,float,"(x >= 0)",False
-AMN,float,"(x >= 0)",False
-ACU,float,"(x >= 0)",False
-AZN,float,"(x >= 0)",False
-AB,float,"(x >= 0)",False
-AMO,float,"(x >= 0)",False
-GZCHD,float,"(x >= 0)",False
+PH,float,"(x >= 0) and (x <= 14) or x==-9999",False
+OM,float,"(x >= 0)  or x==-9999",False
+TN,float,"(x >= 0)  or x==-9999",False
+TP,float,"(x >= 0)  or x==-9999",False
+TK,float,"(x >= 0)  or x==-9999",False
+AP,float,"(x >= 0)  or x==-9999",False
+AK,float,"(x >= 0)  or x==-9999",False
+AS1,float,"(x >= 0)  or x==-9999",False
+AFE,float,"(x >= 0)  or x==-9999",False
+AMN,float,"(x >= 0)  or x==-9999",False
+ACU,float,"(x >= 0)  or x==-9999",False
+AZN,float,"(x >= 0)  or x==-9999",False
+AB,float,"(x >= 0)  or x==-9999",False
+AMO,float,"(x >= 0)  or x==-9999",False
+GZCHD,float,"(x >= 0)  or x==-9999",False

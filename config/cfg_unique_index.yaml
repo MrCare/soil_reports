@@ -18,5 +18,32 @@
   "position_interval" : 3
 "QUAL_73":
   "title" : "安吉县各乡镇（街道）耕地评价综合指数及质量等级表"
+  "limit_field" : "XZQMC"
+  "calc_field" : 'MJ'
+  "weight_field": "score"
+  "street_start_position" : "A3"
+  "score_start_position" : "B3"
+  "level_start_position" : "C3"
+  "level_table":
+    - "level_name": "一等"
+      "range": (x >= 0.9070)
+    - "level_name": "二等"
+      "range": (x >= 0.8806 and x < 0.9070)
+    - "level_name": "三等"
+      "range": (x >= 0.8543 and x < 0.8806)
+    - "level_name": "四等"
+      "range": (x >= 0.8279 and x < 0.8543)
+    - "level_name": "五等"
+      "range": (x >= 0.8015 and x < 0.8279)
+    - "level_name": "六等"
+      "range": (x >= 0.7751 and x < 0.8015)
+    - "level_name": "七等"
+      "range": (x >= 0.7488 and x < 0.7751)
+    - "level_name": "八等"
+      "range": (x >= 0.7224 and x < 0.7488)
+    - "level_name": "九等"
+      "range": (x >= 0.6960 and x < 0.7224)
+    - "level_name": "十等"
+      "range": (x < 0.6960)
 "QUAL_74":
   "title" : "安吉县各乡镇（街道）耕地质量等级面积分布表"
