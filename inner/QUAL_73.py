@@ -2,17 +2,10 @@
 Author: Mr.Car
 Date: 2024-06-17 12:53:04
 '''
-from .share import fill_template, fill_title, get_sheet
+from .share import fill_template, fill_title, get_sheet, _get_weight_result
 from .QUAL_76_78 import _get_street_list
 
-def _get_weight_result(df,calc_field, weight_field):
-    denominator = df[calc_field].sum()
-    if denominator != 0:
-        divider =  (df[calc_field] * df[weight_field]).copy().sum()
-        result = format( divider / denominator,'.5f' )
-    else:
-        result = '/'
-    return result
+
 
 def _get_score_list(df, street_value_list, calc_field, limit_field, weight_field):
     df.loc[:, limit_field+'_new'] = df[limit_field].astype(str)

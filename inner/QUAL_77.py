@@ -3,19 +3,7 @@ Author: Mr.Car
 Date: 2024-03-04 15:23:53
 '''
 from .share import fill_template, get_sheet, fill_title
-
-        # street_start_position = row["street_start_position"]
-        # result_start_position = row["result_start_position"]
-        # calc_field = row["calc_field"]
-        # limit_field = row["limit_field"]
-        # group_field = row["group_field"]
-        # group_field_value = row["group_field_value"]
-
-def _get_street_list(csv_data):
-    street_list = csv_data["cfg_112_var"][1:-1]
-    street_value_list = street_list.index
-    street_title_list = street_list['title']
-    return street_value_list, street_title_list
+from .QUAL_76_78 import _get_street_list
 
 def _get_result_list(street_value_list, df, calc_field, limit_field, group_field, group_field_value, weight_field):
     result_list = []

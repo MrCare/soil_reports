@@ -57,7 +57,7 @@ class XlsPosUtil:
         row += num
         return self.get_excel_position(row, col)
 
-    def _position_add_col(self, position, num):
+    def position_add_col(self, position, num):
         row, col = self.get_row_col(position)
         col += num
         return self.get_excel_position(row, col)
@@ -103,3 +103,13 @@ def get_sheet(wb, template):
     sheet_name = next(x for x in wb.sheetnames if template in x)
     sheet = wb[sheet_name]
     return sheet
+
+
+def _get_weight_result(df,calc_field, weight_field):
+    denominator = df[calc_field].sum()
+    if denominator != 0:
+        divider =  (df[calc_field] * df[weight_field]).copy().sum()
+        result = format( divider / denominator,'.5f' )
+    else:
+        result = '/'
+    return result

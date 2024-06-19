@@ -11,7 +11,7 @@ import os
 import fire
 import warnings
 
-from inner import JSBG_7, JSBG_8, TRSX_111, TRSX_112, QUAL_76_78, QUAL_77, QUAL_72, QUAL_73,QUAL_74, zonal_statistics, check
+from inner import JSBG_7, JSBG_8, TRSX_111, TRSX_112, QUAL_76_78, QUAL_77, QUAL_72, QUAL_73, QUAL_74, QUAL_75, zonal_statistics, check
 from inner.share import fill_title, fill_value, get_sheet, ConfigLoader
 # from inner_unique import add_field, table_66
 from alive_progress import alive_bar
@@ -210,6 +210,18 @@ def type_74(file_pth, xls_template_path=xls_template_path, out_file_pth=None):
         bar()
     return "Done!"
 
+def type_75(file_pth, xls_template_path=xls_template_path, out_file_pth=None):
+    total_steps = 1 + 1
+    if not out_file_pth:
+        out_file_pth = os.path.join(os.path.dirname(file_pth), 'reports_result.xlsx')
+    with alive_bar(total_steps, title="75各街道耕地产能:") as bar:
+        df = read_and_prepare_file(file_pth)
+        wb = get_wb(xls_template_path)
+        wb = QUAL_75.statistics_all(df, csv_data, yaml_data, wb, bar)
+        save_xls(wb, out_file_pth)
+        bar()
+    return "Done!"
+
 def quality_check(shp, shp_type="sample"):
     global_rule_file = os.path.join(folder_path, 'cfg_check_rule_all.csv')
     sample_rule_file = os.path.join(folder_path, 'cfg_check_rule_sample.csv')
@@ -354,6 +366,8 @@ def total(sample_pth, element_pth, suti_pth, qual_pth, type_list, out_file_pth=N
             type_73(qual_pth, xls_template_path, xls_template_path)
         elif each == "QUAL_74":
             type_74(qual_pth, xls_template_path, xls_template_path)
+        elif each == "QUAL_75":
+            type_75(qual_pth, xls_template_path, xls_template_path)
         else:
             print('ERROR!')
     return "Done!"
