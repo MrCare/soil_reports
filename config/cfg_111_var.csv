@@ -1,10 +1,10 @@
-name,start_position,parent_field,title,locate_position
+name,start_position,parent_field,title,locate_position,calc_summary
 classification,B3,,,
-耕地,B4,DLDLMC,耕地,A4
+耕地,B4,DLDLMC,耕地,A4,c
 旱地,B5,DLMC,旱地,A5
 水田,B6,DLMC,水田,A6
-园地,B7,DLDLMC,园地,A7
-林地,B8,DLDLMC,林地,A8
-草地,B9,DLDLMC,草地,A9
-其他,B10,DLDLMC,其他,A10
+园地,B7,DLDLMC,园地,A7,c
+林地,B8,DLDLMC,林地,A8,c
+草地,B9,DLDLMC,草地,A9,c
+其他,B10,DLDLMC,其他,A10,c
 summary,B11,,总计,A11

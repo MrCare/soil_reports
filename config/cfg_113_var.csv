@@ -1,8 +1,8 @@
-name,start_position,parent_field,title,locate_position
-classification,B3,,,
-潮土,B4,TL,潮土,A4
-红壤,B5,TL,红壤,A5
-基性岩土,B6,TL,基性岩土,A6
-水稻土,B7,TL,水稻土,A7
-紫色土,B8,TL,紫色土,A8
-summary,B9,,总计,A9
+name,start_position,parent_field,title,locate_position,calc_summary
+classification,B3,,,,
+潮土,B4,TL,潮土,A4,c
+红壤,B5,TL,红壤,A5,c
+基性岩土,B6,TL,基性岩土,A6,c
+水稻土,B7,TL,水稻土,A7,c
+紫色土,B8,TL,紫色土,A8,c
+summary,B9,,总计,A9,

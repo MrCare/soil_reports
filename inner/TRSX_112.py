@@ -15,13 +15,16 @@ def prepare(origin_file_pth, folder_path, cfg_name, parent_field, encoding='UTF-
     '''
     cfg_pth = os.path.join(folder_path, cfg_name + '.csv')
     gdf = gpd.read_file(origin_file_pth, encoding=encoding)
-    df = pd.DataFrame({'name':['classification'], 'start_position':['B3'], 'parent_field':[''], 'title':[''], 'locate_position':['']})
+    df = pd.DataFrame({'name':['classification'], 'start_position':['B3'], 'parent_field':[''], 'title':[''], 'locate_position':[''], 'calc_summary':['']})
     name_list = gdf[parent_field].unique().tolist()
     parent_list = [parent_field for _ in name_list]
     title_list = [each for each in name_list]
+    calc_summary_list = ['c' for each in name_list]
+
     name_list.append('summary')
     parent_list.append('')
     title_list.append('总计')
+    calc_summary_list.append('')
     start_position_list = [('B' + str(4 + i)) for i in range(len(name_list))]
     locate_position_list = [('A' + str(4 + i)) for i in range(len(name_list))]
 
@@ -30,7 +33,8 @@ def prepare(origin_file_pth, folder_path, cfg_name, parent_field, encoding='UTF-
         'start_position': start_position_list,
         'parent_field': parent_list,
         'title': title_list,
-        'locate_position': locate_position_list
+        'locate_position': locate_position_list,
+        'calc_summary': calc_summary_list
     })
 
     df = pd.concat([df, data_df])

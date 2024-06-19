@@ -1,6 +1,6 @@
-name,start_position,parent_field,title,locate_position
-classification,B3,,,
-天子湖镇,B4,XZQMC,天子湖镇,A4
-天子岗水库,B5,XZQMC,天子岗水库,A5
-南湖林场,B6,XZQMC,南湖林场,A6
-summary,B7,,总计,A7
+name,start_position,parent_field,title,locate_position,calc_summary
+classification,B3,,,,
+天子湖镇,B4,XZQMC,天子湖镇,A4,c
+天子岗水库,B5,XZQMC,天子岗水库,A5,c
+南湖林场,B6,XZQMC,南湖林场,A6,c
+summary,B7,,总计,A7,

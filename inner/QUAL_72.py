@@ -26,8 +26,8 @@ def statistics_all(df, yaml_data, wb, bar):
         grouped_df = df[df[group_field].astype(str) == str(group_field_value)].copy()
         area = grouped_df[calc_field].sum()
         area_percent = area / denominator
-        area_result.append(format(area,'.2f'))
-        area_percent_result.append(format(area_percent, '.2f'))
+        area_result.append(f"{area:.2f}")
+        area_percent_result.append(f"{round(area_percent * 100, 2)}%")
     sheet = get_sheet(wb, sheet_name)
     fill_title(sheet, title)
 

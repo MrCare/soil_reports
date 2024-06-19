@@ -54,15 +54,20 @@ def get_var(df, field, target_field, rule_table, calc_field, parent_field, nan_f
 def statistics_all(df, field, target_field, var_table, rule_table, sheet, nan_filler):
     wb = None
     result_table = []
+    result_calc_summary_table = []
     for name, row in var_table.iterrows():
         calc_field = name
         parent_field = row['parent_field']
+        calc_summary = row['calc_summary']
         if calc_field == "classification":
             result_table.append(get_classification_var(rule_table))
         elif calc_field != "summary":
-            result_table.append(get_iterrows_var(df, field, target_field, rule_table, calc_field, parent_field))
+            result = get_iterrows_var(df, field, target_field, rule_table, calc_field, parent_field)
+            result_table.append(result)
+            if calc_summary == 'c':
+                result_calc_summary_table.append(result)
         else:
-            result_table.append(get_summary_var(result_table[1:]))
+            result_table.append(get_summary_var(result_calc_summary_table))
 
     # 格式化 result_table 
     formatted_table = []

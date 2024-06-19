@@ -18,7 +18,8 @@ def _get_result_list(street_value_list, df, calc_field, weight_field, limit_fiel
     for each in street_value_list:
         calc_df = grouped_df.loc[grouped_df[(limit_field + '_str')] == str(each)].copy()
         if str(table_type) == "76":
-            result = format(calc_df[calc_field].sum(), '.2f')
+            result = calc_df[calc_field].sum()
+            result = f"{round(result, 2)}" if result != 0 else '/'
             result_list.append(result)
         elif str(table_type) == "78":
             denominator = calc_df[calc_field].sum()
