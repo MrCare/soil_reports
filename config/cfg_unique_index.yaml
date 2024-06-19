@@ -79,7 +79,7 @@
   "title" : "安吉县各乡镇（街道）土壤质地等级等级面积分布表"
   "limit_field" : "XZQMC"
   "calc_field" : 'MJ'
-  "group_field" : 'TRZD'
+  "group_field" : 'TRZD_new'
   "group_field_value" : [0,1,2,3,4,5]
   "street_start_position": "A4"
   "result_start_position": "C4"
