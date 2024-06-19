@@ -198,15 +198,30 @@ def type_73(file_pth, xls_template_path=xls_template_path, out_file_pth=None):
         bar()
     return "Done!"
 
-def type_74(file_pth, xls_template_path=xls_template_path, out_file_pth=None):
+def type_74(file_pth, xls_template_path=xls_template_path, out_file_pth=None, sheet_name="QUAL_74"):
     total_steps = 1 + 1
     if not out_file_pth:
         out_file_pth = os.path.join(os.path.dirname(file_pth), 'reports_result.xlsx')
-    with alive_bar(total_steps, title="74耕地质量等级面积总分布:") as bar:
+    with alive_bar(total_steps, title="耕地质量等级面积总分布:") as bar:
         df = read_and_prepare_file(file_pth)
         wb = get_wb(xls_template_path)
-        wb = QUAL_74.statistics_all(df, csv_data, yaml_data, wb, bar)
+        wb = QUAL_74.statistics_all(df, csv_data, yaml_data, wb, bar, sheet_name)
         save_xls(wb, out_file_pth)
+        bar()
+    return "Done!"
+
+def type_56(file_pth, xls_template_path=xls_template_path, out_file_pth=None):
+    # 测试数据中暂时没有 SUITI_165
+    type_74_for_suti_list = ['SUITI_56','SUITI_57','SUITI_58','SUITI_59','SUITI_60','SUITI_61','SUITI_164','SUITI_166']
+    total_steps = len(type_74_for_suti_list) + 1
+    if not out_file_pth:
+        out_file_pth = os.path.join(os.path.dirname(file_pth), 'reports_result.xlsx')
+    with alive_bar(total_steps, title="适宜性评价等级分布:") as bar:
+        for sheet_name in type_74_for_suti_list:
+            df = read_and_prepare_file(file_pth)
+            wb = get_wb(xls_template_path)
+            wb = QUAL_74.statistics_all(df, csv_data, yaml_data, wb, bar, sheet_name)
+            save_xls(wb, out_file_pth)
         bar()
     return "Done!"
 
@@ -343,9 +358,7 @@ def total(sample_pth, element_pth, suti_pth, qual_pth, type_list, out_file_pth=N
         'JSBG_50_AMO',
         'JSBG_54_GZCHD'
         ]
-    suti_list = [
-        'SUTI_66'
-        ]
+
     for each in type_list:
         if each == "JSBG_7":
             batch_type_7(sample_pth, type_7_list)
@@ -354,8 +367,9 @@ def total(sample_pth, element_pth, suti_pth, qual_pth, type_list, out_file_pth=N
             batch_type_111(element_pth, type_111_list, xls_template_path, xls_template_path)
         elif each == "JSBG_8":
             batch_type_8(element_pth, type_8_list, xls_template_path, xls_template_path)
-        elif each == "SUTI":
-            _suiti_tables(suti_pth, suti_list, xls_template_path, xls_template_path)
+        elif each == "SUITI":
+            # _suiti_tables(suti_pth, suti_list, xls_template_path, xls_template_path)
+            type_56(suti_pth, xls_template_path, xls_template_path)
         elif each == "QUAL_76_78":
             batch_type_76(qual_pth, xls_template_path, xls_template_path)
         elif each == "QUAL_77":
@@ -407,8 +421,9 @@ if __name__ == "__main__":
     #     'QUAL_77',
     #     'QUAL_72'
     # ])
-    # total('test_data/sample/sample_short.shp', 'test_data/element/element_short.shp', './test_data/suiti_result/new_csv.csv', './test_data/quality_result/quality_short.shp', [
-    #     'QUAL_74'
+    # total('test_data/sample/sample_short.shp', 'test_data/element/element_short.shp', './test_data/suiti_result/suiti_result.shp', './test_data/quality_result/quality_short.shp', [
+    #     'JSBG_7',
+    #     'SUITI'
     # ])
 
     # batch_type_76("test_data/quality_result/quality_short.shp")

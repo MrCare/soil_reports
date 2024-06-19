@@ -55,11 +55,10 @@ def _get_result_list(df, start_position, street_value_list, group_field, group_f
 
     return area_position_list, area_list, percent_position_list, percent_list
 
-def statistics_all(df, csv_data, yaml_data, wb, bar):
+def statistics_all(df, csv_data, yaml_data, wb, bar, sheet_name="QUAL_74"):
     '''
     计算表74: 各乡镇（街道）耕地质量等级面积分布表
     '''
-    sheet_name = "QUAL_74"
     title = yaml_data[sheet_name]["title"]
     limit_field = yaml_data[sheet_name]["limit_field"]
     calc_field = yaml_data[sheet_name]["calc_field"]

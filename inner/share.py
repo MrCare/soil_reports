@@ -79,7 +79,6 @@ class XlsPosUtil:
                 start_col += i * position_interval
             position_list.append(self.get_excel_position(start_row, start_col))
         return position_list, group_result_list
-    
 
 def fill_template(sheet, start_position, value_list, horizon=True, interval=0):
     start_row, start_col = int(start_position[1:]), ord(start_position[0].upper()) - 64 # B4 转为 列标数字

@@ -8,8 +8,6 @@ from .QUAL_76_78 import _get_street_list
 
 xpu = XlsPosUtil()
 
-
-
 def _get_result_list(df,street_value_list, limit_field, calc_field, weight_field, dl_field, dl_rule):
     cn_list, dl_list = [], []
     df.loc[:,(dl_field + '_str')] = df[dl_field].astype(str)

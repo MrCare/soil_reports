@@ -37,6 +37,8 @@
     - "level_name": "十等"
       "range": (x < 0.6960)
 
+# 74 类型开始
+
 "QUAL_74":
   "title" : "安吉县各乡镇（街道）耕地质量等级面积分布表"
   "limit_field" : "XZQMC"
@@ -45,6 +47,89 @@
   "group_field_value" : [1,2,3,4,5,6,7,8,9,10]
   "street_start_position": "A4"
   "result_start_position": "C4"
+
+"SUITI_56":
+  "title" : "安吉县各乡镇（街道）土壤坡度等级面积分布表"
+  "limit_field" : "XZQMC"
+  "calc_field" : 'MJ'
+  "group_field" : 'PD_new'
+  "group_field_value" : [0,1,2,3,4,5]
+  "street_start_position": "A4"
+  "result_start_position": "C4"
+
+"SUITI_57":
+  "title" : "安吉县各乡镇（街道）土壤土层厚度等级面积分布表"
+  "limit_field" : "XZQMC"
+  "calc_field" : 'MJ'
+  "group_field" : 'TCHD_new'
+  "group_field_value" : [0,1,2,3,4,5]
+  "street_start_position": "A4"
+  "result_start_position": "C4"
+
+"SUITI_58":
+  "title" : "安吉县各乡镇（街道）土壤地表砾石丰度等级面积分布表"
+  "limit_field" : "XZQMC"
+  "calc_field" : 'MJ'
+  "group_field" : 'DBLSFD_new'
+  "group_field_value" : [0,1,2,3,4,5]
+  "street_start_position": "A4"
+  "result_start_position": "C4"
+
+"SUITI_59":
+  "title" : "安吉县各乡镇（街道）土壤质地等级等级面积分布表"
+  "limit_field" : "XZQMC"
+  "calc_field" : 'MJ'
+  "group_field" : 'TRZD'
+  "group_field_value" : [0,1,2,3,4,5]
+  "street_start_position": "A4"
+  "result_start_position": "C4"
+
+"SUITI_60":
+  "title" : "安吉县各乡镇（街道）土壤水资源条件等级面积分布表"
+  "limit_field" : "XZQMC"
+  "calc_field" : 'MJ'
+  "group_field" : 'SZYTJ_new'
+  "group_field_value" : [0,1,2,3,4,5]
+  "street_start_position": "A4"
+  "result_start_position": "C4"
+
+"SUITI_61":
+  "title" : "安吉县各乡镇（街道）土壤排水能力等级面积分布表"
+  "limit_field" : "XZQMC"
+  "calc_field" : 'MJ'
+  "group_field" : 'PSNL_new'
+  "group_field_value" : [0,1,2,3,4,5]
+  "street_start_position": "A4"
+  "result_start_position": "C4"
+
+
+"SUITI_164":
+  "title" : "安吉县各乡镇（街道）土壤侵蚀程度等级面积分布表"
+  "limit_field" : "XZQMC"
+  "calc_field" : 'MJ'
+  "group_field" : 'QSCD_new'
+  "group_field_value" : [0,1,2,3,4,5]
+  "street_start_position": "A4"
+  "result_start_position": "C4"
+
+"SUITI_165":
+  "title" : "安吉县各乡镇（街道）土壤盐碱化等级面积分布表"
+  "limit_field" : "XZQMC"
+  "calc_field" : 'MJ'
+  "group_field" : 'TRYJH_new'
+  "group_field_value" : [0,1,2,3,4,5]
+  "street_start_position": "A4"
+  "result_start_position": "C4"
+
+"SUITI_166":
+  "title" : "安吉县各乡镇（街道）土壤基岩出露丰度等级面积分布表"
+  "limit_field" : "XZQMC"
+  "calc_field" : 'MJ'
+  "group_field" : 'JYCLFD_new'
+  "group_field_value" : [0,1,2,3,4,5]
+  "street_start_position": "A4"
+  "result_start_position": "C4"
+# 74 类型结束
 
 "QUAL_75":
   "title" : "安吉县各乡镇（街道）耕地粮食生产潜能表"
@@ -55,3 +140,4 @@
   "dl_rule": "'^01.*'"
   "street_start_position": "A4"
   "result_start_position": "B4"
+
