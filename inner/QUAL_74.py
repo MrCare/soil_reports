@@ -35,10 +35,13 @@ def _get_result_list(df, start_position, street_value_list, group_field, group_f
         grouped_df = df[df[group_field+'_new'] == str(each_field_level)].copy()
         for each_street in street_value_list:
             calc_df = grouped_df[grouped_df[limit_field + '_new'] == str(each_street)].copy()
+            limited_df = df[df[limit_field + '_new'] == str(each_street)].copy()
             each_level_area_result.append(calc_df[calc_field].sum()) #  某街道某等级面积
-            each_level_percent_result.append(_get_devided_result(calc_df[calc_field].sum(), grouped_df[calc_field].sum()))
-        each_level_area_result.append(sum(each_level_area_result)) # 先计算按行总计
-        each_level_percent_result.append(_get_devided_result(grouped_df[calc_field].sum(), df[calc_field].sum()))
+            each_level_percent_result.append(_get_devided_result(calc_df[calc_field].sum(), limited_df[calc_field].sum()))
+        total_area = sum(each_level_area_result)
+        total_percent = total_area / df[calc_field].sum()
+        each_level_area_result.append(total_area) # 先计算按行总计
+        each_level_percent_result.append(total_percent)
         area_list.append(each_level_area_result)
         percent_list.append(each_level_percent_result)
         area_position_list.append(xpu.get_excel_position(area_row, area_col + i))
