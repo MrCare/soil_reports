@@ -11,7 +11,7 @@ import os
 import fire
 import warnings
 
-from inner import JSBG_7, JSBG_8, TRSX_111, TRSX_112, QUAL_76_78, QUAL_77, QUAL_72, QUAL_73, QUAL_74, QUAL_75, SUITI_63, zonal_statistics, check
+from inner import JSBG_7, JSBG_8, TRSX_111, TRSX_112, QUAL_76_78, QUAL_77, QUAL_72, QUAL_73, QUAL_74, QUAL_75, SUITI_64, zonal_statistics, check
 from inner.share import fill_title, fill_value, get_sheet, ConfigLoader
 # from inner_unique import add_field, table_66
 from alive_progress import alive_bar
@@ -198,16 +198,16 @@ def type_62(file_pth, xls_template_path=xls_template_path, out_file_pth=None):
         bar()
     return "Done!"
 
-def type_63(file_pth, xls_template_path=xls_template_path, out_file_pth=None):
-    sheet_name_list = ['SUITI_63', 'SUITI_64']
+def type_64(file_pth, xls_template_path=xls_template_path, out_file_pth=None):
+    sheet_name_list = ['SUITI_64', 'SUITI_65']
     total_steps = len(sheet_name_list) + 1
     if not out_file_pth:
         out_file_pth = os.path.join(os.path.dirname(file_pth), 'reports_result.xlsx')
-    with alive_bar(total_steps, title="63-64土类亚类及适宜程度面积表:") as bar:
+    with alive_bar(total_steps, title="64-65土类亚类及适宜程度面积表:") as bar:
         for sheet_name in sheet_name_list:
             df = read_and_prepare_file(file_pth)
             wb = get_wb(xls_template_path)
-            wb = SUITI_63.statistics_all(df, yaml_data, wb, bar, sheet_name)
+            wb = SUITI_64.statistics_all(df, yaml_data, wb, bar, sheet_name)
             save_xls(wb, out_file_pth)
         bar()
     return "Done!"
@@ -238,7 +238,7 @@ def type_74(file_pth, xls_template_path=xls_template_path, out_file_pth=None, sh
 
 def type_56(file_pth, xls_template_path=xls_template_path, out_file_pth=None):
     # 测试数据中暂时没有 SUITI_165
-    type_74_for_suti_list = ['SUITI_56','SUITI_57','SUITI_58','SUITI_59','SUITI_60','SUITI_61','SUITI_164','SUITI_166']
+    type_74_for_suti_list = ['SUITI_56','SUITI_57','SUITI_58','SUITI_59','SUITI_60','SUITI_61','SUITI_164','SUITI_166','SUITI_63']
     total_steps = len(type_74_for_suti_list) + 1
     if not out_file_pth:
         out_file_pth = os.path.join(os.path.dirname(file_pth), 'reports_result.xlsx')
@@ -397,7 +397,7 @@ def total(sample_pth, element_pth, suti_pth, qual_pth, type_list, out_file_pth=N
             # _suiti_tables(suti_pth, suti_list, xls_template_path, xls_template_path)
             type_56(suti_pth, xls_template_path, xls_template_path)
             type_62(suti_pth, xls_template_path, xls_template_path)
-            type_63(suti_pth, xls_template_path, xls_template_path)
+            type_64(suti_pth, xls_template_path, xls_template_path)
         elif each == "QUAL_76_78":
             batch_type_76(qual_pth, xls_template_path, xls_template_path)
         elif each == "QUAL_77":

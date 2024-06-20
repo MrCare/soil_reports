@@ -54,9 +54,9 @@ def _get_result_list(df, start_position, street_value_list, group_field, group_f
 
     return area_position_list, area_list, percent_position_list, percent_list
 
-def statistics_all(df, yaml_data, wb, bar, sheet_name="SUITI_63"):
+def statistics_all(df, yaml_data, wb, bar, sheet_name="SUITI_64"):
     '''
-    计算表74: 各乡镇（街道）耕地质量等级面积分布表
+    计算表63: 各土类适宜等级面积分布表
     '''
     title = yaml_data[sheet_name]["title"]
     limit_field = yaml_data[sheet_name]["limit_field"]
