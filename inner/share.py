@@ -70,14 +70,18 @@ class XlsPosUtil:
         start_row, start_col = self.get_row_col(start_position)
         position_list = []
         group_result_list = []
-        groups = len(result_list) // seg_length
-        for i in range(groups):
-            group_result_list.append(result_list[seg_length*i : seg_length*(i+1)])
-            if horizon:
-                start_row += i * position_interval
-            else:
-                start_col += i * position_interval
-            position_list.append(self.get_excel_position(start_row, start_col))
+        if seg_length == 0:
+            position_list.append(start_position)
+            group_result_list.append(result_list)
+        else:
+            groups = len(result_list) // seg_length
+            for i in range(groups):
+                group_result_list.append(result_list[seg_length*i : seg_length*(i+1)])
+                if horizon:
+                    start_row += i * position_interval
+                else:
+                    start_col += i * position_interval
+                position_list.append(self.get_excel_position(start_row, start_col))
         return position_list, group_result_list
 
 def fill_template(sheet, start_position, value_list, horizon=True, interval=0):

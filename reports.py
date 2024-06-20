@@ -11,7 +11,7 @@ import os
 import fire
 import warnings
 
-from inner import JSBG_7, JSBG_8, TRSX_111, TRSX_112, QUAL_76_78, QUAL_77, QUAL_72, QUAL_73, QUAL_74, QUAL_75, zonal_statistics, check
+from inner import JSBG_7, JSBG_8, TRSX_111, TRSX_112, QUAL_76_78, QUAL_77, QUAL_72, QUAL_73, QUAL_74, QUAL_75, SUITI_63, zonal_statistics, check
 from inner.share import fill_title, fill_value, get_sheet, ConfigLoader
 # from inner_unique import add_field, table_66
 from alive_progress import alive_bar
@@ -81,12 +81,12 @@ def save_xls(wb, xls_file_path):
     wb.save(xls_file_path)
     return
 
-def prepare_cfg(origin_file_pth, cfg_name, parent_field):
+def prepare_cfg(origin_file_pth, cfg_name, parent_field, sort_field=None):
     '''
     准备好文件
     '''
     with alive_bar(1, title="生成配置文件:") as bar:
-        TRSX_112.prepare(origin_file_pth, folder_path, cfg_name, parent_field)
+        TRSX_112.prepare(origin_file_pth, folder_path, cfg_name, parent_field, sort_field)
         bar()
     return "Done!"
 
@@ -183,6 +183,32 @@ def type_72(file_pth, xls_template_path=xls_template_path, out_file_pth=None):
         wb = get_wb(xls_template_path)
         wb = QUAL_72.statistics_all(df, yaml_data, wb, bar)
         save_xls(wb, out_file_pth)
+        bar()
+    return "Done!"
+
+def type_62(file_pth, xls_template_path=xls_template_path, out_file_pth=None):
+    total_steps = 1 + 1
+    if not out_file_pth:
+        out_file_pth = os.path.join(os.path.dirname(file_pth), 'reports_result.xlsx')
+    with alive_bar(total_steps, title="62宜类评价面积表:") as bar:
+        df = read_and_prepare_file(file_pth)
+        wb = get_wb(xls_template_path)
+        wb = QUAL_72.statistics_all(df, yaml_data, wb, bar, 'SUITI_62')
+        save_xls(wb, out_file_pth)
+        bar()
+    return "Done!"
+
+def type_63(file_pth, xls_template_path=xls_template_path, out_file_pth=None):
+    sheet_name_list = ['SUITI_63', 'SUITI_64']
+    total_steps = len(sheet_name_list) + 1
+    if not out_file_pth:
+        out_file_pth = os.path.join(os.path.dirname(file_pth), 'reports_result.xlsx')
+    with alive_bar(total_steps, title="63-64土类亚类及适宜程度面积表:") as bar:
+        for sheet_name in sheet_name_list:
+            df = read_and_prepare_file(file_pth)
+            wb = get_wb(xls_template_path)
+            wb = SUITI_63.statistics_all(df, yaml_data, wb, bar, sheet_name)
+            save_xls(wb, out_file_pth)
         bar()
     return "Done!"
 
@@ -370,6 +396,8 @@ def total(sample_pth, element_pth, suti_pth, qual_pth, type_list, out_file_pth=N
         elif each == "SUITI":
             # _suiti_tables(suti_pth, suti_list, xls_template_path, xls_template_path)
             type_56(suti_pth, xls_template_path, xls_template_path)
+            type_62(suti_pth, xls_template_path, xls_template_path)
+            type_63(suti_pth, xls_template_path, xls_template_path)
         elif each == "QUAL_76_78":
             batch_type_76(qual_pth, xls_template_path, xls_template_path)
         elif each == "QUAL_77":
@@ -398,7 +426,7 @@ if __name__ == "__main__":
     
     # 生成配置文件
 
-    # prepare_cfg('./test_data/element/element_short.shp','cfg_112_var','XZQMC')
+    # prepare_cfg('./test_data/element/element_short.shp','cfg_112_var','XZQMC', 'XZQDM')
     # prepare_cfg('./test_data/element/element_short.shp','cfg_113_var','TL')
 
     # 批处理测试
@@ -421,8 +449,8 @@ if __name__ == "__main__":
     #     'QUAL_77',
     #     'QUAL_72'
     # ])
-    # total('test_data/sample/sample_short.shp', 'test_data/element/element_short.shp', './test_data/suiti_result/suiti_result.shp', './test_data/quality_result/quality_short.shp', [
-    #     'JSBG_7','TRSX_111'
+    # total('test_data/sample/sample_short.shp', 'test_data/element/element_short.shp', './test_data/suiti_result/suiti_result_short.shp', './test_data/quality_result/quality_short.shp', [
+    #     'JSBG_7','SUITI'
     # ])
 
     # batch_type_76("test_data/quality_result/quality_short.shp")

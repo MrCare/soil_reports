@@ -7,6 +7,15 @@
   "seg_length" : 5
   "position_interval" : 3
 
+"SUITI_62":
+  "title" : "安吉县适宜类评价面积表"
+  "group_field" : s_level
+  "group_field_values" : [1,2,3,4,5,6]
+  "calc_field" : 'MJ'
+  "start_position" : "B3"
+  "seg_length" : 0
+  "position_interval" : 0
+
 "QUAL_73":
   "title" : "安吉县各乡镇（街道）耕地评价综合指数及质量等级表"
   "limit_field" : "XZQMC"
@@ -36,8 +45,6 @@
       "range": (x >= 0.6960 and x < 0.7224)
     - "level_name": "十等"
       "range": (x < 0.6960)
-
-# 74 类型开始
 
 "QUAL_74":
   "title" : "安吉县各乡镇（街道）耕地质量等级面积分布表"
@@ -102,7 +109,6 @@
   "street_start_position": "A4"
   "result_start_position": "C4"
 
-
 "SUITI_164":
   "title" : "安吉县各乡镇（街道）土壤侵蚀程度等级面积分布表"
   "limit_field" : "XZQMC"
@@ -129,7 +135,6 @@
   "group_field_value" : [0,1,2,3,4,5]
   "street_start_position": "A4"
   "result_start_position": "C4"
-# 74 类型结束
 
 "QUAL_75":
   "title" : "安吉县各乡镇（街道）耕地粮食生产潜能表"
@@ -141,3 +146,20 @@
   "street_start_position": "A4"
   "result_start_position": "B4"
 
+"SUITI_63":
+  "title" : "安吉县土壤类型（亚类）适宜类评价分布表"
+  "limit_field" : "YL"
+  "calc_field" : 'MJ'
+  "group_field" : 's_level'
+  "group_field_value" : [1,2,3,4,5,6]
+  "col_start_position": "A4"
+  "result_start_position": "C4"
+
+"SUITI_64":
+  "title" : "安吉县土壤农业利用适宜程度评价面积表"
+  "limit_field" : "s_s_level"
+  "calc_field" : 'MJ'
+  "group_field" : 's_name'
+  "group_field_value" : ['适宜耕地','适宜园地','适宜林地','适宜草地']
+  "col_start_position": "A4"
+  "result_start_position": "C4"
