@@ -1,0 +1,588 @@
+2024-06-21 13:45:51,139 - ERROR - KeyError occurred: 'SUITI_70'
+Traceback (most recent call last):
+  File "/Users/car/Project/soilCli/reports/inner/exception.py", line 18, in wrapper
+    return func(*args, **kwargs)
+  File "/Users/car/Project/soilCli/reports/./reports.py", line 417, in total
+    type_67(suti_pth, xls_template_path, xls_template_path)
+  File "/Users/car/Project/soilCli/reports/./reports.py", line 276, in type_67
+    wb = SUITI_67.statistics_all(df, yaml_data, wb, bar, sheet_name)
+  File "/Users/car/Project/soilCli/reports/inner/SUITI_67.py", line 64, in statistics_all
+    title = yaml_data[sheet_name]["title"]
+KeyError: 'SUITI_70'
+2024-06-21 13:50:30,259 - ERROR - KeyError occurred: 'SUITI_70'
+Traceback (most recent call last):
+  File "/Users/car/Project/soilCli/reports/inner/exception.py", line 20, in wrapper
+    return func(*args, **kwargs)
+  File "/Users/car/Project/soilCli/reports/./reports.py", line 417, in total
+    type_67(suti_pth, xls_template_path, xls_template_path)
+  File "/Users/car/Project/soilCli/reports/./reports.py", line 276, in type_67
+    wb = SUITI_67.statistics_all(df, yaml_data, wb, bar, sheet_name)
+  File "/Users/car/Project/soilCli/reports/inner/SUITI_67.py", line 64, in statistics_all
+    title = yaml_data[sheet_name]["title"]
+KeyError: 'SUITI_70'
+2024-06-21 13:51:30,532 - ERROR - KeyError occurred: 'SUITI_70'
+Traceback (most recent call last):
+  File "/Users/car/Project/soilCli/reports/inner/exception.py", line 20, in wrapper
+    return func(*args, **kwargs)
+  File "/Users/car/Project/soilCli/reports/./reports.py", line 417, in total
+    type_67(suti_pth, xls_template_path, xls_template_path)
+  File "/Users/car/Project/soilCli/reports/./reports.py", line 276, in type_67
+    wb = SUITI_67.statistics_all(df, yaml_data, wb, bar, sheet_name)
+  File "/Users/car/Project/soilCli/reports/inner/SUITI_67.py", line 64, in statistics_all
+    title = yaml_data[sheet_name]["title"]
+KeyError: 'SUITI_70'
+2024-06-21 13:51:55,820 - ERROR - KeyError occurred: 'SUITI_70'
+Traceback (most recent call last):
+  File "/Users/car/Project/soilCli/reports/inner/exception.py", line 20, in wrapper
+    return func(*args, **kwargs)
+  File "/Users/car/Project/soilCli/reports/./reports.py", line 417, in total
+    type_67(suti_pth, xls_template_path, xls_template_path)
+  File "/Users/car/Project/soilCli/reports/./reports.py", line 276, in type_67
+    wb = SUITI_67.statistics_all(df, yaml_data, wb, bar, sheet_name)
+  File "/Users/car/Project/soilCli/reports/inner/SUITI_67.py", line 64, in statistics_all
+    title = yaml_data[sheet_name]["title"]
+KeyError: 'SUITI_70'
+2024-06-21 13:54:06,684 - ERROR - KeyError occurred: 'SUITI_70'
+Traceback (most recent call last):
+  File "/Users/car/Project/soilCli/reports/inner/exception.py", line 18, in wrapper
+    return func(*args, **kwargs)
+  File "/Users/car/Project/soilCli/reports/./reports.py", line 417, in total
+    type_67(suti_pth, xls_template_path, xls_template_path)
+  File "/Users/car/Project/soilCli/reports/./reports.py", line 276, in type_67
+    wb = SUITI_67.statistics_all(df, yaml_data, wb, bar, sheet_name)
+  File "/Users/car/Project/soilCli/reports/inner/SUITI_67.py", line 64, in statistics_all
+    title = yaml_data[sheet_name]["title"]
+KeyError: 'SUITI_70'
+2024-06-21 13:54:48,774 - ERROR - KeyError occurred: 'SUITI_70'
+Traceback (most recent call last):
+  File "/Users/car/Project/soilCli/reports/inner/exception.py", line 18, in wrapper
+    return func(*args, **kwargs)
+  File "/Users/car/Project/soilCli/reports/./reports.py", line 417, in total
+    type_67(suti_pth, xls_template_path, xls_template_path)
+  File "/Users/car/Project/soilCli/reports/./reports.py", line 276, in type_67
+    wb = SUITI_67.statistics_all(df, yaml_data, wb, bar, sheet_name)
+  File "/Users/car/Project/soilCli/reports/inner/SUITI_67.py", line 64, in statistics_all
+    title = yaml_data[sheet_name]["title"]
+KeyError: 'SUITI_70'
+2024-06-21 13:56:17,015 - ERROR - KeyError occurred: "['DLMCC'] not in index"
+Traceback (most recent call last):
+  File "/Users/car/Project/soilCli/reports/inner/exception.py", line 18, in wrapper
+    return func(*args, **kwargs)
+  File "/Users/car/Project/soilCli/reports/./reports.py", line 417, in total
+    type_67(suti_pth, xls_template_path, xls_template_path)
+  File "/Users/car/Project/soilCli/reports/./reports.py", line 276, in type_67
+    wb = SUITI_67.statistics_all(df, yaml_data, wb, bar, sheet_name)
+  File "/Users/car/Project/soilCli/reports/inner/SUITI_67.py", line 75, in statistics_all
+    area_position_list,area_list,percent_list_position_list,percent_list,col_name_list = _get_result_list(df, result_start_position, col_name_field, col_value_field, col_sum_rule, col_sum_name, group_field, group_field_value, calc_field)
+  File "/Users/car/Project/soilCli/reports/inner/SUITI_67.py", line 45, in _get_result_list
+    special_col_name_list, special_col_value_list = _get_col_list(total_df, col_name_field, col_value_field)
+  File "/Users/car/Project/soilCli/reports/inner/SUITI_67.py", line 16, in _get_col_list
+    temp_df = df[[col_name_field, col_value_field]].copy()
+  File "/Users/car/opt/anaconda3/envs/soilCli/lib/python3.9/site-packages/geopandas/geodataframe.py", line 1415, in __getitem__
+    result = super().__getitem__(key)
+  File "/Users/car/opt/anaconda3/envs/soilCli/lib/python3.9/site-packages/pandas/core/frame.py", line 3899, in __getitem__
+    indexer = self.columns._get_indexer_strict(key, "columns")[1]
+  File "/Users/car/opt/anaconda3/envs/soilCli/lib/python3.9/site-packages/pandas/core/indexes/base.py", line 6115, in _get_indexer_strict
+    self._raise_if_missing(keyarr, indexer, axis_name)
+  File "/Users/car/opt/anaconda3/envs/soilCli/lib/python3.9/site-packages/pandas/core/indexes/base.py", line 6179, in _raise_if_missing
+    raise KeyError(f"{not_found} not in index")
+KeyError: "['DLMCC'] not in index"
+2024-06-21 14:01:42,799 - ERROR - KeyError occurred: 'MJC'
+Traceback (most recent call last):
+  File "/Users/car/opt/anaconda3/envs/soilCli/lib/python3.9/site-packages/pandas/core/indexes/base.py", line 3791, in get_loc
+    return self._engine.get_loc(casted_key)
+  File "index.pyx", line 152, in pandas._libs.index.IndexEngine.get_loc
+  File "index.pyx", line 181, in pandas._libs.index.IndexEngine.get_loc
+  File "pandas/_libs/hashtable_class_helper.pxi", line 7080, in pandas._libs.hashtable.PyObjectHashTable.get_item
+  File "pandas/_libs/hashtable_class_helper.pxi", line 7088, in pandas._libs.hashtable.PyObjectHashTable.get_item
+KeyError: 'MJC'
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/Users/car/Project/soilCli/reports/inner/exception.py", line 20, in wrapper
+    return func(*args, **kwargs)
+  File "/Users/car/Project/soilCli/reports/./reports.py", line 417, in total
+    type_67(suti_pth, xls_template_path, xls_template_path)
+  File "/Users/car/Project/soilCli/reports/./reports.py", line 276, in type_67
+    wb = SUITI_67.statistics_all(df, yaml_data, wb, bar, sheet_name)
+  File "/Users/car/Project/soilCli/reports/inner/SUITI_67.py", line 75, in statistics_all
+    area_position_list,area_list,percent_list_position_list,percent_list,col_name_list = _get_result_list(df, result_start_position, col_name_field, col_value_field, col_sum_rule, col_sum_name, group_field, group_field_value, calc_field)
+  File "/Users/car/Project/soilCli/reports/inner/SUITI_67.py", line 37, in _get_result_list
+    result = calc_df[calc_field].sum()
+  File "/Users/car/opt/anaconda3/envs/soilCli/lib/python3.9/site-packages/geopandas/geodataframe.py", line 1415, in __getitem__
+    result = super().__getitem__(key)
+  File "/Users/car/opt/anaconda3/envs/soilCli/lib/python3.9/site-packages/pandas/core/frame.py", line 3893, in __getitem__
+    indexer = self.columns.get_loc(key)
+  File "/Users/car/opt/anaconda3/envs/soilCli/lib/python3.9/site-packages/pandas/core/indexes/base.py", line 3798, in get_loc
+    raise KeyError(key) from err
+KeyError: 'MJC'
+2024-06-21 14:05:12,066 - ERROR - KeyError occurred: 'MJC'
+Traceback (most recent call last):
+  File "/Users/car/opt/anaconda3/envs/soilCli/lib/python3.9/site-packages/pandas/core/indexes/base.py", line 3791, in get_loc
+    return self._engine.get_loc(casted_key)
+  File "index.pyx", line 152, in pandas._libs.index.IndexEngine.get_loc
+  File "index.pyx", line 181, in pandas._libs.index.IndexEngine.get_loc
+  File "pandas/_libs/hashtable_class_helper.pxi", line 7080, in pandas._libs.hashtable.PyObjectHashTable.get_item
+  File "pandas/_libs/hashtable_class_helper.pxi", line 7088, in pandas._libs.hashtable.PyObjectHashTable.get_item
+KeyError: 'MJC'
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/Users/car/Project/soilCli/reports/inner/exception.py", line 20, in wrapper
+    return func(*args, **kwargs)
+  File "/Users/car/Project/soilCli/reports/./reports.py", line 417, in total
+    type_67(suti_pth, xls_template_path, xls_template_path)
+  File "/Users/car/Project/soilCli/reports/./reports.py", line 276, in type_67
+    wb = SUITI_67.statistics_all(df, yaml_data, wb, bar, sheet_name)
+  File "/Users/car/Project/soilCli/reports/inner/SUITI_67.py", line 75, in statistics_all
+    area_position_list,area_list,percent_list_position_list,percent_list,col_name_list = _get_result_list(df, result_start_position, col_name_field, col_value_field, col_sum_rule, col_sum_name, group_field, group_field_value, calc_field)
+  File "/Users/car/Project/soilCli/reports/inner/SUITI_67.py", line 37, in _get_result_list
+    result = calc_df[calc_field].sum()
+  File "/Users/car/opt/anaconda3/envs/soilCli/lib/python3.9/site-packages/geopandas/geodataframe.py", line 1415, in __getitem__
+    result = super().__getitem__(key)
+  File "/Users/car/opt/anaconda3/envs/soilCli/lib/python3.9/site-packages/pandas/core/frame.py", line 3893, in __getitem__
+    indexer = self.columns.get_loc(key)
+  File "/Users/car/opt/anaconda3/envs/soilCli/lib/python3.9/site-packages/pandas/core/indexes/base.py", line 3798, in get_loc
+    raise KeyError(key) from err
+KeyError: 'MJC'
+2024-06-21 14:05:48,760 - ERROR - KeyError occurred: 'MJC'
+Traceback (most recent call last):
+  File "/Users/car/opt/anaconda3/envs/soilCli/lib/python3.9/site-packages/pandas/core/indexes/base.py", line 3791, in get_loc
+    return self._engine.get_loc(casted_key)
+  File "index.pyx", line 152, in pandas._libs.index.IndexEngine.get_loc
+  File "index.pyx", line 181, in pandas._libs.index.IndexEngine.get_loc
+  File "pandas/_libs/hashtable_class_helper.pxi", line 7080, in pandas._libs.hashtable.PyObjectHashTable.get_item
+  File "pandas/_libs/hashtable_class_helper.pxi", line 7088, in pandas._libs.hashtable.PyObjectHashTable.get_item
+KeyError: 'MJC'
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/Users/car/Project/soilCli/reports/inner/exception.py", line 20, in wrapper
+    return func(*args, **kwargs)
+  File "/Users/car/Project/soilCli/reports/./reports.py", line 417, in total
+    type_67(suti_pth, xls_template_path, xls_template_path)
+  File "/Users/car/Project/soilCli/reports/./reports.py", line 276, in type_67
+    wb = SUITI_67.statistics_all(df, yaml_data, wb, bar, sheet_name)
+  File "/Users/car/Project/soilCli/reports/inner/SUITI_67.py", line 75, in statistics_all
+    area_position_list,area_list,percent_list_position_list,percent_list,col_name_list = _get_result_list(df, result_start_position, col_name_field, col_value_field, col_sum_rule, col_sum_name, group_field, group_field_value, calc_field)
+  File "/Users/car/Project/soilCli/reports/inner/SUITI_67.py", line 37, in _get_result_list
+    result = calc_df[calc_field].sum()
+  File "/Users/car/opt/anaconda3/envs/soilCli/lib/python3.9/site-packages/geopandas/geodataframe.py", line 1415, in __getitem__
+    result = super().__getitem__(key)
+  File "/Users/car/opt/anaconda3/envs/soilCli/lib/python3.9/site-packages/pandas/core/frame.py", line 3893, in __getitem__
+    indexer = self.columns.get_loc(key)
+  File "/Users/car/opt/anaconda3/envs/soilCli/lib/python3.9/site-packages/pandas/core/indexes/base.py", line 3798, in get_loc
+    raise KeyError(key) from err
+KeyError: 'MJC'
+on 0: 2024-06-21 14:15:28,245 - ERROR - test_data/sample/sample_short.sh: No such file or directory
+on 0: 2024-06-21 14:17:11,348 - ERROR - test_data/sample/sample_short.sh: No such file or directory
+on 0: 2024-06-21 14:18:12,309 - ERROR - test_data/sample/sample_short.sh: No such file or directory
+2024-06-21 14:18:12,310 - ERROR - FileNotFoundError: test_data/sample/sample_short.sh: No such file or directory
+Traceback (most recent call last):
+  File "fiona/_shim.pyx", line 83, in fiona._shim.gdal_open_vector
+  File "fiona/_err.pyx", line 291, in fiona._err.exc_wrap_pointer
+fiona._err.CPLE_OpenFailedError: test_data/sample/sample_short.sh: No such file or directory
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/Users/car/Project/soilCli/reports/inner/exception.py", line 36, in wrapper
+    return func(*args, **kwargs)
+  File "/Users/car/Project/soilCli/reports/inner/exception.py", line 24, in wrapper
+    return func(*args, **kwargs)
+  File "/Users/car/Project/soilCli/reports/./reports.py", line 407, in total
+    batch_type_7(sample_pth, type_7_list)
+  File "/Users/car/Project/soilCli/reports/./reports.py", line 97, in batch_type_7
+    df = read_and_prepare_file(file_pth)
+  File "/Users/car/Project/soilCli/reports/./reports.py", line 36, in read_and_prepare_file
+    df = gpd.read_file(file_pth)
+  File "/Users/car/opt/anaconda3/envs/soilCli/lib/python3.9/site-packages/geopandas/io/file.py", line 259, in _read_file
+    return _read_file_fiona(
+  File "/Users/car/opt/anaconda3/envs/soilCli/lib/python3.9/site-packages/geopandas/io/file.py", line 303, in _read_file_fiona
+    with reader(path_or_bytes, **kwargs) as features:
+  File "/Users/car/opt/anaconda3/envs/soilCli/lib/python3.9/site-packages/fiona/env.py", line 408, in wrapper
+    return f(*args, **kwargs)
+  File "/Users/car/opt/anaconda3/envs/soilCli/lib/python3.9/site-packages/fiona/__init__.py", line 264, in open
+    c = Collection(path, mode, driver=driver, encoding=encoding,
+  File "/Users/car/opt/anaconda3/envs/soilCli/lib/python3.9/site-packages/fiona/collection.py", line 162, in __init__
+    self.session.start(self, **kwargs)
+  File "fiona/ogrext.pyx", line 540, in fiona.ogrext.Session.start
+  File "fiona/_shim.pyx", line 90, in fiona._shim.gdal_open_vector
+fiona.errors.DriverError: test_data/sample/sample_short.sh: No such file or directory
+on 0: 2024-06-21 14:18:39,607 - ERROR - test_data/sample/sample_short.sh: No such file or directory
+2024-06-21 14:18:39,608 - ERROR - FileNotFoundError: test_data/sample/sample_short.sh: No such file or directory
+Traceback (most recent call last):
+  File "fiona/_shim.pyx", line 83, in fiona._shim.gdal_open_vector
+  File "fiona/_err.pyx", line 291, in fiona._err.exc_wrap_pointer
+fiona._err.CPLE_OpenFailedError: test_data/sample/sample_short.sh: No such file or directory
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/Users/car/Project/soilCli/reports/inner/exception.py", line 36, in wrapper
+    return func(*args, **kwargs)
+  File "/Users/car/Project/soilCli/reports/inner/exception.py", line 24, in wrapper
+    return func(*args, **kwargs)
+  File "/Users/car/Project/soilCli/reports/./reports.py", line 407, in total
+    batch_type_7(sample_pth, type_7_list)
+  File "/Users/car/Project/soilCli/reports/./reports.py", line 97, in batch_type_7
+    df = read_and_prepare_file(file_pth)
+  File "/Users/car/Project/soilCli/reports/./reports.py", line 36, in read_and_prepare_file
+    df = gpd.read_file(file_pth)
+  File "/Users/car/opt/anaconda3/envs/soilCli/lib/python3.9/site-packages/geopandas/io/file.py", line 259, in _read_file
+    return _read_file_fiona(
+  File "/Users/car/opt/anaconda3/envs/soilCli/lib/python3.9/site-packages/geopandas/io/file.py", line 303, in _read_file_fiona
+    with reader(path_or_bytes, **kwargs) as features:
+  File "/Users/car/opt/anaconda3/envs/soilCli/lib/python3.9/site-packages/fiona/env.py", line 408, in wrapper
+    return f(*args, **kwargs)
+  File "/Users/car/opt/anaconda3/envs/soilCli/lib/python3.9/site-packages/fiona/__init__.py", line 264, in open
+    c = Collection(path, mode, driver=driver, encoding=encoding,
+  File "/Users/car/opt/anaconda3/envs/soilCli/lib/python3.9/site-packages/fiona/collection.py", line 162, in __init__
+    self.session.start(self, **kwargs)
+  File "fiona/ogrext.pyx", line 540, in fiona.ogrext.Session.start
+  File "fiona/_shim.pyx", line 90, in fiona._shim.gdal_open_vector
+fiona.errors.DriverError: test_data/sample/sample_short.sh: No such file or directory
+on 0: 2024-06-21 14:19:50,664 - ERROR - test_data/sample/sample_short.sh: No such file or directory
+2024-06-21 14:19:50,665 - ERROR - FileNotFoundError: test_data/sample/sample_short.sh: No such file or directory
+Traceback (most recent call last):
+  File "fiona/_shim.pyx", line 83, in fiona._shim.gdal_open_vector
+  File "fiona/_err.pyx", line 291, in fiona._err.exc_wrap_pointer
+fiona._err.CPLE_OpenFailedError: test_data/sample/sample_short.sh: No such file or directory
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/Users/car/Project/soilCli/reports/inner/exception.py", line 36, in wrapper
+    return func(*args, **kwargs)
+  File "/Users/car/Project/soilCli/reports/inner/exception.py", line 24, in wrapper
+    return func(*args, **kwargs)
+  File "/Users/car/Project/soilCli/reports/./reports.py", line 407, in total
+    batch_type_7(sample_pth, type_7_list)
+  File "/Users/car/Project/soilCli/reports/./reports.py", line 97, in batch_type_7
+    df = read_and_prepare_file(file_pth)
+  File "/Users/car/Project/soilCli/reports/./reports.py", line 36, in read_and_prepare_file
+    df = gpd.read_file(file_pth)
+  File "/Users/car/opt/anaconda3/envs/soilCli/lib/python3.9/site-packages/geopandas/io/file.py", line 259, in _read_file
+    return _read_file_fiona(
+  File "/Users/car/opt/anaconda3/envs/soilCli/lib/python3.9/site-packages/geopandas/io/file.py", line 303, in _read_file_fiona
+    with reader(path_or_bytes, **kwargs) as features:
+  File "/Users/car/opt/anaconda3/envs/soilCli/lib/python3.9/site-packages/fiona/env.py", line 408, in wrapper
+    return f(*args, **kwargs)
+  File "/Users/car/opt/anaconda3/envs/soilCli/lib/python3.9/site-packages/fiona/__init__.py", line 264, in open
+    c = Collection(path, mode, driver=driver, encoding=encoding,
+  File "/Users/car/opt/anaconda3/envs/soilCli/lib/python3.9/site-packages/fiona/collection.py", line 162, in __init__
+    self.session.start(self, **kwargs)
+  File "fiona/ogrext.pyx", line 540, in fiona.ogrext.Session.start
+  File "fiona/_shim.pyx", line 90, in fiona._shim.gdal_open_vector
+fiona.errors.DriverError: test_data/sample/sample_short.sh: No such file or directory
+on 0: 2024-06-21 14:27:32,848 - ERROR - test_data/sample/sample_short.sh: No such file or directory
+2024-06-21 14:27:32,849 - ERROR - FileNotFoundError: test_data/sample/sample_short.sh: No such file or directory
+Traceback (most recent call last):
+  File "fiona/_shim.pyx", line 83, in fiona._shim.gdal_open_vector
+  File "fiona/_err.pyx", line 291, in fiona._err.exc_wrap_pointer
+fiona._err.CPLE_OpenFailedError: test_data/sample/sample_short.sh: No such file or directory
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/Users/car/Project/soilCli/reports/inner/exception.py", line 36, in wrapper
+    return func(*args, **kwargs)
+  File "/Users/car/Project/soilCli/reports/inner/exception.py", line 24, in wrapper
+    return func(*args, **kwargs)
+  File "/Users/car/Project/soilCli/reports/./reports.py", line 407, in total
+    batch_type_7(sample_pth, type_7_list)
+  File "/Users/car/Project/soilCli/reports/./reports.py", line 97, in batch_type_7
+    df = read_and_prepare_file(file_pth)
+  File "/Users/car/Project/soilCli/reports/./reports.py", line 36, in read_and_prepare_file
+    df = gpd.read_file(file_pth)
+  File "/Users/car/opt/anaconda3/envs/soilCli/lib/python3.9/site-packages/geopandas/io/file.py", line 259, in _read_file
+    return _read_file_fiona(
+  File "/Users/car/opt/anaconda3/envs/soilCli/lib/python3.9/site-packages/geopandas/io/file.py", line 303, in _read_file_fiona
+    with reader(path_or_bytes, **kwargs) as features:
+  File "/Users/car/opt/anaconda3/envs/soilCli/lib/python3.9/site-packages/fiona/env.py", line 408, in wrapper
+    return f(*args, **kwargs)
+  File "/Users/car/opt/anaconda3/envs/soilCli/lib/python3.9/site-packages/fiona/__init__.py", line 264, in open
+    c = Collection(path, mode, driver=driver, encoding=encoding,
+  File "/Users/car/opt/anaconda3/envs/soilCli/lib/python3.9/site-packages/fiona/collection.py", line 162, in __init__
+    self.session.start(self, **kwargs)
+  File "fiona/ogrext.pyx", line 540, in fiona.ogrext.Session.start
+  File "fiona/_shim.pyx", line 90, in fiona._shim.gdal_open_vector
+fiona.errors.DriverError: test_data/sample/sample_short.sh: No such file or directory
+on 0: 2024-06-21 14:28:43,044 - ERROR - test_data/sample/sample_short.sh: No such file or directory
+2024-06-21 14:28:43,045 - ERROR - FileNotFoundError: test_data/sample/sample_short.sh: No such file or directory
+Traceback (most recent call last):
+  File "fiona/_shim.pyx", line 83, in fiona._shim.gdal_open_vector
+  File "fiona/_err.pyx", line 291, in fiona._err.exc_wrap_pointer
+fiona._err.CPLE_OpenFailedError: test_data/sample/sample_short.sh: No such file or directory
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/Users/car/Project/soilCli/reports/inner/exception.py", line 36, in wrapper
+    return func(*args, **kwargs)
+  File "/Users/car/Project/soilCli/reports/inner/exception.py", line 24, in wrapper
+    return func(*args, **kwargs)
+  File "/Users/car/Project/soilCli/reports/inner/exception.py", line 47, in wrapper
+    func(*args, **kwargs)
+  File "/Users/car/Project/soilCli/reports/./reports.py", line 408, in total
+    batch_type_7(sample_pth, type_7_list)
+  File "/Users/car/Project/soilCli/reports/./reports.py", line 97, in batch_type_7
+    df = read_and_prepare_file(file_pth)
+  File "/Users/car/Project/soilCli/reports/./reports.py", line 36, in read_and_prepare_file
+    df = gpd.read_file(file_pth)
+  File "/Users/car/opt/anaconda3/envs/soilCli/lib/python3.9/site-packages/geopandas/io/file.py", line 259, in _read_file
+    return _read_file_fiona(
+  File "/Users/car/opt/anaconda3/envs/soilCli/lib/python3.9/site-packages/geopandas/io/file.py", line 303, in _read_file_fiona
+    with reader(path_or_bytes, **kwargs) as features:
+  File "/Users/car/opt/anaconda3/envs/soilCli/lib/python3.9/site-packages/fiona/env.py", line 408, in wrapper
+    return f(*args, **kwargs)
+  File "/Users/car/opt/anaconda3/envs/soilCli/lib/python3.9/site-packages/fiona/__init__.py", line 264, in open
+    c = Collection(path, mode, driver=driver, encoding=encoding,
+  File "/Users/car/opt/anaconda3/envs/soilCli/lib/python3.9/site-packages/fiona/collection.py", line 162, in __init__
+    self.session.start(self, **kwargs)
+  File "fiona/ogrext.pyx", line 540, in fiona.ogrext.Session.start
+  File "fiona/_shim.pyx", line 90, in fiona._shim.gdal_open_vector
+fiona.errors.DriverError: test_data/sample/sample_short.sh: No such file or directory
+on 0: 2024-06-21 14:29:11,501 - ERROR - test_data/sample/sample_short.sh: No such file or directory
+2024-06-21 14:29:11,501 - ERROR - FileNotFoundError: test_data/sample/sample_short.sh: No such file or directory
+Traceback (most recent call last):
+  File "fiona/_shim.pyx", line 83, in fiona._shim.gdal_open_vector
+  File "fiona/_err.pyx", line 291, in fiona._err.exc_wrap_pointer
+fiona._err.CPLE_OpenFailedError: test_data/sample/sample_short.sh: No such file or directory
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/Users/car/Project/soilCli/reports/inner/exception.py", line 36, in wrapper
+    return func(*args, **kwargs)
+  File "/Users/car/Project/soilCli/reports/inner/exception.py", line 24, in wrapper
+    return func(*args, **kwargs)
+  File "/Users/car/Project/soilCli/reports/./reports.py", line 408, in total
+    batch_type_7(sample_pth, type_7_list)
+  File "/Users/car/Project/soilCli/reports/./reports.py", line 97, in batch_type_7
+    df = read_and_prepare_file(file_pth)
+  File "/Users/car/Project/soilCli/reports/./reports.py", line 36, in read_and_prepare_file
+    df = gpd.read_file(file_pth)
+  File "/Users/car/opt/anaconda3/envs/soilCli/lib/python3.9/site-packages/geopandas/io/file.py", line 259, in _read_file
+    return _read_file_fiona(
+  File "/Users/car/opt/anaconda3/envs/soilCli/lib/python3.9/site-packages/geopandas/io/file.py", line 303, in _read_file_fiona
+    with reader(path_or_bytes, **kwargs) as features:
+  File "/Users/car/opt/anaconda3/envs/soilCli/lib/python3.9/site-packages/fiona/env.py", line 408, in wrapper
+    return f(*args, **kwargs)
+  File "/Users/car/opt/anaconda3/envs/soilCli/lib/python3.9/site-packages/fiona/__init__.py", line 264, in open
+    c = Collection(path, mode, driver=driver, encoding=encoding,
+  File "/Users/car/opt/anaconda3/envs/soilCli/lib/python3.9/site-packages/fiona/collection.py", line 162, in __init__
+    self.session.start(self, **kwargs)
+  File "fiona/ogrext.pyx", line 540, in fiona.ogrext.Session.start
+  File "fiona/_shim.pyx", line 90, in fiona._shim.gdal_open_vector
+fiona.errors.DriverError: test_data/sample/sample_short.sh: No such file or directory
+on 0: 2024-06-21 16:04:31,325 - ERROR - test_datasamplesample_short.shp: No such file or directory
+2024-06-21 16:04:31,327 - ERROR - FileNotFoundError: test_datasamplesample_short.shp: No such file or directory
+Traceback (most recent call last):
+  File "fiona/_shim.pyx", line 83, in fiona._shim.gdal_open_vector
+  File "fiona/_err.pyx", line 291, in fiona._err.exc_wrap_pointer
+fiona._err.CPLE_OpenFailedError: test_datasamplesample_short.shp: No such file or directory
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/Users/car/Project/soilCli/reports/inner/exception.py", line 36, in wrapper
+    return func(*args, **kwargs)
+  File "/Users/car/Project/soilCli/reports/inner/exception.py", line 24, in wrapper
+    return func(*args, **kwargs)
+  File "/Users/car/Project/soilCli/reports/inner/exception.py", line 47, in wrapper
+    func(*args, **kwargs)
+  File "/Users/car/Project/soilCli/reports/./reports.py", line 99, in total
+    sample(sample_pth, inner_xls_template_path, xls_template_path)
+  File "/Users/car/Project/soilCli/reports/a_sample.py", line 47, in sample
+    batch_type_7(file_pth, type_7_list, xls_template_path, out_file_pth)
+  File "/Users/car/Project/soilCli/reports/a_sample.py", line 13, in batch_type_7
+    df = read_and_prepare_file(file_pth)
+  File "/Users/car/Project/soilCli/reports/inner/share.py", line 137, in read_and_prepare_file
+    df = gpd.read_file(file_pth)
+  File "/Users/car/opt/anaconda3/envs/soilCli/lib/python3.9/site-packages/geopandas/io/file.py", line 259, in _read_file
+    return _read_file_fiona(
+  File "/Users/car/opt/anaconda3/envs/soilCli/lib/python3.9/site-packages/geopandas/io/file.py", line 303, in _read_file_fiona
+    with reader(path_or_bytes, **kwargs) as features:
+  File "/Users/car/opt/anaconda3/envs/soilCli/lib/python3.9/site-packages/fiona/env.py", line 408, in wrapper
+    return f(*args, **kwargs)
+  File "/Users/car/opt/anaconda3/envs/soilCli/lib/python3.9/site-packages/fiona/__init__.py", line 264, in open
+    c = Collection(path, mode, driver=driver, encoding=encoding,
+  File "/Users/car/opt/anaconda3/envs/soilCli/lib/python3.9/site-packages/fiona/collection.py", line 162, in __init__
+    self.session.start(self, **kwargs)
+  File "fiona/ogrext.pyx", line 540, in fiona.ogrext.Session.start
+  File "fiona/_shim.pyx", line 90, in fiona._shim.gdal_open_vector
+fiona.errors.DriverError: test_datasamplesample_short.shp: No such file or directory
+2024-06-21 18:25:24,936 - ERROR - KeyError occurred: 'PD_new'
+Traceback (most recent call last):
+  File "/Users/car/opt/anaconda3/envs/soilCli/lib/python3.9/site-packages/pandas/core/indexes/base.py", line 3791, in get_loc
+    return self._engine.get_loc(casted_key)
+  File "index.pyx", line 152, in pandas._libs.index.IndexEngine.get_loc
+  File "index.pyx", line 181, in pandas._libs.index.IndexEngine.get_loc
+  File "pandas/_libs/hashtable_class_helper.pxi", line 7080, in pandas._libs.hashtable.PyObjectHashTable.get_item
+  File "pandas/_libs/hashtable_class_helper.pxi", line 7088, in pandas._libs.hashtable.PyObjectHashTable.get_item
+KeyError: 'PD_new'
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/Users/car/Project/soilCli/reports/inner/exception.py", line 24, in wrapper
+    return func(*args, **kwargs)
+  File "/Users/car/Project/soilCli/reports/inner/exception.py", line 47, in wrapper
+    func(*args, **kwargs)
+  File "/Users/car/Project/soilCli/reports/./reports.py", line 93, in total
+    suiti(qual_pth, xls_template_path, xls_template_path)
+  File "/Users/car/Project/soilCli/reports/d_suiti.py", line 66, in suiti
+    type_56(suti_pth, xls_template_path, out_file_pth)
+  File "/Users/car/Project/soilCli/reports/d_suiti.py", line 20, in type_56
+    wb = QUAL_74.statistics_all(df, csv_data, yaml_data, wb, bar, sheet_name)
+  File "/Users/car/Project/soilCli/reports/inner/QUAL_74.py", line 71, in statistics_all
+    area_position_list, area_list, percent_list_position_list, percent_list = _get_result_list(df, result_start_position, street_value_list, group_field, group_field_value, calc_field, limit_field)
+  File "/Users/car/Project/soilCli/reports/inner/QUAL_74.py", line 18, in _get_result_list
+    df.loc[:, group_field+'_new'] = df[group_field].astype(str)
+  File "/Users/car/opt/anaconda3/envs/soilCli/lib/python3.9/site-packages/geopandas/geodataframe.py", line 1415, in __getitem__
+    result = super().__getitem__(key)
+  File "/Users/car/opt/anaconda3/envs/soilCli/lib/python3.9/site-packages/pandas/core/frame.py", line 3893, in __getitem__
+    indexer = self.columns.get_loc(key)
+  File "/Users/car/opt/anaconda3/envs/soilCli/lib/python3.9/site-packages/pandas/core/indexes/base.py", line 3798, in get_loc
+    raise KeyError(key) from err
+KeyError: 'PD_new'
+2024-06-21 18:25:48,037 - ERROR - KeyError occurred: 'PD_new'
+Traceback (most recent call last):
+  File "/Users/car/opt/anaconda3/envs/soilCli/lib/python3.9/site-packages/pandas/core/indexes/base.py", line 3791, in get_loc
+    return self._engine.get_loc(casted_key)
+  File "index.pyx", line 152, in pandas._libs.index.IndexEngine.get_loc
+  File "index.pyx", line 181, in pandas._libs.index.IndexEngine.get_loc
+  File "pandas/_libs/hashtable_class_helper.pxi", line 7080, in pandas._libs.hashtable.PyObjectHashTable.get_item
+  File "pandas/_libs/hashtable_class_helper.pxi", line 7088, in pandas._libs.hashtable.PyObjectHashTable.get_item
+KeyError: 'PD_new'
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/Users/car/Project/soilCli/reports/inner/exception.py", line 24, in wrapper
+    return func(*args, **kwargs)
+  File "/Users/car/Project/soilCli/reports/inner/exception.py", line 47, in wrapper
+    func(*args, **kwargs)
+  File "/Users/car/Project/soilCli/reports/./reports.py", line 93, in total
+    suiti(qual_pth, xls_template_path, xls_template_path)
+  File "/Users/car/Project/soilCli/reports/d_suiti.py", line 66, in suiti
+    type_56(suti_pth, xls_template_path, out_file_pth)
+  File "/Users/car/Project/soilCli/reports/d_suiti.py", line 20, in type_56
+    wb = QUAL_74.statistics_all(df, csv_data, yaml_data, wb, bar, sheet_name)
+  File "/Users/car/Project/soilCli/reports/inner/QUAL_74.py", line 71, in statistics_all
+    area_position_list, area_list, percent_list_position_list, percent_list = _get_result_list(df, result_start_position, street_value_list, group_field, group_field_value, calc_field, limit_field)
+  File "/Users/car/Project/soilCli/reports/inner/QUAL_74.py", line 18, in _get_result_list
+    df.loc[:, group_field+'_new'] = df[group_field].astype(str)
+  File "/Users/car/opt/anaconda3/envs/soilCli/lib/python3.9/site-packages/geopandas/geodataframe.py", line 1415, in __getitem__
+    result = super().__getitem__(key)
+  File "/Users/car/opt/anaconda3/envs/soilCli/lib/python3.9/site-packages/pandas/core/frame.py", line 3893, in __getitem__
+    indexer = self.columns.get_loc(key)
+  File "/Users/car/opt/anaconda3/envs/soilCli/lib/python3.9/site-packages/pandas/core/indexes/base.py", line 3798, in get_loc
+    raise KeyError(key) from err
+KeyError: 'PD_new'
+2024-06-21 18:33:00,152 - ERROR - KeyError occurred: 'PD_new'
+Traceback (most recent call last):
+  File "/Users/car/opt/anaconda3/envs/soilCli/lib/python3.9/site-packages/pandas/core/indexes/base.py", line 3791, in get_loc
+    return self._engine.get_loc(casted_key)
+  File "index.pyx", line 152, in pandas._libs.index.IndexEngine.get_loc
+  File "index.pyx", line 181, in pandas._libs.index.IndexEngine.get_loc
+  File "pandas/_libs/hashtable_class_helper.pxi", line 7080, in pandas._libs.hashtable.PyObjectHashTable.get_item
+  File "pandas/_libs/hashtable_class_helper.pxi", line 7088, in pandas._libs.hashtable.PyObjectHashTable.get_item
+KeyError: 'PD_new'
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/Users/car/Project/soilCli/reports/inner/exception.py", line 24, in wrapper
+    return func(*args, **kwargs)
+  File "/Users/car/Project/soilCli/reports/inner/exception.py", line 47, in wrapper
+    func(*args, **kwargs)
+  File "/Users/car/Project/soilCli/reports/./reports.py", line 93, in total
+    suiti(qual_pth, xls_template_path, xls_template_path)
+  File "/Users/car/Project/soilCli/reports/d_suiti.py", line 72, in suiti
+    type_56(suti_pth, xls_template_path, out_file_pth)
+  File "/Users/car/Project/soilCli/reports/d_suiti.py", line 26, in type_56
+    wb = QUAL_74.statistics_all(df, csv_data, yaml_data, wb, bar, sheet_name)
+  File "/Users/car/Project/soilCli/reports/inner/QUAL_74.py", line 71, in statistics_all
+    area_position_list, area_list, percent_list_position_list, percent_list = _get_result_list(df, result_start_position, street_value_list, group_field, group_field_value, calc_field, limit_field)
+  File "/Users/car/Project/soilCli/reports/inner/QUAL_74.py", line 18, in _get_result_list
+    df.loc[:, group_field+'_new'] = df[group_field].astype(str)
+  File "/Users/car/opt/anaconda3/envs/soilCli/lib/python3.9/site-packages/geopandas/geodataframe.py", line 1415, in __getitem__
+    result = super().__getitem__(key)
+  File "/Users/car/opt/anaconda3/envs/soilCli/lib/python3.9/site-packages/pandas/core/frame.py", line 3893, in __getitem__
+    indexer = self.columns.get_loc(key)
+  File "/Users/car/opt/anaconda3/envs/soilCli/lib/python3.9/site-packages/pandas/core/indexes/base.py", line 3798, in get_loc
+    raise KeyError(key) from err
+KeyError: 'PD_new'
+2024-06-21 18:35:22,376 - ERROR - KeyError occurred: 'PD_new'
+Traceback (most recent call last):
+  File "/Users/car/opt/anaconda3/envs/soilCli/lib/python3.9/site-packages/pandas/core/indexes/base.py", line 3791, in get_loc
+    return self._engine.get_loc(casted_key)
+  File "index.pyx", line 152, in pandas._libs.index.IndexEngine.get_loc
+  File "index.pyx", line 181, in pandas._libs.index.IndexEngine.get_loc
+  File "pandas/_libs/hashtable_class_helper.pxi", line 7080, in pandas._libs.hashtable.PyObjectHashTable.get_item
+  File "pandas/_libs/hashtable_class_helper.pxi", line 7088, in pandas._libs.hashtable.PyObjectHashTable.get_item
+KeyError: 'PD_new'
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/Users/car/Project/soilCli/reports/inner/exception.py", line 24, in wrapper
+    return func(*args, **kwargs)
+  File "/Users/car/Project/soilCli/reports/inner/exception.py", line 47, in wrapper
+    func(*args, **kwargs)
+  File "/Users/car/Project/soilCli/reports/./reports.py", line 93, in total
+    suiti(qual_pth, xls_template_path, xls_template_path)
+  File "/Users/car/Project/soilCli/reports/d_suiti.py", line 72, in suiti
+    type_56(suti_pth, xls_template_path, out_file_pth)
+  File "/Users/car/Project/soilCli/reports/d_suiti.py", line 26, in type_56
+    wb = QUAL_74.statistics_all(df, csv_data, yaml_data, wb, bar, sheet_name)
+  File "/Users/car/Project/soilCli/reports/inner/QUAL_74.py", line 71, in statistics_all
+    area_position_list, area_list, percent_list_position_list, percent_list = _get_result_list(df, result_start_position, street_value_list, group_field, group_field_value, calc_field, limit_field)
+  File "/Users/car/Project/soilCli/reports/inner/QUAL_74.py", line 18, in _get_result_list
+    df.loc[:, group_field+'_new'] = df[group_field].astype(str)
+  File "/Users/car/opt/anaconda3/envs/soilCli/lib/python3.9/site-packages/geopandas/geodataframe.py", line 1415, in __getitem__
+    result = super().__getitem__(key)
+  File "/Users/car/opt/anaconda3/envs/soilCli/lib/python3.9/site-packages/pandas/core/frame.py", line 3893, in __getitem__
+    indexer = self.columns.get_loc(key)
+  File "/Users/car/opt/anaconda3/envs/soilCli/lib/python3.9/site-packages/pandas/core/indexes/base.py", line 3798, in get_loc
+    raise KeyError(key) from err
+KeyError: 'PD_new'
+2024-06-21 18:35:44,906 - ERROR - KeyError occurred: 'PD_new'
+Traceback (most recent call last):
+  File "/Users/car/opt/anaconda3/envs/soilCli/lib/python3.9/site-packages/pandas/core/indexes/base.py", line 3791, in get_loc
+    return self._engine.get_loc(casted_key)
+  File "index.pyx", line 152, in pandas._libs.index.IndexEngine.get_loc
+  File "index.pyx", line 181, in pandas._libs.index.IndexEngine.get_loc
+  File "pandas/_libs/hashtable_class_helper.pxi", line 7080, in pandas._libs.hashtable.PyObjectHashTable.get_item
+  File "pandas/_libs/hashtable_class_helper.pxi", line 7088, in pandas._libs.hashtable.PyObjectHashTable.get_item
+KeyError: 'PD_new'
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/Users/car/Project/soilCli/reports/inner/exception.py", line 24, in wrapper
+    return func(*args, **kwargs)
+  File "/Users/car/Project/soilCli/reports/inner/exception.py", line 47, in wrapper
+    func(*args, **kwargs)
+  File "/Users/car/Project/soilCli/reports/./reports.py", line 93, in total
+    suiti(qual_pth, xls_template_path, xls_template_path)
+  File "/Users/car/Project/soilCli/reports/d_suiti.py", line 72, in suiti
+    type_56(suti_pth, xls_template_path, out_file_pth)
+  File "/Users/car/Project/soilCli/reports/d_suiti.py", line 26, in type_56
+    wb = QUAL_74.statistics_all(df, csv_data, yaml_data, wb, bar, sheet_name)
+  File "/Users/car/Project/soilCli/reports/inner/QUAL_74.py", line 71, in statistics_all
+    area_position_list, area_list, percent_list_position_list, percent_list = _get_result_list(df, result_start_position, street_value_list, group_field, group_field_value, calc_field, limit_field)
+  File "/Users/car/Project/soilCli/reports/inner/QUAL_74.py", line 18, in _get_result_list
+    df.loc[:, group_field+'_new'] = df[group_field].astype(str)
+  File "/Users/car/opt/anaconda3/envs/soilCli/lib/python3.9/site-packages/geopandas/geodataframe.py", line 1415, in __getitem__
+    result = super().__getitem__(key)
+  File "/Users/car/opt/anaconda3/envs/soilCli/lib/python3.9/site-packages/pandas/core/frame.py", line 3893, in __getitem__
+    indexer = self.columns.get_loc(key)
+  File "/Users/car/opt/anaconda3/envs/soilCli/lib/python3.9/site-packages/pandas/core/indexes/base.py", line 3798, in get_loc
+    raise KeyError(key) from err
+KeyError: 'PD_new'

@@ -3,33 +3,12 @@ Author: Mr.Car
 Date: 2024-02-29 18:13:50
 '''
 import pandas as pd
+import geopandas as gpd
 import os
 import yaml
 import openpyxl
-
-
-class ConfigLoader:
-    '''
-    载入配置文件
-    '''
-    def __init__(self, folder_path):
-        self.yaml = {}
-        self.csv = {}
-        self.load_cfg_files(folder_path)
-
-    def load_cfg_files(self, folder_path):
-        for root, dirs, files in os.walk(folder_path):
-            for filename in files:
-                if filename.endswith('.yaml'):
-                    with open(os.path.join(root, filename), 'r', encoding='utf-8') as f:
-                        data = yaml.load(f, Loader=yaml.FullLoader)
-                        self.yaml.update(data)
-                if filename.endswith('.csv'):
-                    file_path = os.path.join(root, filename)  # 获取文件的完整路径
-                    dataframe = pd.read_csv(file_path)  # 读取 CSV 文件为 Pandas DataFrame
-                    dataframe.set_index('name', inplace=True)
-                    self.csv[os.path.splitext(filename)[0]] = dataframe # 使用文件名（不包含扩展名）作为字典的键，并将 DataFrame 存储为值
-
+from openpyxl import load_workbook
+from .load_config import csv_data, yaml_data, inner_xls_template_path, cfg_index
 class XlsPosUtil:
     '''
     处理 excel 中的 position 字符串
@@ -126,3 +105,67 @@ def _get_sorted_list(df, parent_field, sort_field):
     else:
         result_list = df[parent_field].unique().tolist()
     return result_list
+
+
+# 原 report.py 中的准备文件：
+def read_and_prepare_file(file_pth, file_type="shp"):
+    if file_type == 'csv':
+        df = pd.read_csv(file_path)
+    else:
+        df = gpd.read_file(file_pth)
+    return df
+
+def get_cfg_params(cfg_index, name, result_type="variable"):
+    if result_type == "variable":
+        var_table = csv_data[cfg_index.loc[name]["var"]]
+    if result_type == "file_pth":
+        var_table = os.path.join(folder_path, cfg_index.loc[name]["var"])
+    rule_table = csv_data[cfg_index.loc[name]["rule"]]
+    field = cfg_index.loc[name]["field"]
+    target_field = cfg_index.loc[name]["target_field"]
+    title = cfg_index.loc[name]["title"]
+    nan_filler = cfg_index.loc[name]["nan_filler"]
+    return var_table, rule_table, field, target_field, title, nan_filler
+
+def get_wb(xls_file_path):
+    wb = load_workbook(xls_file_path)    
+    return wb
+
+def fill_column_title(var_table, sheet):
+    '''
+    填充标题列
+    '''
+    for name, row in var_table.iterrows():
+        locate_position = row["locate_position"]
+        title = row["title"]
+        if not pd.isna(locate_position) and not pd.isna(title):
+            sheet = fill_value(sheet, title, locate_position)
+    return sheet
+
+def deal_none(df, field, rule_table, result_type="ss"):
+    '''
+    输入样点数据 输出df(除了空值之外的) 输出df(空值)
+    '''
+    ss = df[field]
+    rule_str = rule_table.loc["none"]["value"]
+    ss_none = ss[ss.apply(lambda x: eval(rule_str, {"x": x}))]
+    df_none = df[ss.apply(lambda x: eval(rule_str, {"x": x}))]
+    ss_not_none = ss[ss.apply(lambda x: not eval(rule_str, {"x": x}))]
+    df_not_none = df[ss.apply(lambda x: not eval(rule_str, {"x": x}))]
+    if result_type == "ss":
+        return ss_none, ss_not_none
+    elif result_type == "df":
+        return df_none, df_not_none
+
+def save_xls(wb, xls_file_path):
+    wb.save(xls_file_path)
+    return
+
+def prepare_cfg(origin_file_pth, cfg_name, parent_field, sort_field=None):
+    '''
+    准备好文件
+    '''
+    with alive_bar(1, title="生成配置文件:") as bar:
+        TRSX_112.prepare(origin_file_pth, folder_path, cfg_name, parent_field, sort_field)
+        bar()
+    return "Done!"

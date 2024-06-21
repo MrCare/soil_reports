@@ -11,271 +11,17 @@ import os
 import fire
 import warnings
 
-from inner import JSBG_7, JSBG_8, TRSX_111, TRSX_112, QUAL_76_78, QUAL_77, QUAL_72, QUAL_73, QUAL_74, QUAL_75, SUITI_64, SUITI_67, zonal_statistics, check
-from inner.share import fill_title, fill_value, get_sheet, ConfigLoader
-# from inner_unique import add_field, table_66
-from alive_progress import alive_bar
-from openpyxl import load_workbook
+from inner import zonal_statistics, check
+from inner.share import *
+from inner.exception import *
+from a_sample import sample
+from b_element import element
+from c_qual import qual
+from d_suiti import suiti
 
 # 忽略 FutureWarning
 warnings.simplefilter(action='ignore', category=FutureWarning)
 
-# 载入配置文件
-folder_path = os.path.join(os.path.dirname(__file__), 'config')
-xls_template_path = os.path.join(folder_path, 'cfg_template.xlsx')
-configLoader = ConfigLoader(folder_path)# 载入配置文件
-csv_data = configLoader.csv
-yaml_data = configLoader.yaml
-cfg_index = csv_data['cfg_index']
-
-def read_and_prepare_file(file_pth, file_type="shp"):
-    if file_type == 'csv':
-        df = pd.read_csv(file_path)
-    else:
-        df = gpd.read_file(file_pth)
-    return df
-
-def get_cfg_params(cfg_index, name, result_type="variable"):
-    if result_type == "variable":
-        var_table = csv_data[cfg_index.loc[name]["var"]]
-    if result_type == "file_pth":
-        var_table = os.path.join(folder_path, cfg_index.loc[name]["var"])
-    rule_table = csv_data[cfg_index.loc[name]["rule"]]
-    field = cfg_index.loc[name]["field"]
-    target_field = cfg_index.loc[name]["target_field"]
-    title = cfg_index.loc[name]["title"]
-    nan_filler = cfg_index.loc[name]["nan_filler"]
-    return var_table, rule_table, field, target_field, title, nan_filler
-
-def get_wb(xls_file_path):
-    wb = load_workbook(xls_file_path)    
-    return wb
-
-def fill_column_title(var_table, sheet):
-    '''
-    填充标题列
-    '''
-    for name, row in var_table.iterrows():
-        locate_position = row["locate_position"]
-        title = row["title"]
-        if not pd.isna(locate_position) and not pd.isna(title):
-            sheet = fill_value(sheet, title, locate_position)
-    return sheet
-
-def deal_none(df, field, rule_table, result_type="ss"):
-    '''
-    输入样点数据 输出df(除了空值之外的) 输出df(空值)
-    '''
-    ss = df[field]
-    rule_str = rule_table.loc["none"]["value"]
-    ss_none = ss[ss.apply(lambda x: eval(rule_str, {"x": x}))]
-    df_none = df[ss.apply(lambda x: eval(rule_str, {"x": x}))]
-    ss_not_none = ss[ss.apply(lambda x: not eval(rule_str, {"x": x}))]
-    df_not_none = df[ss.apply(lambda x: not eval(rule_str, {"x": x}))]
-    if result_type == "ss":
-        return ss_none, ss_not_none
-    elif result_type == "df":
-        return df_none, df_not_none
-
-def save_xls(wb, xls_file_path):
-    wb.save(xls_file_path)
-    return
-
-def prepare_cfg(origin_file_pth, cfg_name, parent_field, sort_field=None):
-    '''
-    准备好文件
-    '''
-    with alive_bar(1, title="生成配置文件:") as bar:
-        TRSX_112.prepare(origin_file_pth, folder_path, cfg_name, parent_field, sort_field)
-        bar()
-    return "Done!"
-
-def batch_type_7(file_pth, table_list, xls_template_path=xls_template_path, out_file_pth=None):
-    total_steps = len(table_list) + 1
-    with alive_bar(total_steps, title="表层样数据分析:") as bar:
-        df = read_and_prepare_file(file_pth)
-        wb = get_wb(xls_template_path)
-        for table in table_list:
-            var_table, rule_table, field, target_field, title, nan_filler = get_cfg_params(cfg_index, table)
-            sheet = get_sheet(wb, table)
-            sheet = fill_title(sheet, title, "A1")
-            ss_none, ss_not_none = deal_none(df, field, rule_table)
-            JSBG_7.statistics_all(ss_not_none, var_table, rule_table, sheet, nan_filler)
-            if not out_file_pth:
-                out_file_pth = os.path.join(os.path.dirname(file_pth), 'reports_result.xlsx')
-            bar()
-
-        save_xls(wb, out_file_pth)
-        bar()
-    return "Done!"
-
-def batch_type_111(file_pth, table_list, xls_template_path=xls_template_path, out_file_pth=None):
-    total_steps = len(table_list) + 1
-    with alive_bar(total_steps, title="评价单元数据分析:") as bar:
-        df = read_and_prepare_file(file_pth)
-        wb = get_wb(xls_template_path)
-        for table in table_list:
-            var_table, rule_table, field, target_field, title, nan_filler = get_cfg_params(cfg_index, table)
-            sheet = get_sheet(wb, table)
-            sheet = fill_title(sheet, title, "A1")
-            sheet = fill_column_title(var_table, sheet)
-            df_none, df_not_none = deal_none(df, field, rule_table, 'df')
-            df = TRSX_111.prepare(df_not_none)
-            TRSX_111.statistics_all(df, field, target_field, var_table, rule_table, sheet, nan_filler)
-            if not out_file_pth:
-                out_file_pth = os.path.join(os.path.dirname(file_pth), 'reports_result.xlsx')
-            bar()
-
-        save_xls(wb, out_file_pth)
-        bar()
-    return "Done!"
-
-def batch_type_8(file_pth, table_list, xls_template_path=xls_template_path, out_file_pth=None):
-    total_steps = len(table_list) + 1
-    with alive_bar(total_steps,title="评价单元数据分析:") as bar:
-        df = read_and_prepare_file(file_pth)
-        wb = get_wb(xls_template_path)
-        for table in table_list:
-            var_table, rule_table, field, target_field, title, nan_filler = get_cfg_params(cfg_index, table)
-            sheet = get_sheet(wb, table)
-            sheet = fill_title(sheet, title, "A1")
-            df_none, df_not_none = deal_none(df, field, rule_table, 'df')
-            JSBG_8.statistics_all(df_not_none, field, target_field, var_table, sheet, nan_filler)
-            if not out_file_pth:
-                out_file_pth = os.path.join(os.path.dirname(file_pth), 'reports_result.xlsx')
-            bar()
-        save_xls(wb, out_file_pth)
-        bar()
-    return "Done!"
-
-def batch_type_76(file_pth, xls_template_path=xls_template_path, out_file_pth=None):
-    var_table = csv_data['cfg_76and78_var']
-    total_steps = len(var_table) + 1
-    if not out_file_pth:
-        out_file_pth = os.path.join(os.path.dirname(file_pth), 'reports_result.xlsx')
-    with alive_bar(total_steps, title="土壤质量等级面积与产能分布:") as bar:
-        df = read_and_prepare_file(file_pth)
-        wb = get_wb(xls_template_path)
-        wb = QUAL_76_78.statistics_all(df, var_table, csv_data, wb, bar)
-        save_xls(wb, out_file_pth)
-        bar()
-    return "Done!"
-
-def batch_type_77(file_pth, xls_template_path=xls_template_path, out_file_pth=None):
-    var_table = csv_data['cfg_77_var']
-    total_steps = len(var_table) + 1
-    if not out_file_pth:
-        out_file_pth = os.path.join(os.path.dirname(file_pth), 'reports_result.xlsx')
-    with alive_bar(total_steps, title="土壤质量属性情况:") as bar:
-        df = read_and_prepare_file(file_pth)
-        wb = get_wb(xls_template_path)
-        wb = QUAL_77.statistics_all(df, var_table, csv_data, wb, bar)
-        save_xls(wb, out_file_pth)
-        bar()
-    return "Done!"
-
-def type_72(file_pth, xls_template_path=xls_template_path, out_file_pth=None):
-    total_steps = 1 + 1
-    if not out_file_pth:
-        out_file_pth = os.path.join(os.path.dirname(file_pth), 'reports_result.xlsx')
-    with alive_bar(total_steps, title="72土壤质量等级面积及其占比:") as bar:
-        df = read_and_prepare_file(file_pth)
-        wb = get_wb(xls_template_path)
-        wb = QUAL_72.statistics_all(df, yaml_data, wb, bar)
-        save_xls(wb, out_file_pth)
-        bar()
-    return "Done!"
-
-def type_62(file_pth, xls_template_path=xls_template_path, out_file_pth=None):
-    total_steps = 1 + 1
-    if not out_file_pth:
-        out_file_pth = os.path.join(os.path.dirname(file_pth), 'reports_result.xlsx')
-    with alive_bar(total_steps, title="62宜类评价面积表:") as bar:
-        df = read_and_prepare_file(file_pth)
-        wb = get_wb(xls_template_path)
-        wb = QUAL_72.statistics_all(df, yaml_data, wb, bar, 'SUITI_62')
-        save_xls(wb, out_file_pth)
-        bar()
-    return "Done!"
-
-def type_64(file_pth, xls_template_path=xls_template_path, out_file_pth=None):
-    sheet_name_list = ['SUITI_64', 'SUITI_65']
-    total_steps = len(sheet_name_list) + 1
-    if not out_file_pth:
-        out_file_pth = os.path.join(os.path.dirname(file_pth), 'reports_result.xlsx')
-    with alive_bar(total_steps, title="64-65土类亚类及适宜程度面积表:") as bar:
-        for sheet_name in sheet_name_list:
-            df = read_and_prepare_file(file_pth)
-            wb = get_wb(xls_template_path)
-            wb = SUITI_64.statistics_all(df, yaml_data, wb, bar, sheet_name)
-            save_xls(wb, out_file_pth)
-        bar()
-    return "Done!"
-
-def type_73(file_pth, xls_template_path=xls_template_path, out_file_pth=None):
-    total_steps = 1 + 1
-    if not out_file_pth:
-        out_file_pth = os.path.join(os.path.dirname(file_pth), 'reports_result.xlsx')
-    with alive_bar(total_steps, title="73土壤质量等级及得分:") as bar:
-        df = read_and_prepare_file(file_pth)
-        wb = get_wb(xls_template_path)
-        wb = QUAL_73.statistics_all(df, csv_data, yaml_data, wb, bar)
-        save_xls(wb, out_file_pth)
-        bar()
-    return "Done!"
-
-def type_74(file_pth, xls_template_path=xls_template_path, out_file_pth=None, sheet_name="QUAL_74"):
-    total_steps = 1 + 1
-    if not out_file_pth:
-        out_file_pth = os.path.join(os.path.dirname(file_pth), 'reports_result.xlsx')
-    with alive_bar(total_steps, title="耕地质量等级面积总分布:") as bar:
-        df = read_and_prepare_file(file_pth)
-        wb = get_wb(xls_template_path)
-        wb = QUAL_74.statistics_all(df, csv_data, yaml_data, wb, bar, sheet_name)
-        save_xls(wb, out_file_pth)
-        bar()
-    return "Done!"
-
-def type_56(file_pth, xls_template_path=xls_template_path, out_file_pth=None):
-    # 测试数据中暂时没有 SUITI_165
-    type_74_for_suti_list = ['SUITI_56','SUITI_57','SUITI_58','SUITI_59','SUITI_60','SUITI_61','SUITI_164','SUITI_166','SUITI_63']
-    total_steps = len(type_74_for_suti_list) + 1
-    if not out_file_pth:
-        out_file_pth = os.path.join(os.path.dirname(file_pth), 'reports_result.xlsx')
-    with alive_bar(total_steps, title="适宜性评价等级分布:") as bar:
-        for sheet_name in type_74_for_suti_list:
-            df = read_and_prepare_file(file_pth)
-            wb = get_wb(xls_template_path)
-            wb = QUAL_74.statistics_all(df, csv_data, yaml_data, wb, bar, sheet_name)
-            save_xls(wb, out_file_pth)
-        bar()
-    return "Done!"
-
-def type_75(file_pth, xls_template_path=xls_template_path, out_file_pth=None):
-    total_steps = 1 + 1
-    if not out_file_pth:
-        out_file_pth = os.path.join(os.path.dirname(file_pth), 'reports_result.xlsx')
-    with alive_bar(total_steps, title="75各街道耕地产能:") as bar:
-        df = read_and_prepare_file(file_pth)
-        wb = get_wb(xls_template_path)
-        wb = QUAL_75.statistics_all(df, csv_data, yaml_data, wb, bar)
-        save_xls(wb, out_file_pth)
-        bar()
-    return "Done!"
-
-def type_67(file_pth, xls_template_path=xls_template_path, out_file_pth=None):
-    sheet_name_list = ['SUITI_67', 'SUITI_68', 'SUITI_69', 'SUITI_70']
-    total_steps = len(sheet_name_list) + 1
-    if not out_file_pth:
-        out_file_pth = os.path.join(os.path.dirname(file_pth), 'reports_result.xlsx')
-    with alive_bar(total_steps, title="67-70地类面积错配表:") as bar:
-        for sheet_name in sheet_name_list:
-            df = read_and_prepare_file(file_pth)
-            wb = get_wb(xls_template_path)
-            wb = SUITI_67.statistics_all(df, yaml_data, wb, bar, sheet_name)
-            save_xls(wb, out_file_pth)
-        bar()
-    return "Done!"
 
 def quality_check(shp, shp_type="sample"):
     global_rule_file = os.path.join(folder_path, 'cfg_check_rule_all.csv')
@@ -302,131 +48,51 @@ def add_DL(shp):
         bar()
     return "Done!"
 
-def _suiti_tables(file_pth, table_list, xls_template_path=xls_template_path, out_file_pth=None):
-    df = read_and_prepare_file(file_pth)
-    wb = get_wb(xls_template_path)
-    if not out_file_pth:
-        out_file_pth = os.path.join(os.path.dirname(file_pth), 'reports_result.xlsx')
+# def _suiti_tables(file_pth, table_list, xls_template_path=None, out_file_pth=None):
+#     df = read_and_prepare_file(file_pth)
+#     wb = get_wb(xls_template_path)
+#     if not out_file_pth:
+#         out_file_pth = os.path.join(os.path.dirname(file_pth), 'reports_result.xlsx')
 
-    for table in table_list:
-        _, _, _, _, title, nan_filler = get_cfg_params(cfg_index, table)
-        sheet = get_sheet(wb, table)
-        sheet = fill_title(sheet, title, "A1")
-        if table == 'SUTI_66':
-            result_list = table_66.table_66(df)
-            for each in result_list:
-                fill_value(sheet, each["form"], each["position"])
-    save_xls(wb, out_file_pth)
+#     for table in table_list:
+#         _, _, _, _, title, nan_filler = get_cfg_params(cfg_index, table)
+#         sheet = get_sheet(wb, table)
+#         sheet = fill_title(sheet, title, "A1")
+#         if table == 'SUTI_66':
+#             result_list = table_66.table_66(df)
+#             for each in result_list:
+#                 fill_value(sheet, each["form"], each["position"])
+#     save_xls(wb, out_file_pth)
 
-def total(sample_pth, element_pth, suti_pth, qual_pth, type_list, out_file_pth=None):
+
+@catch_file_not_found_error
+@catch_key_error
+@add_attention
+def total(sample_pth, element_pth, suiti_pth, qual_pth, range='ALL', out_file_pth=None):
+    '''
+    --sample_pth : 样点数据路径
+    --element_pth : 评价单元数据路径
+    --qual_pth : 耕地质量评价结果数据路径
+    --suiti_pth : 适宜性评价结果数据路径
+    --range: ALL | SAMPLE | ELEMENT | QUAL | SUITI
+    '''
     xls_template_path = os.path.join(os.path.dirname(sample_pth), 'reports_result.xlsx')
-    type_7_list = [
-        'JSBG_7_PH',
-        'JSBG_10_OM',
-        'JSBG_16_TN',
-        'JSBG_19_TP',
-        'JSBG_22_TK',
-        'JSBG_25_AP',
-        'JSBG_28_AK',
-        'JSBG_31_AS1',
-        'JSBG_34_AFE',
-        'JSBG_37_AMN',
-        'JSBG_40_ACU',
-        'JSBG_43_AZN',
-        'JSBG_46_AB',
-        'JSBG_49_AMO',
-        'JSBG_53_GZCHD'
-        ]
-    type_111_list = [
-        'TRSX_111_PH',
-        'TRSX_112_PH',
-        'TRSX_113_PH',
-        'TRSX_114_CEC',
-        'TRSX_115_CEC',
-        'TRSX_116_CEC',
-        'TRSX_117_TRRZPJZ',
-        'TRSX_118_TRRZPJZ',
-        'TRSX_119_TRRZPJZ',
-        'TRSX_120_GZCHD',
-        'TRSX_121_GZCHD',
-        'TRSX_122_GZCHD',
-        'TRSX_123_TRZD',
-        'TRSX_124_TRZD',
-        'TRSX_125_TRZD',
-        'TRSX_126_TRSL',
-        'TRSX_127_TRSL',
-        'TRSX_128_TRSL',
-        'TRSX_129_TRFSL',
-        'TRSX_130_TRFSL',
-        'TRSX_131_TRFSL',
-        'TRSX_132_TRNL',
-        'TRSX_133_TRNL',
-        'TRSX_134_TRNL',
-        'TRSX_135_OM',
-        'TRSX_136_OM',
-        'TRSX_137_OM',
-        'TRSX_138_TN',
-        'TRSX_139_TN',
-        'TRSX_140_TN',
-        'TRSX_141_TP',
-        'TRSX_142_TP',
-        'TRSX_143_TP',
-        'TRSX_144_TK',
-        'TRSX_145_TK',
-        'TRSX_146_TK',
-        'TRSX_147_AP',
-        'TRSX_148_AP',
-        'TRSX_149_AP',
-        'TRSX_150_AK',
-        'TRSX_151_AK',
-        'TRSX_152_AK'
-        ]
-    type_8_list = [
-        'JSBG_8_PH',
-        'JSBG_11_OM',
-        'JSBG_17_TN',
-        'JSBG_20_TP',
-        'JSBG_23_TK',
-        'JSBG_26_AP',
-        'JSBG_29_AK',
-        'JSBG_32_AS1',
-        'JSBG_35_AFE',
-        'JSBG_38_AMN',
-        'JSBG_41_ACU',
-        'JSBG_44_AZN',
-        'JSBG_47_AB',
-        'JSBG_50_AMO',
-        'JSBG_54_GZCHD'
-        ]
 
-    for each in type_list:
-        if each == "JSBG_7":
-            batch_type_7(sample_pth, type_7_list)
-        elif each == "TRSX_111":
-            # batch_type_111(element_pth, ['TRSX_111_PH', 'TRSX_135_OM', 'TRSX_114_CEC', 'TRSX_117_TRRZPJZ', 'TRSX_120_GZCHD', 'TRSX_123_TRZD', 'TRSX_126_TRSL', 'TRSX_129_TRFSL', 'TRSX_132_TRNL', 'TRSX_138_TN', 'TRSX_141_TP', 'TRSX_144_TK', 'TRSX_147_AP', 'TRSX_150_AK'], xls_template_path)
-            batch_type_111(element_pth, type_111_list, xls_template_path, xls_template_path)
-        elif each == "JSBG_8":
-            batch_type_8(element_pth, type_8_list, xls_template_path, xls_template_path)
-        elif each == "SUITI":
-            # _suiti_tables(suti_pth, suti_list, xls_template_path, xls_template_path)
-            type_56(suti_pth, xls_template_path, xls_template_path)
-            type_62(suti_pth, xls_template_path, xls_template_path)
-            type_64(suti_pth, xls_template_path, xls_template_path)
-            type_67(suti_pth, xls_template_path, xls_template_path)
-        elif each == "QUAL_76_78":
-            batch_type_76(qual_pth, xls_template_path, xls_template_path)
-        elif each == "QUAL_77":
-            batch_type_77(qual_pth, xls_template_path, xls_template_path)
-        elif each == "QUAL_72":
-            type_72(qual_pth, xls_template_path, xls_template_path)
-        elif each == "QUAL_73":
-            type_73(qual_pth, xls_template_path, xls_template_path)
-        elif each == "QUAL_74":
-            type_74(qual_pth, xls_template_path, xls_template_path)
-        elif each == "QUAL_75":
-            type_75(qual_pth, xls_template_path, xls_template_path)
-        else:
-            print('ERROR!')
+    if range == "SAMPLE":
+        sample(sample_pth)
+    elif range == "ELEMENT":
+        element(element_pth)
+    elif range == "QUAL":
+        qual(qual_pth)
+    elif range == "SUITI":
+        suiti(suiti_pth)
+    elif range == "ALL":
+        sample(sample_pth, xls_template_path)
+        element(element_pth, xls_template_path, xls_template_path)
+        qual(qual_pth, xls_template_path, xls_template_path)
+        suiti(suiti_pth, xls_template_path, xls_template_path)
+    else:
+        print('ERROR!')
     return "Done!"
 
 if __name__ == "__main__":
@@ -436,18 +102,10 @@ if __name__ == "__main__":
     python reports.py quality_check --shp_files "['./test_data/表层样点.shp']"
     '''
     # zonal_statistics.zs('./test_data/PH评价单元.shp','./test_data/OM预测.tif','OM','./test_data/PH_OM评价单元.shp')
-    # batch_type_7('./test_data/表层样点.shp', ['JSBG_7_PH','JSBG_10_OM','JSBG_16_TN','JSBG_19_TP','JSBG_22_TK','JSBG_25_AP','JSBG_28_AK','JSBG_31_AS1','JSBG_34_AFE','JSBG_37_AMN','JSBG_40_ACU','JSBG_43_AZN','JSBG_46_AB','JSBG_49_AMO','JSBG_53_GZCHD'])
-    # batch_type_111('./test_data/评价单元.shp', ['TRSX_117_TRRZPJZ'])
-    
     # 生成配置文件
 
     # prepare_cfg('./test_data/element/element_short.shp','cfg_112_var','XZQMC', 'XZQDM')
     # prepare_cfg('./test_data/element/element_short.shp','cfg_113_var','TL')
-
-    # 批处理测试
-
-    # batch_type_111('./test_data/PH_OM评价单元.shp', ['TRSX_112_PH', 'TRSX_113_PH'])
-    # batch_type_8('./test_data/评价单元.shp', ['JSBG_8_PH'])
 
     # 质量检查
 
@@ -456,18 +114,7 @@ if __name__ == "__main__":
     
     #总体测试
     # add_DL("./test_data/suiti_result/suiti_result.shp")
-    # total('test_data/sample/sample_short.shp', 'test_data/element/element_short.shp', './test_data/suiti_result/new_csv.csv', './test_data/quality_result/quality_short.shp', [
-    #     'JSBG_7',
-    #     'JSBG_8',
-    #     'TRSX_111',
-    #     'QUAL_76_78'
-    #     'QUAL_77',
-    #     'QUAL_72'
-    # ])
-    # total('test_data/sample/sample_short.shp', 'test_data/element/element_short.shp', './test_data/suiti_result/suiti_result_short.shp', './test_data/quality_result/quality_short.shp', [
-    #     'JSBG_7','SUITI'
-    # ])
-
+    # total('test_data/sample/sample_short.shp', 'test_data/element/element_short.shp', './test_data/suiti_result/suiti_result_short.shp', './test_data/quality_result/quality_short.shp', 'ALL')
     # batch_type_76("test_data/quality_result/quality_short.shp")
 
     fire.Fire({
