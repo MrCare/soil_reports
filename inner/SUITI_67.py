@@ -12,64 +12,58 @@ def _get_devided_result(divider, denominator):
         result = divider / denominator
     return result
 
-def _get_result_list(df, start_position, col_field, col_sum_rule, col_sum_name, group_field, group_field_value, calc_field):
-    df.loc[:, col_field+'_new'] = df[col_field].astype(str)
+def _get_col_list(df, col_name_field, col_value_field):
+    temp_df = df[[col_name_field, col_value_field]].copy()
+    unique_df = temp_df.drop_duplicates(subset = col_value_field, keep='first')
+    unique_df = unique_df.sort_values(by = col_value_field, ascending=True)
+    col_name_list = unique_df[col_name_field].tolist()
+    col_value_list = unique_df[col_value_field].tolist()
+    return col_name_list, col_value_list
+
+def _get_result_list(df, start_position, col_name_field, col_value_field, col_sum_rule, col_sum_name, group_field, group_field_value, calc_field):
+    df.loc[:, col_value_field+'_new'] = df[col_value_field].astype(str)
     df.loc[:, group_field+'_new'] = df[group_field].astype(str)
     area_list = []
+    area_value_list = []
     percent_list = []
     area_position_list = []
     percent_position_list = []
 
     # 先搞定总计
     col_value_list = [col_sum_name]
-    total_df = df.query(f"{col_field+'new'}.str.match({col_sum_rule})").copy()
+    total_df = df.query(f"{col_value_field+'_new'}.str.match({col_sum_rule})").copy()
     for i, each_value in enumerate(group_field_value):
         calc_df = total_df[total_df[group_field+"_new"] == each_value].copy()
-        area_list.append([f"{calc_df[calc_field].sum()}:.2f"])
+        result = calc_df[calc_field].sum()
+        area_list.append([f"{result:.2f}"])
+        area_value_list.append(result)
         area_position_list.append(xpu.position_add_col(start_position, i*2))
         percent_list.append(['100.00%'])
         percent_position_list.append(xpu.position_add_col(start_position, i*2+1))
 
-    # area_sum_list = []
-    # percent_sum_list = []
+    # 再分别统计
+    special_col_name_list, special_col_value_list = _get_col_list(total_df, col_name_field, col_value_field)
+    col_name_list = [col_sum_name] + special_col_name_list
 
 
-    # 处理位置关系
-    area_row, area_col = xpu.get_row_col(start_position)
-    percent_row, percent_col = area_row + 1, area_col
-
-    for i, each_field_level in enumerate(group_field_value):
+    for i, each_value in enumerate(group_field_value):
         each_level_area_result = []
         each_level_percent_result = []
-        grouped_df = df[df[group_field+'_new'] == str(each_field_level)].copy()
-        for each_street in street_value_list:
-            calc_df = grouped_df[grouped_df[limit_field + '_new'] == str(each_street)].copy()
-            limited_df = df[df[limit_field + '_new'] == str(each_street)].copy()
-            each_level_area_result.append(calc_df[calc_field].sum()) #  某街道某等级面积
-            each_level_percent_result.append(_get_devided_result(calc_df[calc_field].sum(), limited_df[calc_field].sum()))
-        total_area = sum(each_level_area_result)
-        total_percent = total_area / df[calc_field].sum()
-        each_level_area_result.append(total_area) # 先计算按行总计
-        each_level_percent_result.append(total_percent)
-        area_list.append(each_level_area_result)
-        percent_list.append(each_level_percent_result)
-        area_position_list.append(xpu.get_excel_position(area_row, area_col + i))
-        percent_position_list.append(xpu.get_excel_position(percent_row, area_col + i))
-    area_sum_list = [sum([each[i] for each in area_list]) for i in range(len(area_list[0]))] # 统一计算按列求和
-    percent_sum_list = [sum([each[i] for each in percent_list]) for i in range(len(percent_list[0]))] # 统一计算按列求和
-    area_list.append(area_sum_list) # 后计算按列总计
-    percent_list.append(percent_sum_list)
-    area_position_list.append(xpu.get_excel_position(area_row, area_col + len(group_field_value)))
-    percent_position_list.append(xpu.get_excel_position(percent_row, area_col + len(group_field_value)))
+        grouped_df = total_df[total_df[group_field+'_new'] == str(each_value)].copy()
+        for each_col_value in special_col_value_list:
+            calc_df = grouped_df[grouped_df[col_value_field + '_new'] == str(each_col_value)].copy()
+            area_list[i].append(calc_df[calc_field].sum())
+            percent_list[i].append(_get_devided_result(calc_df[calc_field].sum(), area_value_list[i]))
 
-    return area_position_list, area_list, percent_position_list, percent_list, col_value_list
+    return area_position_list, area_list, percent_position_list, percent_list, col_name_list
 
 def statistics_all(df, yaml_data, wb, bar, sheet_name="SUITI_67"):
     '''
     计算表63: 各土类适宜等级面积分布表
     '''
     title = yaml_data[sheet_name]["title"]
-    col_field = yaml_data[sheet_name]["col_field"]
+    col_name_field = yaml_data[sheet_name]["col_name_field"]
+    col_value_field = yaml_data[sheet_name]["col_value_field"]
     col_sum_rule = yaml_data[sheet_name]["col_sum_rule"]
     col_sum_name = yaml_data[sheet_name]["col_sum_name"]
     calc_field = yaml_data[sheet_name]["calc_field"]
@@ -78,15 +72,11 @@ def statistics_all(df, yaml_data, wb, bar, sheet_name="SUITI_67"):
     col_start_position = yaml_data[sheet_name]["col_start_position"]
     result_start_position = yaml_data[sheet_name]["result_start_position"]
 
-    area_position_list,
-    area_list,
-    percent_list_position_list,
-    percent_list,
-    col_value_list = _get_result_list(df, result_start_position, col_field, col_sum_rule, col_sum_name, group_field, group_field_value, calc_field)
+    area_position_list,area_list,percent_list_position_list,percent_list,col_name_list = _get_result_list(df, result_start_position, col_name_field, col_value_field, col_sum_rule, col_sum_name, group_field, group_field_value, calc_field)
 
     sheet = get_sheet(wb, sheet_name)
     fill_title(sheet, title)
-    fill_template(sheet, col_start_position, col_value_list, False, 1)
+    fill_template(sheet, col_start_position, col_name_list, False, 1)
     for index, each in enumerate(area_position_list):
         fill_template(sheet, each, map(str, area_list[index]), False, 1)
     for index, each in enumerate(percent_list_position_list):

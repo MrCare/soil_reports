@@ -178,12 +178,49 @@
 
 # 67类型开始
 "SUITI_67":
-  "title" : "安吉县土壤农业利用适宜程度评价面积表"
-  "col_field" : "DLBM"
-  "col_sum_rule" : '^01'
-  "col_sum_name" : 'title'
+  "title" : "安吉县耕地-适宜类面积错配表"
+  "col_name_field" : "DLMC"
+  "col_value_field" : "DLBM"
+  "col_sum_rule" : "'^01'"
+  "col_sum_name" : '耕地'
   "calc_field" : 'MJ'
   "group_field" : 's_name'
   "group_field_value" : ['适宜园地','适宜林地','适宜草地']
   "col_start_position": "A4"
-  "result_start_position": "C4"
+  "result_start_position": "B4"
+
+"SUITI_68":
+  "title" : "安吉县园地-适宜类面积错配表"
+  "col_name_field" : "DLMC"
+  "col_value_field" : "DLBM"
+  "col_sum_rule" : "'^02'"
+  "col_sum_name" : '园地'
+  "calc_field" : 'MJ'
+  "group_field" : 's_name'
+  "group_field_value" : ['适宜耕地','适宜林地','适宜草地']
+  "col_start_position": "A4"
+  "result_start_position": "B4"
+
+"SUITI_69":
+  "title" : "安吉县林地-适宜类面积错配表"
+  "col_name_field" : "DLMC"
+  "col_value_field" : "DLBM"
+  "col_sum_rule" : "'^03'"
+  "col_sum_name" : '林地'
+  "calc_field" : 'MJ'
+  "group_field" : 's_name'
+  "group_field_value" : ['适宜耕地','适宜园地','适宜草地']
+  "col_start_position": "A4"
+  "result_start_position": "B4"
+
+"SUITI_70":
+  "title" : "安吉县草地-适宜类面积错配表"
+  "col_name_field" : "DLMC"
+  "col_value_field" : "DLBM"
+  "col_sum_rule" : "'^04'"
+  "col_sum_name" : '草地'
+  "calc_field" : 'MJ'
+  "group_field" : 's_name'
+  "group_field_value" : ['适宜耕地','适宜园地','适宜林地']
+  "col_start_position": "A4"
+  "result_start_position": "B4"

@@ -11,7 +11,7 @@ import os
 import fire
 import warnings
 
-from inner import JSBG_7, JSBG_8, TRSX_111, TRSX_112, QUAL_76_78, QUAL_77, QUAL_72, QUAL_73, QUAL_74, QUAL_75, SUITI_64, zonal_statistics, check
+from inner import JSBG_7, JSBG_8, TRSX_111, TRSX_112, QUAL_76_78, QUAL_77, QUAL_72, QUAL_73, QUAL_74, QUAL_75, SUITI_64, SUITI_67, zonal_statistics, check
 from inner.share import fill_title, fill_value, get_sheet, ConfigLoader
 # from inner_unique import add_field, table_66
 from alive_progress import alive_bar
@@ -263,6 +263,20 @@ def type_75(file_pth, xls_template_path=xls_template_path, out_file_pth=None):
         bar()
     return "Done!"
 
+def type_67(file_pth, xls_template_path=xls_template_path, out_file_pth=None):
+    sheet_name_list = ['SUITI_67', 'SUITI_68', 'SUITI_69', 'SUITI_70']
+    total_steps = len(sheet_name_list) + 1
+    if not out_file_pth:
+        out_file_pth = os.path.join(os.path.dirname(file_pth), 'reports_result.xlsx')
+    with alive_bar(total_steps, title="67-70地类面积错配表:") as bar:
+        for sheet_name in sheet_name_list:
+            df = read_and_prepare_file(file_pth)
+            wb = get_wb(xls_template_path)
+            wb = SUITI_67.statistics_all(df, yaml_data, wb, bar, sheet_name)
+            save_xls(wb, out_file_pth)
+        bar()
+    return "Done!"
+
 def quality_check(shp, shp_type="sample"):
     global_rule_file = os.path.join(folder_path, 'cfg_check_rule_all.csv')
     sample_rule_file = os.path.join(folder_path, 'cfg_check_rule_sample.csv')
@@ -395,9 +409,10 @@ def total(sample_pth, element_pth, suti_pth, qual_pth, type_list, out_file_pth=N
             batch_type_8(element_pth, type_8_list, xls_template_path, xls_template_path)
         elif each == "SUITI":
             # _suiti_tables(suti_pth, suti_list, xls_template_path, xls_template_path)
-            type_56(suti_pth, xls_template_path, xls_template_path)
-            type_62(suti_pth, xls_template_path, xls_template_path)
-            type_64(suti_pth, xls_template_path, xls_template_path)
+            # type_56(suti_pth, xls_template_path, xls_template_path)
+            # type_62(suti_pth, xls_template_path, xls_template_path)
+            # type_64(suti_pth, xls_template_path, xls_template_path)
+            type_67(suti_pth, xls_template_path, xls_template_path)
         elif each == "QUAL_76_78":
             batch_type_76(qual_pth, xls_template_path, xls_template_path)
         elif each == "QUAL_77":
@@ -449,9 +464,9 @@ if __name__ == "__main__":
     #     'QUAL_77',
     #     'QUAL_72'
     # ])
-    # total('test_data/sample/sample_short.shp', 'test_data/element/element_short.shp', './test_data/suiti_result/suiti_result_short.shp', './test_data/quality_result/quality_short.shp', [
-    #     'JSBG_7','SUITI'
-    # ])
+    total('test_data/sample/sample_short.shp', 'test_data/element/element_short.shp', './test_data/suiti_result/suiti_result_short.shp', './test_data/quality_result/quality_short.shp', [
+        'JSBG_7','SUITI'
+    ])
 
     # batch_type_76("test_data/quality_result/quality_short.shp")
 

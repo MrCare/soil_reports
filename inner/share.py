@@ -116,3 +116,13 @@ def _get_weight_result(df,calc_field, weight_field):
     else:
         result = '/'
     return result
+
+def _get_sorted_list(df, parent_field, sort_field):
+    result_list = []
+    if sort_field:
+        temp_df = df[[parent_field, sort_field]].copy()
+        sorted_temp_df = temp_df.sort_values(by=sort_field, ascending=True)
+        result_list = sorted_temp_df[parent_field].unique().tolist()
+    else:
+        result_list = df[parent_field].unique().tolist()
+    return result_list

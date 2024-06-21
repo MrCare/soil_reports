@@ -5,18 +5,10 @@ Date: 2024-03-04 15:23:53
 import pandas as pd
 import geopandas as gpd
 import os
-from .share import fill_template
+from .share import fill_template, _get_sorted_list
 from .TRSX_111 import statistics_all as statistics_all
 
-def _get_sorted_list(df, parent_field, sort_field):
-    result_list = []
-    if sort_field:
-        temp_df = df[[parent_field, sort_field]].copy()
-        sorted_temp_df = temp_df.sort_values(by=sort_field, ascending=True)
-        result_list = sorted_temp_df[parent_field].unique().tolist()
-    else:
-        result_list = df[parent_field].unique().tolist()
-    return result_list
+
 
 def prepare(origin_file_pth, folder_path, cfg_name, parent_field, sort_field=None, encoding='UTF-8', ):
     '''
