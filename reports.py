@@ -464,9 +464,9 @@ if __name__ == "__main__":
     #     'QUAL_77',
     #     'QUAL_72'
     # ])
-    total('test_data/sample/sample_short.shp', 'test_data/element/element_short.shp', './test_data/suiti_result/suiti_result_short.shp', './test_data/quality_result/quality_short.shp', [
-        'JSBG_7','SUITI'
-    ])
+    # total('test_data/sample/sample_short.shp', 'test_data/element/element_short.shp', './test_data/suiti_result/suiti_result_short.shp', './test_data/quality_result/quality_short.shp', [
+    #     'JSBG_7','SUITI'
+    # ])
 
     # batch_type_76("test_data/quality_result/quality_short.shp")
 
