@@ -409,9 +409,9 @@ def total(sample_pth, element_pth, suti_pth, qual_pth, type_list, out_file_pth=N
             batch_type_8(element_pth, type_8_list, xls_template_path, xls_template_path)
         elif each == "SUITI":
             # _suiti_tables(suti_pth, suti_list, xls_template_path, xls_template_path)
-            # type_56(suti_pth, xls_template_path, xls_template_path)
-            # type_62(suti_pth, xls_template_path, xls_template_path)
-            # type_64(suti_pth, xls_template_path, xls_template_path)
+            type_56(suti_pth, xls_template_path, xls_template_path)
+            type_62(suti_pth, xls_template_path, xls_template_path)
+            type_64(suti_pth, xls_template_path, xls_template_path)
             type_67(suti_pth, xls_template_path, xls_template_path)
         elif each == "QUAL_76_78":
             batch_type_76(qual_pth, xls_template_path, xls_template_path)
