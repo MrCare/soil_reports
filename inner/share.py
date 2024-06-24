@@ -106,6 +106,11 @@ def _get_sorted_list(df, parent_field, sort_field):
         result_list = df[parent_field].unique().tolist()
     return result_list
 
+def _get_devided_result(divider, denominator):
+    result = 0
+    if denominator != 0:
+        result = divider / denominator
+    return result
 
 # 原 report.py 中的准备文件：
 def read_and_prepare_file(file_pth, file_type="shp"):

@@ -2,15 +2,10 @@
 Author: Mr.Car
 Date: 2024-06-20 15:38:09
 '''
-from .share import fill_template, fill_title, get_sheet, XlsPosUtil
+from .share import fill_template, fill_title, get_sheet, XlsPosUtil, _get_devided_result
 
 xpu = XlsPosUtil()
 
-def _get_devided_result(divider, denominator):
-    result = 0
-    if denominator != 0:
-        result = divider / denominator
-    return result
 
 def _get_col_list(df, col_name_field, col_value_field):
     temp_df = df[[col_name_field, col_value_field]].copy()

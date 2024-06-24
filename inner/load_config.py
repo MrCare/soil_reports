@@ -67,7 +67,7 @@ class ConfigLoader:
         self._loaded = False
         self._load_config()
 
-# Usage
+# 确保在引入时候就初始化
 config_loader = ConfigLoader()
 yaml_data = config_loader.yaml
 csv_data = config_loader.csv

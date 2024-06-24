@@ -2,16 +2,10 @@
 Author: Mr.Car
 Date: 2024-06-17 12:53:04
 '''
-from .share import fill_template, fill_title, get_sheet, XlsPosUtil
+from .share import fill_template, fill_title, get_sheet, XlsPosUtil, _get_devided_result
 from .QUAL_76_78 import _get_street_list
 
 xpu = XlsPosUtil()
-
-def _get_devided_result(divider, denominator):
-    result = 0
-    if denominator != 0:
-        result = divider / denominator
-    return result
 
 def _get_result_list(df, start_position, street_value_list, group_field, group_field_value, calc_field, limit_field):
     df.loc[:, limit_field+'_new'] = df[limit_field].astype(str)
