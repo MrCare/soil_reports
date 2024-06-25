@@ -11,9 +11,11 @@ import os
 import fire
 import warnings
 
-from inner import zonal_statistics, check
+from alive_progress import alive_bar
+from inner import zonal_statistics, check, TRSX_112
 from inner.share import *
 from inner.exception import *
+from inner.load_config import folder_path
 from a_sample import sample
 from b_element import element
 from c_qual import qual
@@ -22,6 +24,14 @@ from d_suiti import suiti
 # 忽略 FutureWarning
 warnings.simplefilter(action='ignore', category=FutureWarning)
 
+def prepare_cfg(origin_file_pth, cfg_name, parent_field, sort_field=None):
+    '''
+    准备好文件
+    '''
+    with alive_bar(1, title="生成配置文件:") as bar:
+        TRSX_112.prepare(origin_file_pth, folder_path, cfg_name, parent_field, sort_field)
+        bar()
+    return "Done!"
 
 def quality_check(shp, shp_type="sample"):
     global_rule_file = os.path.join(folder_path, 'cfg_check_rule_all.csv')

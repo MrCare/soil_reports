@@ -23,6 +23,12 @@ class ConfigLoader:
         self._folder_path = os.path.join(os.path.dirname(__file__), 'config')
 
     @property
+    def folder_path(self):
+        if not self._loaded:
+            self._load_config()
+        return self._folder_path
+
+    @property
     def yaml(self):
         if not self._loaded:
             self._load_config()
@@ -73,3 +79,4 @@ yaml_data = config_loader.yaml
 csv_data = config_loader.csv
 inner_xls_template_path = config_loader.inner_xls_template_path
 cfg_index = config_loader.cfg_index
+folder_path = config_loader.folder_path

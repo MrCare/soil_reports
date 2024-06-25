@@ -8,8 +8,7 @@ import os
 import yaml
 import openpyxl
 from openpyxl import load_workbook
-from alive_progress import alive_bar
-from .load_config import csv_data, yaml_data, inner_xls_template_path, cfg_index
+from .load_config import csv_data, yaml_data, inner_xls_template_path, cfg_index, folder_path
 class XlsPosUtil:
     '''
     处理 excel 中的 position 字符串
@@ -166,12 +165,3 @@ def deal_none(df, field, rule_table, result_type="ss"):
 def save_xls(wb, xls_file_path):
     wb.save(xls_file_path)
     return
-
-def prepare_cfg(origin_file_pth, cfg_name, parent_field, sort_field=None):
-    '''
-    准备好文件
-    '''
-    with alive_bar(1, title="生成配置文件:") as bar:
-        TRSX_112.prepare(origin_file_pth, folder_path, cfg_name, parent_field, sort_field)
-        bar()
-    return "Done!"
