@@ -228,8 +228,8 @@
 
 "SUITI_71":
   "title" : "安吉县耕地后备资源面积表"
-  "col_sum_names" : ["园地", "林地", "草地"]
-  "col_sum_value" : ["'^02'", "'^03'", "'^04'"]
+  "col_sum_names" : ["园地", "林地", "草地", "其他"]
+  "col_sum_value" : ["'^02'", "'^03'", "'^04'", "'^(?!(01|02|03|04))'"]
   "col_name_field" : "DLMC"
   "col_value_field" : "DLBM"
   "calc_field" : "MJ"

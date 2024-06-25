@@ -70,7 +70,7 @@ class FieldChecker:
                         '不合格的值': value,
                         '不合格的原因': rule.get_description()
                     })
-        bar()
+            bar()
         return invalid_data
     
     def check_file(self, shp_file, specific_rule_file=None):
