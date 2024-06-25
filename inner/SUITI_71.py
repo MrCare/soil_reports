@@ -16,7 +16,7 @@ def _get_result_list(df, pivot_df, col_sum_names, col_sum_value, col_name_field,
     
     unique_df = df.drop_duplicates(subset = col_value_field, keep='first')
     unique_df = unique_df.sort_values(by = col_value_field, ascending=True)
-    col_tuple_list = zip(unique_df[col_value_field], unique_df[col_name_field])
+    col_tuple_list = list(zip(unique_df[col_value_field], unique_df[col_name_field]))
 
     for i, each_rule in enumerate(col_sum_value):
         col_name_list.append(col_sum_names[i]) # 整理 col_sum_name 到 name_list

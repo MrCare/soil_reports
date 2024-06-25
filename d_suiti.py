@@ -88,4 +88,4 @@ def suiti(suti_pth, out_file_pth=None, xls_template_path=inner_xls_template_path
     type_71(suti_pth, out_file_pth, out_file_pth)
 
 # if __name__ == "__main__":
-#     # doNothing
+#     # type_71("/Users/car/Work/2023workPlan/三普土壤制图工具/测试与新需求/0617/样例数据0617/适宜性评价.shp")
