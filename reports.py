@@ -15,7 +15,7 @@ from alive_progress import alive_bar
 from inner import zonal_statistics, check, TRSX_112
 from inner.share import *
 from inner.exception import *
-from inner.load_config import folder_path
+from inner.load_config import folder_path, inner_xls_template_path
 from a_sample import sample
 from b_element import element
 from c_qual import qual
@@ -89,13 +89,13 @@ def total(sample_pth, element_pth, suiti_pth, qual_pth, range='ALL', out_file_pt
     xls_template_path = os.path.join(os.path.dirname(sample_pth), 'reports_result.xlsx')
 
     if range == "SAMPLE":
-        sample(sample_pth)
+        sample(sample_pth, xls_template_path, inner_xls_template_path)
     elif range == "ELEMENT":
-        element(element_pth)
+        element(element_pth, xls_template_path, inner_xls_template_path)
     elif range == "QUAL":
-        qual(qual_pth)
+        qual(qual_pth, xls_template_path, inner_xls_template_path)
     elif range == "SUITI":
-        suiti(suiti_pth)
+        suiti(suiti_pth, xls_template_path, inner_xls_template_path)
     elif range == "ALL":
         sample(sample_pth, xls_template_path)
         element(element_pth, xls_template_path, xls_template_path)
