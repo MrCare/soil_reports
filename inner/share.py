@@ -8,6 +8,7 @@ import os
 import yaml
 import openpyxl
 from openpyxl import load_workbook
+from alive_progress import alive_bar
 from .load_config import csv_data, yaml_data, inner_xls_template_path, cfg_index
 class XlsPosUtil:
     '''

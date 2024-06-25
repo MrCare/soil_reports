@@ -3,3 +3,4 @@ build
 test_data
 reports.spec
 .DS_Store
+**/*.pyc
