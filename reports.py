@@ -26,7 +26,7 @@ warnings.simplefilter(action='ignore', category=FutureWarning)
 
 def prepare_cfg(origin_file_pth, cfg_name, parent_field, sort_field=None):
     '''
-    准备好文件
+    准备“街道”与“土类”字段: 112 与 113 类型的配置文件
     '''
     with alive_bar(1, title="生成配置文件:") as bar:
         TRSX_112.prepare(origin_file_pth, folder_path, cfg_name, parent_field, sort_field)
@@ -34,6 +34,9 @@ def prepare_cfg(origin_file_pth, cfg_name, parent_field, sort_field=None):
     return "Done!"
 
 def quality_check(shp, shp_type="sample"):
+    '''
+    文件质量检查
+    '''
     global_rule_file = os.path.join(folder_path, 'cfg_check_rule_all.csv')
     sample_rule_file = os.path.join(folder_path, 'cfg_check_rule_sample.csv')
     element_rule_file = os.path.join(folder_path, 'cfg_check_rule_element.csv')
@@ -46,34 +49,17 @@ def quality_check(shp, shp_type="sample"):
         check.quality_check(global_rule_file, [shp], output_file)
     return "Done!"
 
-def add_DL(shp):
-    total_steps = 3
-    with alive_bar(total_steps,title="合并地类名称:") as bar:
-        new_csv = os.path.join(os.path.dirname(shp), 'new_csv.csv')
-        df = gpd.read_file(shp, encoding="utf-8")
-        bar()
-        df = add_field.add_field(df)
-        bar()
-        df.to_csv(new_csv, encoding="utf-8")
-        bar()
-    return "Done!"
-
-# def _suiti_tables(file_pth, table_list, xls_template_path=None, out_file_pth=None):
-#     df = read_and_prepare_file(file_pth)
-#     wb = get_wb(xls_template_path)
-#     if not out_file_pth:
-#         out_file_pth = os.path.join(os.path.dirname(file_pth), 'reports_result.xlsx')
-
-#     for table in table_list:
-#         _, _, _, _, title, nan_filler = get_cfg_params(cfg_index, table)
-#         sheet = get_sheet(wb, table)
-#         sheet = fill_title(sheet, title, "A1")
-#         if table == 'SUTI_66':
-#             result_list = table_66.table_66(df)
-#             for each in result_list:
-#                 fill_value(sheet, each["form"], each["position"])
-#     save_xls(wb, out_file_pth)
-
+# def add_DL(shp):
+#     total_steps = 3
+#     with alive_bar(total_steps,title="合并地类名称:") as bar:
+#         new_csv = os.path.join(os.path.dirname(shp), 'new_csv.csv')
+#         df = gpd.read_file(shp, encoding="utf-8")
+#         bar()
+#         df = add_field.add_field(df)
+#         bar()
+#         df.to_csv(new_csv, encoding="utf-8")
+#         bar()
+#     return "Done!"
 
 @catch_file_not_found_error
 @catch_key_error
@@ -122,8 +108,8 @@ if __name__ == "__main__":
     # quality_check("./test_data/表层样点.shp", shp_type='sample')
     # quality_check('./test_data/评价单元.shp', shp_type='element')
     
-    #总体测试
-    # add_DL("./test_data/suiti_result/suiti_result.shp")
+    # 总体测试
+
     # total('test_data/sample/sample_short.shp', 'test_data/element/element_short.shp', './test_data/suiti_result/suiti_result_short.shp', './test_data/quality_result/quality_short.shp', 'ALL')
     # batch_type_76("test_data/quality_result/quality_short.shp")
 
@@ -132,5 +118,4 @@ if __name__ == "__main__":
         "total": total,
         "get_var_table": prepare_cfg,
         "quality_check": quality_check,
-        "add_DL": add_DL,
     })

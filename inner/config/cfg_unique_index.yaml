@@ -237,3 +237,12 @@
   "group_field_value" : [1, 2]
   "col_start_position" : "A4"
   "result_start_position" : "B4"
+
+"SUITI_167":
+  "title" : "安吉县各乡镇（街道）限制因素评级表"
+  "col_name_field" : "XZQMC"
+  "calc_field" : 'MJ'
+  "group_value_list" : ['PD_new', 'TCHD_new', 'DBLSFD_new', 'TRZD_new', 'SZYTJ_new', 'PSNL_new', 'QSCD_new', 'JYCLFD_new']
+  "group_start_position" : 'B3'
+  "col_start_position" : "A4"
+  "result_start_position" : "B4"

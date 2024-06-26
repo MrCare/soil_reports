@@ -3,7 +3,7 @@ Author: Mr.Car
 Date: 2024-06-21 15:12:58
 '''
 import os
-from inner import QUAL_74, QUAL_72, SUITI_64, SUITI_67, SUITI_71
+from inner import QUAL_74, QUAL_72, SUITI_64, SUITI_67, SUITI_71, SUITI_167
 from alive_progress import alive_bar
 from inner.share import *
 from inner.load_config import ConfigLoader
@@ -80,12 +80,26 @@ def type_71(file_pth, xls_template_path=inner_xls_template_path, out_file_pth=No
         bar()
     return "Done!"
 
+def type_167(file_pth, xls_template_path=inner_xls_template_path, out_file_pth=None):
+    total_steps = 1 + 1
+    if not out_file_pth:
+        out_file_pth = os.path.join(os.path.dirname(file_pth), 'reports_result.xlsx')
+    with alive_bar(total_steps, title="167:限制因素等级表:") as bar:
+        df = read_and_prepare_file(file_pth)
+        wb = get_wb(xls_template_path)
+        wb = SUITI_167.statistics_all(df, csv_data, yaml_data, wb, bar)
+        save_xls(wb, out_file_pth)
+        bar()
+    return "Done!"
+
 def suiti(suti_pth, out_file_pth=None, xls_template_path=inner_xls_template_path):
     type_56(suti_pth, xls_template_path, out_file_pth)
     type_62(suti_pth, out_file_pth, out_file_pth)
     type_64(suti_pth, out_file_pth, out_file_pth)
     type_67(suti_pth, out_file_pth, out_file_pth)
     type_71(suti_pth, out_file_pth, out_file_pth)
+    type_167(suti_pth, out_file_pth, out_file_pth)
 
-# if __name__ == "__main__":
-#     # type_71("/Users/car/Work/2023workPlan/三普土壤制图工具/测试与新需求/0617/样例数据0617/适宜性评价.shp")
+if __name__ == "__main__":
+    # type_167("/Users/car/Work/2023workPlan/三普土壤制图工具/测试与新需求/0617/样例数据0617/适宜性评价.shp")
+    type_167("/Users/car/Project/soilCli/reports/test_data/suiti_result/suiti_result_short.shp")
