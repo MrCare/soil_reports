@@ -132,7 +132,7 @@ def element(file_pth, out_file_pth=None, xls_template_path=inner_xls_template_pa
 
     batch_type_8(file_pth, type_8_list, xls_template_path, out_file_pth)
     batch_type_111(file_pth, type_111_list, out_file_pth, out_file_pth)
-    type_108(file_pth, type_111_list, out_file_pth, out_file_pth)
+    type_108(file_pth, out_file_pth, out_file_pth)
 
 if __name__ == "__main__":
     type_108('/Users/car/Project/soilCli/reports/test_data/element/element_short.shp')
