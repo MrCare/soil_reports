@@ -29,6 +29,7 @@ def _get_result_list(pivot_df_first, pivot_df_second, columns_values, col_name_l
             for each_value in columns_values:
                 try:
                     area = pivot_df_first.loc[each_col_name[1], each_value]
+                    area = area if area else 0
                     result.append(area)
                     percent.append(f"{(area / pivot_df_first.loc[each_col_name[1], 'All'] * 100):.2f}%")
                 except Exception as e:
@@ -40,6 +41,7 @@ def _get_result_list(pivot_df_first, pivot_df_second, columns_values, col_name_l
                 try:
                     index_field = (each_col_name[1], each_col_name[2])
                     area = pivot_df_second.loc[index_field, each_value]
+                    area = area if area else 0
                     result.append(area)
                     percent.append(f"{(area / pivot_df_second.loc[index_field, 'All'] * 100):.2f}%")
                 except Exception as e:

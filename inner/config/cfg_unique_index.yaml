@@ -260,3 +260,12 @@
   "col_name_list": [[0, "耕地"],[0, "园地"],[1, "园地", "工程恢复"],[1, "园地", "即可恢复"],[0, "林地"],[1, "林地", "工程恢复"],[1, "林地", "即可恢复"],[0, "草地"],[1, "草地", "工程恢复"],[1, "草地", "即可恢复"],[0, "其他"], [0, "All"]]
   "result_start_position" : "D3"
   "percent_start_position" : "D4"
+
+"JSBG_106":
+  "title" : "安吉县土壤表层样品数据预处理"
+  "values" : ['count', 'min', 'max', 'mean', 'std']
+  "fields" : ['PH', 'CEC', 'OM', 'TN', 'TP', 'TK', 'AP', 'AK', 'TRRZPJZ', 'GZCHD', 'JXZC1', 'JXZC2']
+  "rule" : "x != -9999"
+  "col_start_position" : "A3"
+  "value_start_position" : "B2"
+  "result_start_position" : 'B3'
