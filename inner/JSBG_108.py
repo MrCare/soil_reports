@@ -26,8 +26,8 @@ def _get_result_list(df, soil_value_list, values, field, weight):
             std = (((calc_df[each_value] - mean) ** 2 * calc_df[weight]).sum() / calc_df[weight].sum()) ** 0.5
             mean_list.append(mean)
             std_list.append(std)
-    result_mean_list.append(mean_list)
-    result_std_list.append(std_list)
+        result_mean_list.append(mean_list)
+        result_std_list.append(std_list)
 
     return np.transpose(result_mean_list), np.transpose(result_std_list)
 
