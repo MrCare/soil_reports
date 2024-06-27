@@ -1,3 +1,7 @@
+'''
+Author: Mr.Car
+Date: 2024-06-24 14:14:39
+'''
 import pandas as pd
 import numpy as np
 import re
@@ -5,6 +9,9 @@ from .share import fill_template, fill_title, get_sheet, XlsPosUtil, _get_devide
 xpu = XlsPosUtil()
 
 def _create_target_df(df, group_field_value):
+    '''
+    给df添加初始化为 0 的列
+    '''
     for each_col in group_field_value:
         if each_col not in df.columns:
             df = df.assign(**{each_col: 0})

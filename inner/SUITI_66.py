@@ -18,6 +18,8 @@ def add_dl(row, field, new_field_name, new_field_name_rule):
     for i, each in enumerate(new_field_name_rule):
         if re.match(each[1:-1], row[field]):
             return new_field_name[i]
+def fill_none_nan_zero(value):
+    return value if not (value is None or pd.isnull(value)) else 0
 
 def _get_result_list(pivot_df_first, pivot_df_second, columns_values, col_name_list):
     result_list = []
@@ -29,9 +31,9 @@ def _get_result_list(pivot_df_first, pivot_df_second, columns_values, col_name_l
             for each_value in columns_values:
                 try:
                     area = pivot_df_first.loc[each_col_name[1], each_value]
-                    area = area if area else 0
+                    area = fill_none_nan_zero(area)
                     result.append(area)
-                    percent.append(f"{(area / pivot_df_first.loc[each_col_name[1], 'All'] * 100):.2f}%")
+                    percent.append(f"{fill_none_nan_zero(area / pivot_df_first.loc[each_col_name[1], 'All'] * 100):.2f}%")
                 except Exception as e:
                     result.append(0)
                     percent.append(f"{0 * 100:.2f}%")
@@ -41,9 +43,9 @@ def _get_result_list(pivot_df_first, pivot_df_second, columns_values, col_name_l
                 try:
                     index_field = (each_col_name[1], each_col_name[2])
                     area = pivot_df_second.loc[index_field, each_value]
-                    area = area if area else 0
+                    area = fill_none_nan_zero(area)
                     result.append(area)
-                    percent.append(f"{(area / pivot_df_second.loc[index_field, 'All'] * 100):.2f}%")
+                    percent.append(f"{fill_none_nan_zero(area / pivot_df_second.loc[index_field, 'All'] * 100):.2f}%")
                 except Exception as e:
                     result.append(0)
                     percent.append(f"{0 * 100:.2f}%")
