@@ -10,8 +10,6 @@ from .QUAL_76_78 import _get_street_list
 
 xpu = XlsPosUtil()
 
-
-
 def _get_result_list(group_value_list, df, col_name_field, street_value_list,result_start_position,calc_field):
     result_position_list = []
     result_list = []

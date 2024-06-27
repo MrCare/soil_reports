@@ -4426,3 +4426,4 @@ on 0: 2024-06-27 13:49:20,609 - ERROR - SUITI_66: ('草地', '即可恢复')
         File "/Users/car/opt/anaconda3/envs/soilCli/lib/python3.9/site-packages/pandas/core/indexes/multi.py", line 3107, in _get_loc_level
           raise KeyError(key) from err
       KeyError: ('草地', '即可恢复')
+on 0: 2024-06-27 18:13:58,518 - ERROR - /Users/car/Project/soilCli/reports/test_data/element/element.shp: No such file or directory

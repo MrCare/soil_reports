@@ -135,4 +135,4 @@ def element(file_pth, out_file_pth=None, xls_template_path=inner_xls_template_pa
     type_108(file_pth, out_file_pth, out_file_pth)
 
 if __name__ == "__main__":
-    type_108('/Users/car/Project/soilCli/reports/test_data/element/element_short.shp')
+    type_108('/Users/car/Project/soilCli/reports/test_data/element/element.shp')

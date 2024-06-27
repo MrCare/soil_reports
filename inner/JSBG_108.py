@@ -22,8 +22,12 @@ def _get_result_list(df, soil_value_list, values, field, weight):
         calc_df = df[df[field] == each_soil]
         mean_list, std_list = [], []
         for each_value in values:
-            mean = np.average(calc_df[each_value], weights=calc_df[weight])
-            std = (((calc_df[each_value] - mean) ** 2 * calc_df[weight]).sum() / calc_df[weight].sum()) ** 0.5
+            try:
+                mean = np.average(calc_df[each_value], weights=calc_df[weight])
+                std = (((calc_df[each_value] - mean) ** 2 * calc_df[weight]).sum() / calc_df[weight].sum()) ** 0.5
+            except Exception as e:
+                mean, std = 0, 0
+                logging.error(f"JSBG_108 & 109: {e}", exc_info=True)
             mean_list.append(mean)
             std_list.append(std)
         result_mean_list.append(mean_list)
