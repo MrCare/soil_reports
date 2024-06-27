@@ -274,7 +274,7 @@
   "title" : "安吉县土类理化性状特征统计表"
   "field" : 'TL'
   "weight" : "MJ"
-  "values" : ['PH', 'CEC', 'TRRZPJZ', 'GZCHD', 'TRNL', 'TRSL']
+  "values" : ['PH', 'CEC', 'TRRZPJZ', 'GZCHD', 'TRNL', 'TRSL', 'TRFSL']
   "col_start_position" : "A3"
   "value_start_position" : "C2"
   "result_start_position" : 'C3'
@@ -287,3 +287,16 @@
   "col_start_position" : "A3"
   "value_start_position" : "C2"
   "result_start_position" : 'C3'
+
+"JSBG_001":
+  "title" : "安吉县土地利用类型下土壤类型面积统计表"
+  "values" : "MJ"
+  "field" : "DLBM"
+  "new_field" : "DLDLMC"
+  "new_field_name" : ["耕地", "园地", "林地", "草地", "其他"]
+  "new_field_name_rule" : ["'^01'", "'^02'", "'^03'", "'^04'", "'^(?!(01|02|03|04))'"]
+  "index" : ['TL', 'YL', 'TS', 'TZ']
+  "columns" : ['DLDLMC']
+  "col_start_position" : "A4"
+  "row_start_position" : "E3"
+  "result_start_position" : "E4"

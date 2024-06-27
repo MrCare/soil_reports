@@ -3,7 +3,7 @@ Author: Mr.Car
 Date: 2024-06-21 15:10:42
 '''
 import os
-from inner import JSBG_8, TRSX_111, JSBG_108
+from inner import JSBG_8, TRSX_111, JSBG_108, JSBG_1
 from alive_progress import alive_bar
 from inner.share import *
 from inner.load_config import ConfigLoader
@@ -63,6 +63,18 @@ def type_108(file_pth, xls_template_path=inner_xls_template_path, out_file_pth=N
         wb = get_wb(xls_template_path)
         for sheet_name in sheet_name_list:
             wb = JSBG_108.statistics_all(df, csv_data, yaml_data, wb, bar, sheet_name)
+        save_xls(wb, out_file_pth)
+        bar()
+    return "Done!"
+
+def type_1(file_pth, xls_template_path=inner_xls_template_path, out_file_pth=None):
+    total_steps = 1 + 1
+    if not out_file_pth:
+        out_file_pth = os.path.join(os.path.dirname(file_pth), 'reports_result.xlsx')
+    with alive_bar(total_steps, title="1:土壤类型面积统计表:") as bar:
+        df = read_and_prepare_file(file_pth)
+        wb = get_wb(xls_template_path)
+        wb = JSBG_1.statistics_all(df, yaml_data, wb, bar)
         save_xls(wb, out_file_pth)
         bar()
     return "Done!"
@@ -133,6 +145,7 @@ def element(file_pth, out_file_pth=None, xls_template_path=inner_xls_template_pa
     batch_type_8(file_pth, type_8_list, xls_template_path, out_file_pth)
     batch_type_111(file_pth, type_111_list, out_file_pth, out_file_pth)
     type_108(file_pth, out_file_pth, out_file_pth)
+    type_1(file_pth, out_file_pth, out_file_pth)
 
 if __name__ == "__main__":
-    type_108('/Users/car/Project/soilCli/reports/test_data/element/element.shp')
+    type_1('/Users/car/Project/soilCli/reports/test_data/element/element_short.shp')
