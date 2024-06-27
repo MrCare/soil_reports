@@ -269,3 +269,21 @@
   "col_start_position" : "A3"
   "value_start_position" : "B2"
   "result_start_position" : 'B3'
+
+"JSBG_108":
+  "title" : "安吉县土类理化性状特征统计表"
+  "field" : 'TL'
+  "weight" : "MJ"
+  "values" : ['PH', 'CEC', 'TRRZPJZ', 'GZCHD']
+  "col_start_position" : "A3"
+  "value_start_position" : "C2"
+  "result_start_position" : 'C3'
+
+"JSBG_109":
+  "title" : "安吉县土类肥力特征统计表"
+  "field" : 'TL'
+  "weight" : "MJ"
+  "values" : ['OM', 'TN', 'TP', 'TK', 'AP', 'AK']
+  "col_start_position" : "A3"
+  "value_start_position" : "C2"
+  "result_start_position" : 'C3'

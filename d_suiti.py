@@ -46,11 +46,11 @@ def type_64(file_pth, xls_template_path=inner_xls_template_path, out_file_pth=No
     if not out_file_pth:
         out_file_pth = os.path.join(os.path.dirname(file_pth), 'reports_result.xlsx')
     with alive_bar(total_steps, title="64-65:土类亚类及适宜程度面积表:") as bar:
+        df = read_and_prepare_file(file_pth)
+        wb = get_wb(xls_template_path)
         for sheet_name in sheet_name_list:
-            df = read_and_prepare_file(file_pth)
-            wb = get_wb(xls_template_path)
             wb = SUITI_64.statistics_all(df, yaml_data, wb, bar, sheet_name)
-            save_xls(wb, out_file_pth)
+        save_xls(wb, out_file_pth)
         bar()
     return "Done!"
 
@@ -60,11 +60,11 @@ def type_67(file_pth, xls_template_path=inner_xls_template_path, out_file_pth=No
     if not out_file_pth:
         out_file_pth = os.path.join(os.path.dirname(file_pth), 'reports_result.xlsx')
     with alive_bar(total_steps, title="67-70:地类面积错配表:") as bar:
+        df = read_and_prepare_file(file_pth)
+        wb = get_wb(xls_template_path)
         for sheet_name in sheet_name_list:
-            df = read_and_prepare_file(file_pth)
-            wb = get_wb(xls_template_path)
             wb = SUITI_67.statistics_all(df, yaml_data, wb, bar, sheet_name)
-            save_xls(wb, out_file_pth)
+        save_xls(wb, out_file_pth)
         bar()
     return "Done!"
 
@@ -115,4 +115,4 @@ def suiti(suti_pth, out_file_pth=None, xls_template_path=inner_xls_template_path
 
 if __name__ == "__main__":
     # type_167("/Users/car/Work/2023workPlan/三普土壤制图工具/测试与新需求/0617/样例数据0617/适宜性评价.shp")
-    type_66("/Users/car/Project/soilCli/reports/test_data/suiti_result/suiti_result_short.shp")
+    type_64("/Users/car/Project/soilCli/reports/test_data/suiti_result/suiti_result_short.shp")
