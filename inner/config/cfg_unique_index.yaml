@@ -323,11 +323,10 @@
   "percent_start_position" : "C4"
 # type 13 结束
 
-"JSBG_014":
-  "title" : "安吉县表层样点土壤质地统计表"
-  "values" : ['JXZC1','JXZC2','JXZC3','JXZC4']
-  "index" : ['DLDLMC']
-  "columns" : []
+"JSBG_002":
+  "title" : "安吉县土壤类型理化指标统计表"
+  "values" : [["OM", 'mean'],"PH","TN","TP","TK","AP","AK","CEC", "TRRZPJZ"]
+  "index" : ['TL', 'YL', 'TS', 'TZ']
   "col_start_position" : "A4"
   "row_start_position" : "B3"
   "result_start_position" : "B4"
