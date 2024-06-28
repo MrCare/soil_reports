@@ -4427,3 +4427,6 @@ on 0: 2024-06-27 13:49:20,609 - ERROR - SUITI_66: ('草地', '即可恢复')
           raise KeyError(key) from err
       KeyError: ('草地', '即可恢复')
 on 0: 2024-06-27 18:13:58,518 - ERROR - /Users/car/Project/soilCli/reports/test_data/element/element.shp: No such file or directory
+2024-06-28 09:21:15,911 - ERROR - Failed to create field name '实验室': cannot convert to ISO-8859-1
+2024-06-28 09:22:45,763 - ERROR - Failed to create field name '实验室': cannot convert to ISO-8859-1
+2024-06-28 10:58:53,965 - ERROR - Failed to create file test_data/element/test_data/element/element_short_dldlbm.shp: No such file or directory

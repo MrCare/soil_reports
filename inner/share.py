@@ -165,3 +165,20 @@ def deal_none(df, field, rule_table, result_type="ss"):
 def save_xls(wb, xls_file_path):
     wb.save(xls_file_path)
     return
+
+def save_pth(file_pth, new_name = 'reports_result.xlsx'):
+    '''
+    传入一个文件绝对目录，与新文件名，返回文件的同级别目录下的新文件绝对目录
+    '''
+    out_file_pth = os.path.join(os.path.dirname(file_pth), new_name)
+    return out_file_pth
+
+def save_suffix_pth(file_pth, suffix = '_new'):
+    '''
+    传入一个文件绝对目录，与后缀名，返回文件的同级别目录下的新文件绝对目录
+    '''
+    dirname = os.path.dirname(file_pth)
+    basename = os.path.basename(file_pth)
+    filename, ext = os.path.splitext(basename)
+    out_file_pth = os.path.join(dirname, filename + suffix + ext)
+    return out_file_pth

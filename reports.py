@@ -12,7 +12,7 @@ import fire
 import warnings
 
 from alive_progress import alive_bar
-from inner import zonal_statistics, check, TRSX_112
+from inner import zonal_statistics, check, TRSX_112, prepare
 from inner.share import *
 from inner.exception import *
 from inner.load_config import folder_path, inner_xls_template_path
@@ -24,6 +24,8 @@ from d_suiti import suiti
 # 忽略 FutureWarning
 warnings.simplefilter(action='ignore', category=FutureWarning)
 
+@catch_file_not_found_error
+@catch_key_error
 def prepare_cfg(origin_file_pth, cfg_name, parent_field, sort_field=None):
     '''
     准备“街道”与“土类”字段: 112 与 113 类型的配置文件
@@ -33,6 +35,8 @@ def prepare_cfg(origin_file_pth, cfg_name, parent_field, sort_field=None):
         bar()
     return "Done!"
 
+@catch_file_not_found_error
+@catch_key_error
 def quality_check(shp, shp_type="sample"):
     '''
     文件质量检查
@@ -49,17 +53,29 @@ def quality_check(shp, shp_type="sample"):
         check.quality_check(global_rule_file, [shp], output_file)
     return "Done!"
 
-# def add_DL(shp):
-#     total_steps = 3
-#     with alive_bar(total_steps,title="合并地类名称:") as bar:
-#         new_csv = os.path.join(os.path.dirname(shp), 'new_csv.csv')
-#         df = gpd.read_file(shp, encoding="utf-8")
-#         bar()
-#         df = add_field.add_field(df)
-#         bar()
-#         df.to_csv(new_csv, encoding="utf-8")
-#         bar()
-#     return "Done!"
+@catch_file_not_found_error
+@catch_key_error
+def element_join_sample(sample_pth, element_pth):
+    '''
+    找出在评价单元范围内的样点，并将结果赋值给样点，并增加DLDLMC
+    '''
+    sample_gdf = gpd.read_file(sample_pth, encoding='utf-8')
+    element_gdf = gpd.read_file(element_pth, encoding='utf-8')
+    sample_result = prepare.sample_joined(sample_gdf, element_gdf)
+    sample_result.to_file(save_pth(sample_pth, 'sample_joined.shp'), encoding='utf-8')
+    return "Done!"
+
+@catch_file_not_found_error
+@catch_key_error
+def add_dldlmc(file_pth):
+    '''
+    预处理数据，增加评价单元名称
+    '''
+    gdf = gpd.read_file(file_pth, encoding='utf-8')
+    gdf = prepare.add_dldlmc(gdf)
+    gdf.to_file(save_suffix_pth(file_pth, '_dldlbm'), encoding='utf-8')
+    return "Done!"
+
 
 @catch_file_not_found_error
 @catch_key_error
@@ -101,7 +117,7 @@ if __name__ == "__main__":
     # 生成配置文件
 
     # prepare_cfg('./test_data/element/element_short.shp','cfg_112_var','XZQMC', 'XZQDM')
-    # prepare_cfg('./test_data/element/element_short.shp','cfg_113_var','TL')
+    # prepare_cfg('./test_data/element/element_short.shp','cfg_113_var','TL', 'TLBH')
 
     # 质量检查
 
@@ -118,4 +134,6 @@ if __name__ == "__main__":
         "total": total,
         "get_var_table": prepare_cfg,
         "quality_check": quality_check,
+        "element_join_sample": element_join_sample,
+        "add_dldlmc": add_dldlmc
     })
