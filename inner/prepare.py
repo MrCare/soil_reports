@@ -10,7 +10,9 @@ config_loader = ConfigLoader()
 yaml_data = config_loader.yaml
 
 def sample_joined(sample_df, element_df):
-    element_df = element_df[['DLBM','DLMC','TL', 'YL', 'TS', 'TZ', 'geometry']]
+    fields = yaml_data["sample_joined"]
+    print(fields)
+    element_df = element_df[[*fields, 'geometry']]
     sample_result = gpd.sjoin(sample_df, element_df, how='inner', op='within')
     return sample_result
 

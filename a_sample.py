@@ -98,4 +98,5 @@ def sample(file_pth, out_file_pth=None, xls_template_path=inner_xls_template_pat
 
 if __name__ == '__main__':
     # type_106('/Users/car/Project/soilCli/reports/test_data/sample/sample.shp')
-    type_14('/Users/car/Project/soilCli/reports/test_data/sample/sample_joined_dldlbm.shp')
+    type_13('/Users/car/Project/soilCli/reports/test_data/sample/sample_joined_dldlbm.shp')
+    # type_14('/Users/car/Project/soilCli/reports/test_data/sample/sample_joined_dldlbm.shp')

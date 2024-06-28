@@ -4430,3 +4430,30 @@ on 0: 2024-06-27 18:13:58,518 - ERROR - /Users/car/Project/soilCli/reports/test_
 2024-06-28 09:21:15,911 - ERROR - Failed to create field name '实验室': cannot convert to ISO-8859-1
 2024-06-28 09:22:45,763 - ERROR - Failed to create field name '实验室': cannot convert to ISO-8859-1
 2024-06-28 10:58:53,965 - ERROR - Failed to create file test_data/element/test_data/element/element_short_dldlbm.shp: No such file or directory
+2024-06-28 17:23:58,793 - ERROR - KeyError occurred: <function sample_joined at 0x7faee0bd75e0>
+Traceback (most recent call last):
+  File "/Users/car/Project/soilCli/reports/inner/exception.py", line 24, in wrapper
+    return func(*args, **kwargs)
+  File "/Users/car/Project/soilCli/reports/reports.py", line 64, in element_join_sample
+    sample_result = prepare.sample_joined(sample_gdf, element_gdf)
+  File "/Users/car/Project/soilCli/reports/inner/prepare.py", line 13, in sample_joined
+    element_df = element_df[[*yaml_data[sample_joined], 'geometry']]
+KeyError: <function sample_joined at 0x7faee0bd75e0>
+2024-06-28 17:24:40,067 - ERROR - KeyError occurred: <function sample_joined at 0x7fa1807bf670>
+Traceback (most recent call last):
+  File "/Users/car/Project/soilCli/reports/inner/exception.py", line 24, in wrapper
+    return func(*args, **kwargs)
+  File "/Users/car/Project/soilCli/reports/reports.py", line 64, in element_join_sample
+    sample_result = prepare.sample_joined(sample_gdf, element_gdf)
+  File "/Users/car/Project/soilCli/reports/inner/prepare.py", line 13, in sample_joined
+    element_df = element_df[[*yaml_data[sample_joined], 'geometry']]
+KeyError: <function sample_joined at 0x7fa1807bf670>
+2024-06-28 17:25:35,261 - ERROR - KeyError occurred: <function sample_joined at 0x7fbd282175e0>
+Traceback (most recent call last):
+  File "/Users/car/Project/soilCli/reports/inner/exception.py", line 24, in wrapper
+    return func(*args, **kwargs)
+  File "/Users/car/Project/soilCli/reports/reports.py", line 64, in element_join_sample
+    sample_result = prepare.sample_joined(sample_gdf, element_gdf)
+  File "/Users/car/Project/soilCli/reports/inner/prepare.py", line 13, in sample_joined
+    fields = yaml_data[sample_joined]
+KeyError: <function sample_joined at 0x7fbd282175e0>
