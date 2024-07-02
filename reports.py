@@ -44,13 +44,17 @@ def quality_check(shp, shp_type="sample"):
     global_rule_file = os.path.join(folder_path, 'cfg_check_rule_all.csv')
     sample_rule_file = os.path.join(folder_path, 'cfg_check_rule_sample.csv')
     element_rule_file = os.path.join(folder_path, 'cfg_check_rule_element.csv')
+    suiti_rule_file = os.path.join(folder_path, 'cfg_check_rule_suiti.csv')
+    qual_rule_file = os.path.join(folder_path, 'cfg_qual_rule_file.csv')
     output_file = os.path.join(os.path.dirname(shp), os.path.splitext(os.path.basename(shp))[0] + '_check_results.csv')
     if shp_type == 'sample':
         check.quality_check(global_rule_file, [shp], output_file, [sample_rule_file])
     elif shp_type == "element":
         check.quality_check(global_rule_file, [shp], output_file, [element_rule_file])
+    elif shp_type == "suiti":
+        check.quality_check(global_rule_file, [shp], output_file, [suiti_rule_file])
     else:
-        check.quality_check(global_rule_file, [shp], output_file)
+        check.quality_check(global_rule_file, [shp], output_file, [qual_rule_file])
     return "Done!"
 
 @catch_file_not_found_error
@@ -141,6 +145,7 @@ if __name__ == "__main__":
     # total('test_data/sample/sample_short.shp', 'test_data/element/element_short.shp', './test_data/suiti_result/suiti_result_short.shp', './test_data/quality_result/quality_short.shp', 'ALL')
     # batch_type_76("test_data/quality_result/quality_short.shp")
 
+    # total_joined 对 “样点与评价单元进行连接后的样点数据” 进行分析
     # python reports.py total_joined --sample_pth test_data/sample/sample_joined_dldlbm.shp
     fire.Fire({
         "zs": zonal_statistics.zs,

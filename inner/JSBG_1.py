@@ -13,6 +13,17 @@ from .exception import logging
 xpu = XlsPosUtil()
 
 def fill_none_nan_zero(value):
+    """
+    A function that fills None or NaN values in the input 'value' with 0.
+    
+    Parameters:
+    value : object
+        The value to be checked and replaced if it is None or NaN.
+    
+    Returns:
+    object
+        The original 'value' if it is not None or NaN, otherwise 0.
+    """
     return value if not (value is None or pd.isnull(value)) else 0
 
 def statistics_all(df, yaml_data, wb, bar):
