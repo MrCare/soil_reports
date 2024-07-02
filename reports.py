@@ -20,7 +20,7 @@ from a_sample import sample
 from b_element import element
 from c_qual import qual
 from d_suiti import suiti
-
+from e_joined import joined
 # 忽略 FutureWarning
 warnings.simplefilter(action='ignore', category=FutureWarning)
 
@@ -107,6 +107,18 @@ def total(sample_pth, element_pth, suiti_pth, qual_pth, range='ALL', out_file_pt
         print('ERROR!')
     return "Done!"
 
+@catch_file_not_found_error
+@catch_key_error
+@add_attention
+def total_joined(sample_pth, out_file_pth=None):
+    '''
+    --sample_pth : 经过与评价单元连接后的样点数据路径
+    --element_pth : 评价单元数据路径
+    '''
+    xls_template_path = os.path.join(os.path.dirname(sample_pth), 'reports_joind_result.xlsx')
+    joined(sample_pth, xls_template_path, inner_xls_template_path)
+    return "Done!"
+
 if __name__ == "__main__":
     '''
     reports batch_type_7 --file_pth ./test_data/表层样点.shp --table_list "[JSBG_7_PH,JSBG_8_OM]"--out_file_pth xx.shp
@@ -129,9 +141,11 @@ if __name__ == "__main__":
     # total('test_data/sample/sample_short.shp', 'test_data/element/element_short.shp', './test_data/suiti_result/suiti_result_short.shp', './test_data/quality_result/quality_short.shp', 'ALL')
     # batch_type_76("test_data/quality_result/quality_short.shp")
 
+    # python reports.py total_joined --sample_pth test_data/sample/sample_joined_dldlbm.shp
     fire.Fire({
         "zs": zonal_statistics.zs,
         "total": total,
+        "total_joined": total_joined,
         "get_var_table": prepare_cfg,
         "quality_check": quality_check,
         "element_join_sample": element_join_sample,

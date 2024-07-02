@@ -46,31 +46,6 @@ def type_106(file_pth, xls_template_path=inner_xls_template_path, out_file_pth=N
         bar()
     return "Done!"
 
-def type_13(file_pth, xls_template_path=inner_xls_template_path, out_file_pth=None):
-    sheet_list = ["JSBG_013", "JSBG_015"]
-    total_steps = len(sheet_list) + 1
-    if not out_file_pth:
-        out_file_pth = os.path.join(os.path.dirname(file_pth), 'reports_result.xlsx')
-    with alive_bar(total_steps, title="13&15:样点土壤质地统计:") as bar:
-        df = read_and_prepare_file(file_pth)
-        wb = get_wb(xls_template_path)
-        for each in sheet_list:
-            wb = JSBG_13.statistics_all(df, yaml_data, wb, bar, each)
-        save_xls(wb, out_file_pth)
-        bar()
-    return "Done!"
-
-def type_14(file_pth, xls_template_path=inner_xls_template_path, out_file_pth=None):
-    total_steps = 1 + 1
-    if not out_file_pth:
-        out_file_pth = os.path.join(os.path.dirname(file_pth), 'reports_result.xlsx')
-    with alive_bar(total_steps, title="14:样点颗粒组成统计:") as bar:
-        df = read_and_prepare_file(file_pth)
-        wb = get_wb(xls_template_path)
-        wb = JSBG_14.statistics_all(df, yaml_data, wb, bar)
-        save_xls(wb, out_file_pth)
-        bar()
-    return "Done!"
 
 def sample(file_pth, out_file_pth=None, xls_template_path=inner_xls_template_path):
     type_7_list = [
@@ -92,11 +67,8 @@ def sample(file_pth, out_file_pth=None, xls_template_path=inner_xls_template_pat
     ]
     batch_type_7(file_pth, type_7_list, xls_template_path, out_file_pth)
     type_106(file_pth, out_file_pth, out_file_pth)
-    type_13(file_pth, out_file_pth, out_file_pth)
-    type_14(file_pth, out_file_pth, out_file_pth)
-
 
 if __name__ == '__main__':
-    # type_106('/Users/car/Project/soilCli/reports/test_data/sample/sample.shp')
-    type_13('/Users/car/Project/soilCli/reports/test_data/sample/sample_joined_dldlbm.shp')
+    type_106('/Users/car/Project/soilCli/reports/test_data/sample/sample.shp')
+    # type_13('/Users/car/Project/soilCli/reports/test_data/sample/sample_joined_dldlbm.shp')
     # type_14('/Users/car/Project/soilCli/reports/test_data/sample/sample_joined_dldlbm.shp')

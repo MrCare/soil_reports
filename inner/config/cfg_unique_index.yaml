@@ -306,7 +306,7 @@
 
 "JSBG_013":
   "title" : "安吉县表层样点土壤质地统计表"
-  "values" : "样点编"
+  "values" : "MJ"
   "index" : ['DLDLMC']
   "columns" : ['TRZD']
   "col_start_position" : "A3"
@@ -316,7 +316,7 @@
 
 "JSBG_015":
   "title" : "安吉县表层样点土壤质地统计表"
-  "values" : "样点编"
+  "values" : "MJ"
   "index" : ['XZQMC']
   "columns" : ['TRZD']
   "col_start_position" : "A3"
